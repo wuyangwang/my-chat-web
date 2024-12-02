@@ -4,5 +4,8 @@ compatibility_date = "2024-11-12"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
-[ai]
+[env.production.ai]
 binding = "AI"
+
+[env.production.vars]
+ENVIRONMENT = "production"
