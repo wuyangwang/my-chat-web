@@ -11,6 +11,9 @@
 - 图片生成 @cf/stabilityai/stable-diffusion-xl-base-1.0
 - 翻译 @cf/meta/m2m100-1.2b
 
+### 参考文档
+
+- https://developers.cloudflare.com/pages/framework-guides/nextjs/ssr/
 - https://developers.cloudflare.com/workers-ai/models/
 
 ## 开发
