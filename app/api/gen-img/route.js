@@ -14,8 +14,7 @@ export async function GET(request) {
 	const env = getRequestContext().env
 	const prompt = utils.getQuery(request, 'prompt')
 
-	const result = genImgSchema.safeParse({ prompt })
-	if (!result.success) return utils.returnJsonError('Invalid prompt')
+	utils.validReqSchema(genImgSchema, { prompt })
 
 	const response = await env.AI.run(aiModel.genImg, {
 		prompt: prompt

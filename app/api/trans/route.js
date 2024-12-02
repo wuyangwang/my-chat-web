@@ -16,8 +16,7 @@ export async function GET(request) {
 	const to = utils.getQuery(request, 'to')
 	const model = utils.getQuery(request, 'model')
 
-	const result = transSchema.safeParse({ text, to })
-	if (!result.success) return utils.returnJsonError('Invalid text')
+	utils.validReqSchema(transSchema, { text, to })
 
 	const isEn = to === 'en'
 	const inputs = {

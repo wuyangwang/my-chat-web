@@ -15,8 +15,7 @@ export async function GET(request) {
 	const prompt = utils.getQuery(request, 'prompt')
 	const model = utils.getQuery(request, 'model')
 
-	const result = chatSchema.safeParse({ prompt })
-	if (!result.success) return utils.returnJsonError('Invalid prompt')
+	utils.validReqSchema(chatSchema, { prompt })
 
 	let inputs = {
 		messages: [

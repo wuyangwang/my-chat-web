@@ -1,4 +1,5 @@
 export * from './post'
+export * from './validation'
 
 export function returnJson(data) {
 	return Response.json({
