@@ -4,23 +4,26 @@ import {
 	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupLabel,
-	SidebarHeader
+	SidebarHeader,
+	SidebarSeparator
 } from '@/components/ui/sidebar'
 import { Header } from './header'
 import { Footer } from './footer'
 
-export default function AppSidebar() {
+export function AppSidebar() {
 	return (
-		<Sidebar collapsible='icon'>
+		<Sidebar collapsible='icon' variant='sidebar'>
 			<SidebarHeader>
 				<Header />
 			</SidebarHeader>
+			<SidebarSeparator />
 			<SidebarContent>
 				<SidebarGroup>
 					<SidebarGroupLabel>Application</SidebarGroupLabel>
 				</SidebarGroup>
 				<SidebarGroup />
 			</SidebarContent>
+			<SidebarSeparator />
 			<SidebarFooter>
 				<Footer />
 			</SidebarFooter>

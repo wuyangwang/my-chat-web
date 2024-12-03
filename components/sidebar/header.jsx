@@ -7,6 +7,7 @@ export function Header() {
 			<SidebarMenuItem>
 				<div className='flex items-center gap-2 data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'></div>
 				<SidebarMenuButton
+					isActive
 					size='lg'
 					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
 				>
@@ -14,7 +15,7 @@ export function Header() {
 						<Home />
 					</div>
 					<div className='grid flex-1 text-left text-sm leading-tight'>
-						<span className='truncate font-semibold'>Home</span>
+						<span className='truncate font-semibold'>首页</span>
 					</div>
 				</SidebarMenuButton>
 			</SidebarMenuItem>
