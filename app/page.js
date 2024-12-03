@@ -2,6 +2,8 @@ import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { getModels } from '@/actions/getModels'
 
+export const runtime = 'edge'
+
 export default async function Home() {
 	const models = await getModels()
 
