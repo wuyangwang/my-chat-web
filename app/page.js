@@ -13,7 +13,7 @@ export default async function Home() {
 		<div className='h-full justify-center'>
 			<div className='grid grid-cols-1 md:grid-cols-3 gap-10'>
 				{models.map((model) => (
-					<Card key={model.id} className='flex-1 max-w-[300px] max-h-[200px]'>
+					<Card key={model.id} className='flex-1 max-w-[300px] mx-auto min-w-[260px] max-h-[200px]'>
 						<CardHeader>
 							<CardTitle>{model.name}</CardTitle>
 							<CardDescription>{model.desc}</CardDescription>
