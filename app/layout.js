@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/provider/theme-provider'
 import { SidebarProvider } from '@/components/ui/sidebar'
+import FullLoading from '@/components/full-loading'
 import { AppSidebar } from '@/components/sidebar/'
 import { AppNavbar } from '@/components/navbar'
 import './globals.css'
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
 							<div className='p-4 flex-1'>{children}</div>
 						</main>
 					</SidebarProvider>
+					<FullLoading />
 				</ThemeProvider>
 			</body>
 		</html>

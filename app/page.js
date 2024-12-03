@@ -2,9 +2,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import CanvasCursor from '@/components/anim/canvas-cursor'
 import TextWriter from '@/components/anim/text-writer'
-import { getModels } from '@/actions/getModels'
+import { getModels } from '@/actions/'
 
-export const runtime = 'edge'
+// export const runtime = 'edge'
 
 export default async function Home() {
 	const models = await getModels()
