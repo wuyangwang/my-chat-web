@@ -25,7 +25,7 @@ export default async function Home() {
 				))}
 			</div>
 			<div className='text-center mt-10 text-2xl font-bold'>
-				<TextWriter text={'选择一个模型，开始加速吧！'} delay={0.1} loop />
+				<TextWriter text={'选择一个模型，开始加速吧！'} delay={0.5} loop />
 			</div>
 			<CanvasCursor />
 		</div>
