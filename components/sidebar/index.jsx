@@ -2,13 +2,12 @@ import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
-	SidebarGroup,
-	SidebarGroupLabel,
 	SidebarHeader,
 	SidebarSeparator
 } from '@/components/ui/sidebar'
 import { Header } from './header'
 import { Footer } from './footer'
+import { Nav } from './nav'
 
 export function AppSidebar() {
 	return (
@@ -18,10 +17,7 @@ export function AppSidebar() {
 			</SidebarHeader>
 			<SidebarSeparator />
 			<SidebarContent>
-				<SidebarGroup>
-					<SidebarGroupLabel>Application</SidebarGroupLabel>
-				</SidebarGroup>
-				<SidebarGroup />
+				<Nav />
 			</SidebarContent>
 			<SidebarSeparator />
 			<SidebarFooter>
