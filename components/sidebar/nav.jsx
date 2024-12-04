@@ -6,13 +6,14 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem
 } from '@/components/ui/sidebar'
+import { RouterEnum } from '@/utils'
 import { ImageMinus, FileType, MessageCircleMore } from 'lucide-react'
 import Link from 'next/link'
 
 const navList = [
-	{ title: '聊天', url: '/chat', icon: MessageCircleMore },
-	{ title: '图片生成', url: '/img', icon: ImageMinus },
-	{ title: '翻译', url: '/trans', icon: FileType }
+	{ title: '聊天', url: RouterEnum.chat, icon: MessageCircleMore },
+	{ title: '图片生成', url: RouterEnum.genImage, icon: ImageMinus },
+	{ title: '文本翻译', url: RouterEnum.translate, icon: FileType }
 ]
 export function Nav() {
 	return (

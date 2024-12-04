@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from '@/provider/theme-provider'
 import { SidebarProvider } from '@/components/ui/sidebar'
+import { Toaster } from '@/components/ui/sonner'
 import FullLoading from '@/components/full-loading'
 import { AppSidebar } from '@/components/sidebar/'
 import { AppNavbar } from '@/components/navbar'
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
 					</SidebarProvider>
 					<FullLoading />
 				</ThemeProvider>
+				<Toaster position='top-right' richColors />
 			</body>
 		</html>
 	)

@@ -1,13 +1,25 @@
+'use client'
+
+import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import CanvasCursor from '@/components/anim/canvas-cursor'
 import TextWriter from '@/components/anim/text-writer'
-import { getModels } from '@/actions/'
+import { useChatStore } from '@/store'
+import { getModels } from '@/service'
+import Link from 'next/link'
 
-// export const runtime = 'edge'
+export default function Home() {
+	const models = useChatStore((state) => state.models)
+	const setModels = useChatStore((state) => state.setModels)
 
-export default async function Home() {
-	const models = await getModels()
+	useEffect(() => {
+		const fetchModel = async () => {
+			let arr = await getModels()
+			setModels(arr)
+		}
+		fetchModel()
+	}, [setModels])
 
 	return (
 		<div className='h-full justify-center'>
@@ -19,13 +31,15 @@ export default async function Home() {
 							<CardDescription>{model.desc}</CardDescription>
 						</CardHeader>
 						<CardFooter>
-							<Button className='w-full z-50'>开始</Button>
+							<Button className='w-full z-50' asChild>
+								<Link href={model.url}>开始</Link>
+							</Button>
 						</CardFooter>
 					</Card>
 				))}
 			</div>
 			<div className='text-center mt-10 text-2xl font-bold'>
-				<TextWriter text={'选择一个模型，开始加速吧！'} delay={0.5} loop />
+				<TextWriter text={'选择一个模型，开始加速吧！'} delay={0.2} loop />
 			</div>
 			<CanvasCursor />
 		</div>
