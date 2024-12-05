@@ -1,11 +1,12 @@
-import { Inter } from 'next/font/google'
-import { ThemeProvider } from '@/provider/theme-provider'
-import { SidebarProvider } from '@/components/ui/sidebar'
-import { Toaster } from '@/components/ui/sonner'
-import FullLoading from '@/components/full-loading'
-import { AppSidebar } from '@/components/sidebar/'
-import { AppNavbar } from '@/components/navbar'
 import './globals.css'
+
+import { AppNavbar } from '@/components/navbar'
+import { AppSidebar } from '@/components/sidebar/'
+import FullLoading from '@/components/full-loading'
+import { Inter } from 'next/font/google'
+import { SidebarProvider } from '@/components/ui/sidebar'
+import { ThemeProvider } from '@/provider/theme-provider'
+import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 

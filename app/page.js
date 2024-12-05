@@ -1,6 +1,6 @@
 import CanvasCursor from '@/components/anim/canvas-cursor'
-import TextWriter from '@/components/anim/text-writer'
 import { ModelToolList } from '@/components/home/ModelToolList'
+import TextWriter from '@/components/anim/text-writer'
 
 export default function Home() {
 	return (

@@ -5,6 +5,10 @@ export const RouterEnum = {
 	history: '/history'
 }
 
+export const isValidRoute = (path) => {
+	return Object.values(RouterEnum).includes(path)
+}
+
 export const aiToolList = [
 	{
 		id: 1,
