@@ -5,12 +5,6 @@ export const RouterEnum = {
 	history: '/history'
 }
 
-const RouteTag = {
-	chat: 'chat',
-	image: 'image',
-	translate: 'translate'
-}
-
 export const aiToolList = [
 	{
 		id: 1,
@@ -31,10 +25,3 @@ export const aiToolList = [
 		url: RouterEnum.translate
 	}
 ]
-
-export const getModelInfoByPath = (modelArr, path) => {
-	if (path === RouterEnum.chat) return modelArr.filter((i) => i.tag === RouteTag.chat)
-	if (path === RouterEnum.genImage) return modelArr.filter((i) => i.tag === RouteTag.image)
-	if (path === RouterEnum.translate) return modelArr.filter((i) => i.tag === RouteTag.translate)
-	return {}
-}

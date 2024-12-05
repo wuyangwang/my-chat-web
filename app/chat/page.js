@@ -1,9 +1,9 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
+import { useModelInfo } from '@/hooks/useModelInfo'
 
 export default function Chat() {
-	const path = usePathname()
-	console.log('🚀 ~ Chat ~ path:', path)
-	return <div>todo</div>
+	const { models, currentModel } = useModelInfo()
+
+	return <div></div>
 }

@@ -10,7 +10,7 @@ export function ModelToolList() {
 				<Card key={model.id} className='flex-1 max-w-[300px] mx-auto min-w-[260px] max-h-[200px]'>
 					<CardHeader>
 						<CardTitle>{model.title}</CardTitle>
-						<CardDescription>{model.desc}</CardDescription>
+						<CardDescription className='min-h-16'>{model.desc}</CardDescription>
 					</CardHeader>
 					<CardFooter>
 						<Button className='w-full z-50' asChild>
