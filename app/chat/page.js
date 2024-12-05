@@ -2,22 +2,35 @@
 
 import { useEffect, useState } from 'react'
 
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { getChat } from '@/service'
 import { useModelInfo } from '@/hooks/useModelInfo'
 
 export default function GenImage() {
 	const { models, currentModel } = useModelInfo()
-	const { text, setText } = useState('')
+	const [text, setText] = useState('')
+	const [prompt, setPrompt] = useState('')
 
-	useEffect(() => {
-		const onSubmit = async () => {
-			const res = await getChat('a cat')
-			console.log('🚀 ~ onSubmit ~ res:', res)
-			setText(res.text)
-		}
-		onSubmit()
-	}, [setText])
+	const onInput = (e) => {
+		setPrompt(e.target.value)
+	}
+	const onSubmit = async () => {
+		const res = await getChat(prompt)
+		setText(res.text)
+		setPrompt('')
+	}
 
-	if (!text) return <div>loading</div>
-	return <div>{text}</div>
+	return (
+		<div>
+			<div className='flex w-full max-w-sm items-center space-x-2'>
+				<Input placeholder='输入描述提示词' value={prompt} onChange={onInput} />
+				<Button type='submit' onClick={onSubmit}>
+					生成
+				</Button>
+			</div>
+
+			<div className='mt-4'>{text}</div>
+		</div>
+	)
 }

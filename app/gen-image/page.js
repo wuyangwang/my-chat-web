@@ -10,11 +10,15 @@ import { useModelInfo } from '@/hooks/useModelInfo'
 
 export default function GenImage() {
 	const { models, currentModel } = useModelInfo()
-	const { img, setImg } = useState()
-	const { prompt, setPrompt } = useState('')
+	const [img, setImg] = useState()
+	const [prompt, setPrompt] = useState('')
+
+	const onInput = (e) => {
+		setPrompt(e.target.value)
+	}
 
 	const onSubmit = async () => {
-		const url = await getImage('a cat')
+		const url = await getImage(prompt)
 		setImg(url)
 		setPrompt('')
 	}
@@ -23,11 +27,7 @@ export default function GenImage() {
 		<div>
 			<h1>Generate Image</h1>
 			<div className='flex w-full max-w-sm items-center space-x-2'>
-				<Input
-					placeholder='输入描述提示词'
-					value={prompt}
-					onChange={(e) => setPrompt(e.target.value)}
-				/>
+				<Input placeholder='输入描述提示词' value={prompt} onChange={onInput} />
 				<Button disabled={!prompt} type='submit' onClick={onSubmit}>
 					生成
 				</Button>
