@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import {
 	SidebarGroup,
 	SidebarGroupContent,
@@ -6,16 +7,25 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem
 } from '@/components/ui/sidebar'
-import { RouterEnum } from '@/utils'
+import { aiToolList, RouterEnum } from '@/utils'
 import { ImageMinus, FileType, MessageCircleMore } from 'lucide-react'
 import Link from 'next/link'
 
-const navList = [
-	{ title: '聊天', url: RouterEnum.chat, icon: MessageCircleMore },
-	{ title: '图片生成', url: RouterEnum.genImage, icon: ImageMinus },
-	{ title: '文本翻译', url: RouterEnum.translate, icon: FileType }
-]
+const iconMap = {
+	[RouterEnum.chat]: MessageCircleMore,
+	[RouterEnum.genImage]: ImageMinus,
+	[RouterEnum.translate]: FileType
+}
 export function Nav() {
+	const navList = useMemo(
+		() =>
+			aiToolList.map((i) => {
+				i.icon = iconMap[i.url]
+				return i
+			}),
+		[]
+	)
+
 	return (
 		<SidebarGroup>
 			<SidebarGroupLabel>功能</SidebarGroupLabel>
