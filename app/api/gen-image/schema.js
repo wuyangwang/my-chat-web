@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const chatSchema = z.object({
+export const genImgSchema = z.object({
 	prompt: z
 		.string()
 		.min(1, { message: '请输入至少一个字符' })

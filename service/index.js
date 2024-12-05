@@ -1,18 +1,9 @@
-import { showToast } from '@/utils'
-
-const host = process.env.NEXT_PUBLIC_HOST
+import { apiGet } from './request'
 
 export async function getModels(tag) {
-	const data = await fetch(`/api/models?tag=${tag}`)
-	const res = await data.json()
-	// await sleep(5000)
-	if (res.code !== 200) {
-		showToast('获取模型失败', 'error')
-		return []
-	}
-	return res.data
+	return await apiGet('/api/models', { tag })
 }
 
-async function sleep(ms = 1000) {
-	return new Promise((resolve) => setTimeout(resolve, ms))
+export async function getImage(prompt) {
+	return await apiGet('/api/gen-image', { prompt }, { isFile: true })
 }
