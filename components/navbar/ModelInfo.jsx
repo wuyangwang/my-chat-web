@@ -14,7 +14,7 @@ export function ModelInfo() {
 	return (
 		<div className='flex items-center gap-2 text-foreground text-sm'>
 			<div>当前模型</div>
-			<div className='text-fuchsia-500'>{currentModel?.name || '--'}</div>
+			<div className='text-primary'>{currentModel?.name || '--'}</div>
 		</div>
 	)
 }

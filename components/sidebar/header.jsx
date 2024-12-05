@@ -1,4 +1,5 @@
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
+
 import { Home } from 'lucide-react'
 import Link from 'next/link'
 
@@ -14,7 +15,7 @@ export function Header() {
 					asChild
 				>
 					<Link href='/'>
-						<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
+						<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'>
 							<Home />
 						</div>
 						<div className='grid flex-1 text-left text-sm leading-tight'>

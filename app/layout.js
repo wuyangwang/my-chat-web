@@ -2,6 +2,7 @@ import './globals.css'
 
 import { AppNavbar } from '@/components/navbar'
 import { AppSidebar } from '@/components/sidebar/'
+import CanvasCursor from '@/components/anim/canvas-cursor'
 import FullLoading from '@/components/full-loading'
 import { Inter } from 'next/font/google'
 import { SidebarProvider } from '@/components/ui/sidebar'
@@ -27,9 +28,10 @@ export default function RootLayout({ children }) {
 							<div className='p-4 flex-1'>{children}</div>
 						</main>
 					</SidebarProvider>
-					<FullLoading />
+					<Toaster position='top-right' richColors />
 				</ThemeProvider>
-				<Toaster position='top-right' richColors />
+				<FullLoading />
+				<CanvasCursor />
 			</body>
 		</html>
 	)
