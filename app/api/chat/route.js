@@ -1,6 +1,7 @@
-import { getRequestContext } from '@cloudflare/next-on-pages'
 import * as utils from '@/app/api/utils/index'
+
 import { chatSchema } from './schema'
+import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
 
@@ -16,6 +17,23 @@ export async function GET(request) {
 	const model = utils.getQuery(request, 'model')
 
 	utils.validReqSchema(chatSchema, { prompt })
+
+	let inputs = {
+		messages: [
+			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
+			{ role: 'user', content: prompt }
+		]
+	}
+
+	const response = await env.AI.run(aiModel.chat, inputs)
+	return utils.returnJson(response)
+}
+
+export async function POST(request) {
+	const env = getRequestContext().env
+	const body = await request.json()
+
+	utils.validReqSchema(chatSchema, body)
 
 	let inputs = {
 		messages: [
