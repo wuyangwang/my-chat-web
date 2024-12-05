@@ -1,5 +1,6 @@
-import { getRequestContext } from '@cloudflare/next-on-pages'
 import * as utils from '@/app/api/utils/index'
+
+import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
 
@@ -16,7 +17,7 @@ const aiModelList = [
 		]
 	},
 	{
-		tag: 'image',
+		tag: 'gen-image',
 		models: [
 			{
 				name: 'stable-diffusion',

@@ -1,6 +1,6 @@
-import { useEffect } from 'react'
 import { getModels } from '@/service'
 import { useChatStore } from '@/store'
+import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 export function useModelInfo() {

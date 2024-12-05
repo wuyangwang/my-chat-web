@@ -24,9 +24,10 @@ export function ModelSelect() {
 
 	if (!isValid) return null
 	if (!currentModel) return null
+
 	return (
 		<div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'>
-			<Select defaultValue={currentModel?.name} onValueChange={onChange}>
+			<Select value={currentModel.name} onValueChange={onChange}>
 				<SelectTrigger className='w-[150px]'>
 					<SelectValue placeholder='选择一个模型' />
 				</SelectTrigger>
