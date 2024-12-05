@@ -25,8 +25,8 @@ export async function GET(request) {
 		]
 	}
 
-	const response = await env.AI.run(aiModel.chat, inputs)
-	return utils.returnJson(response)
+	const res = await env.AI.run(aiModel.chat, inputs)
+	return utils.returnJson({ text: res.response })
 }
 
 export async function POST(request) {
@@ -42,6 +42,6 @@ export async function POST(request) {
 		]
 	}
 
-	const response = await env.AI.run(aiModel.chat, inputs)
-	return utils.returnJson(response)
+	const res = await env.AI.run(aiModel.chat, inputs)
+	return utils.returnJson({ text: res.response })
 }

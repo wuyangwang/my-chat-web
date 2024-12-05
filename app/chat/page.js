@@ -11,11 +11,13 @@ export default function GenImage() {
 
 	useEffect(() => {
 		const onSubmit = async () => {
-			const text = await getChat('a cat')
-			setText(text)
+			const res = await getChat('a cat')
+			console.log('🚀 ~ onSubmit ~ res:', res)
+			setText(res.text)
 		}
 		onSubmit()
 	}, [setText])
 
+	if (!text) return <div>loading</div>
 	return <div>{text}</div>
 }

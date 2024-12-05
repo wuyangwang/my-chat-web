@@ -5,7 +5,7 @@ export async function getModels(tag) {
 }
 
 export async function getChat(prompt) {
-	return await apiPost('/api/chat', { prompt })
+	return await apiGet('/api/chat', { prompt })
 }
 export async function getTranslate(text) {
 	return await apiGet('/api/trans', { text })
