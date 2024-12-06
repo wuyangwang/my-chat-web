@@ -17,7 +17,10 @@ export function Chat({ type }) {
 
 	const onScroll = () => {
 		if (chatRef) {
-			chatRef.current.scrollTop = chatRef.current.scrollHeight
+			chatRef.current.scrollTo({
+				top: chatRef.current.scrollHeight,
+				behavior: 'smooth'
+			})
 		}
 	}
 
