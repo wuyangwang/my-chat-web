@@ -24,24 +24,28 @@ export function useChat(type) {
 	const onSubmit = async () => {
 		if (!text) return showToast('请输入内容')
 		let msg = genUserMessage(text)
-		let apiPost
+		let chatApi
+		let params
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
-			apiPost = getChat(text)
+			chatApi = getChat
+			params = text
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')
-			apiPost = getTranslate({ text, source, target })
+			chatApi = getTranslate
+			params = { text, source, target }
 		} else if (type === ChatTypeEnum.genImage) {
 			addImgMessage(msg)
-			apiPost = getImage(text)
+			chatApi = getImage
+			params = text
 		} else {
 			//
 		}
 
 		try {
 			setApiLoading(true)
-			const data = await apiPost()
+			const data = await chatApi(params)
 			// const data = await mock()
 			setText('')
 
