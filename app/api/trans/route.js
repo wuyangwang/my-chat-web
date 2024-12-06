@@ -14,16 +14,17 @@ const aiModel = {
 export async function GET(request) {
 	const env = getRequestContext().env
 	const text = utils.getQuery(request, 'text')
-	const source = utils.getQuery(request, 'source')
-	const target = utils.getQuery(request, 'target')
+	const source = utils.getQuery(request, 'source') || 'zh'
+	const target = utils.getQuery(request, 'target') || 'en'
 	const model = utils.getQuery(request, 'model')
 
-	const data = utils.validReqSchema(transSchema, { text, source, target })
+	const [validObj, err] = utils.validReqSchema(transSchema, { text, source, target })
+	if (err) return err
 
 	const inputs = {
-		text: data.text,
-		source_lang: data.source,
-		target_lang: data.target
+		text: validObj.text,
+		source_lang: validObj.source,
+		target_lang: validObj.target
 	}
 
 	const response = await env.AI.run(aiModel.trans, inputs)

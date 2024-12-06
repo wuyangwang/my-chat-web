@@ -16,7 +16,8 @@ export async function GET(request) {
 	const prompt = utils.getQuery(request, 'prompt')
 	const model = utils.getQuery(request, 'model')
 
-	utils.validReqSchema(chatSchema, { prompt })
+	const [_, err] = utils.validReqSchema(chatSchema, { prompt })
+	if (err) return err
 
 	let inputs = {
 		messages: [
@@ -33,7 +34,8 @@ export async function POST(request) {
 	const env = getRequestContext().env
 	const body = await request.json()
 
-	utils.validReqSchema(chatSchema, body)
+	const [_, err] = utils.validReqSchema(chatSchema, body)
+	if (err) return err
 
 	let inputs = {
 		messages: [

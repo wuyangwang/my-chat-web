@@ -15,7 +15,8 @@ export async function GET(request) {
 	const env = getRequestContext().env
 	const prompt = utils.getQuery(request, 'prompt')
 
-	utils.validReqSchema(genImgSchema, { prompt })
+	const [_, err] = utils.validReqSchema(genImgSchema, { prompt })
+	if (err) return err
 
 	// 先转为英文
 	const res = await fetch('/api/trans?prompt=' + encodeURIComponent(prompt))
