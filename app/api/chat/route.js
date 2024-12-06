@@ -40,7 +40,7 @@ export async function POST(request) {
 	let inputs = {
 		messages: [
 			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
-			{ role: 'user', content: prompt }
+			{ role: 'user', content: body.prompt }
 		]
 	}
 

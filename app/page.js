@@ -3,7 +3,7 @@ import TextWriter from '@/components/anim/text-writer'
 
 export default function Home() {
 	return (
-		<div className='h-full justify-center'>
+		<div className='p-4 h-full justify-center'>
 			<div className='my-4 text-center md:text-left text-foreground text-3xl font-bold'>
 				当前功能:
 			</div>

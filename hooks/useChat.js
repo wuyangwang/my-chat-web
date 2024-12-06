@@ -27,14 +27,14 @@ export function useChat(type) {
 		let apiPost
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
-			apiPost = getChat(text)
+			// apiPost = getChat(text)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')
-			apiPost = getTranslate({ text, source, target })
+			// apiPost = getTranslate({ text, source, target })
 		} else if (type === ChatTypeEnum.genImage) {
 			addImgMessage(msg)
-			apiPost = getImage(text)
+			// apiPost = getImage(text)
 		} else {
 			//
 		}

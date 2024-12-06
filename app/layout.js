@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
 						<AppSidebar />
 						<main className='flex flex-col w-full h-screen overflow-hidden'>
 							<AppNavbar />
-							<div className='p-4 flex-1'>{children}</div>
+							{children}
 						</main>
 					</SidebarProvider>
 					<Toaster position='top-right' richColors />

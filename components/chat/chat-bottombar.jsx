@@ -15,7 +15,7 @@ export function ChatBottom({ type }) {
 	}
 
 	return (
-		<div className='w-full h-[60px] flex items-center'>
+		<div className='sticky w-full h-16 flex items-center'>
 			<ChatInput
 				ref={chatRef}
 				value={text}

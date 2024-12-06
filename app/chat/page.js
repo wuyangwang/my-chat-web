@@ -1,5 +1,3 @@
-'use client'
-
 import { Chat } from '@/components/chat'
 import { ChatTypeEnum } from '@/utils'
 
