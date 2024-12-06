@@ -17,7 +17,7 @@ export function ModelSelect() {
 	const currentTrans = useModelStore((state) => state.currentTrans)
 	const setCurrentModel = useModelStore((state) => state.setCurrentModel)
 	const setCurrentTrans = useModelStore((state) => state.setCurrentTrans)
-	const isValid = useValidRoute()
+	const [isValid, isTransPath] = useValidRoute()
 
 	const onChange = (value) => {
 		let obj = models.find((model) => model.name === value)
@@ -41,7 +41,7 @@ export function ModelSelect() {
 				</SelectContent>
 			</Select>
 
-			{currentModel.items && currentModel.items.length > 0 && (
+			{isTransPath && currentModel.items && currentModel.items.length > 0 && (
 				<Select value={currentTrans} onValueChange={setCurrentTrans}>
 					<SelectTrigger className='w-[90px]'>
 						<SelectValue placeholder='选择一个翻译目标' />

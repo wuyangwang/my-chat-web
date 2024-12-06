@@ -7,7 +7,7 @@ import { useValidRoute } from '@/hooks/useValidRoute'
 export function ModelInfo() {
 	const isMobile = useIsMobile()
 	const currentModel = useModelStore((state) => state.currentModel)
-	const isValid = useValidRoute()
+	const [isValid] = useValidRoute()
 
 	if (isMobile) return null
 	if (!isValid) return null
