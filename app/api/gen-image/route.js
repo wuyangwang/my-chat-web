@@ -7,6 +7,9 @@ export const runtime = 'edge'
 
 const aiModel = {
 	chat: '@cf/meta/llama-3.1-8b-instruct',
+	// @cf/runwayml/stable-diffusion-v1-5-inpainting
+	// @cf/runwayml/stable-diffusion-v1-5-img2img
+	// @cf/lykon/dreamshaper-8-lcm
 	genImg: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 	trans: '@cf/meta/m2m100-1.2b'
 }

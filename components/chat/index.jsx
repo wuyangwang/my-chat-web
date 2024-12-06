@@ -1,36 +1,43 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 import { ChatBottom } from './chat-bottombar'
+import { ChatList } from './chat-list'
 import { ChatMessage } from './chat-message'
-import { ChatMessageList } from './chat-message-list'
 import { ChatScroll } from './chat-scroll'
 import { ChatTop } from './chat-topbar'
 import { useChat } from '@/hooks/useChat'
 import { useModel } from '@/hooks/useModel'
-import { useRef } from 'react'
 
 export function Chat({ type }) {
+	const chatRef = useRef(null)
 	const { currentModel } = useModel()
-	const { apiLoading, messages } = useChat(type)
-	const chatRef = useRef()
+	const { apiLoading, messages, ...props } = useChat(type)
 
 	const onScroll = () => {
-		chatRef.current.scrollTop = chatRef.current.scrollHeight
+		if (chatRef) {
+			chatRef.current.scrollTop = chatRef.current.scrollHeight
+		}
 	}
+
+	useEffect(() => {
+		onScroll()
+	}, [messages])
 
 	return (
 		<div className='w-full h-[calc(100vh-64px)] relative max-w-screen-md mx-auto flex flex-col'>
-			{/* <ChatTop /> */}
-			<ChatMessageList ref={chatRef}>
+			<ChatTop />
+			<ChatList ref={chatRef}>
 				{messages.map((message) => (
 					<ChatMessage key={message.id} message={message} />
 				))}
 				{apiLoading && (
-					<ChatMessage message={{ role: 'assistant', loading: true, content: '...' }} />
+					<ChatMessage message={{ role: 'assistant', loading: true, content: '正在生成中...' }} />
 				)}
-			</ChatMessageList>
+			</ChatList>
 			<ChatScroll onScroll={onScroll} />
-			<ChatBottom type={type} />
+			<ChatBottom apiLoading={apiLoading} {...props} />
 		</div>
 	)
 }

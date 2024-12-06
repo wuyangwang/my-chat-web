@@ -1,12 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { ChatInput } from './chat-input'
-import { useChat } from '@/hooks/useChat'
-import { useRef } from 'react'
 
-export function ChatBottom({ type }) {
-	const { apiLoading, onInputChange, text, onSubmit } = useChat(type)
-	const chatRef = useRef()
-
+export function ChatBottom({ apiLoading, onInputChange, text, onSubmit }) {
 	const onKeyDown = (e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault()
@@ -17,7 +12,6 @@ export function ChatBottom({ type }) {
 	return (
 		<div className='sticky w-full h-16 flex items-center'>
 			<ChatInput
-				ref={chatRef}
 				value={text}
 				disabled={apiLoading}
 				onChange={(e) => onInputChange(e.target.value)}

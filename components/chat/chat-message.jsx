@@ -2,8 +2,9 @@ import { BotMessageSquare } from 'lucide-react'
 import { ChatRole } from '@/utils'
 import { Loader } from 'lucide-react'
 import { User } from 'lucide-react'
+import { memo } from 'react'
 
-export function ChatMessage({ message }) {
+const ChatMessage = memo(({ message }) => {
 	const { role, loading, content } = message
 	return (
 		<div className='flex flex-col gap-2'>
@@ -22,4 +23,7 @@ export function ChatMessage({ message }) {
 			</div>
 		</div>
 	)
-}
+})
+
+ChatMessage.displayName = 'ChatMessage'
+export { ChatMessage }
