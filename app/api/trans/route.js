@@ -18,12 +18,12 @@ export async function GET(request) {
 	const target = utils.getQuery(request, 'target')
 	const model = utils.getQuery(request, 'model')
 
-	utils.validReqSchema(transSchema, { text, source, target })
+	const data = utils.validReqSchema(transSchema, { text, source, target })
 
 	const inputs = {
-		text: text,
-		source_lang: source,
-		target_lang: target
+		text: data.text,
+		source_lang: data.source,
+		target_lang: data.target
 	}
 
 	const response = await env.AI.run(aiModel.trans, inputs)

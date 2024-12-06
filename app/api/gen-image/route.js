@@ -17,8 +17,12 @@ export async function GET(request) {
 
 	utils.validReqSchema(genImgSchema, { prompt })
 
+	// 先转为英文
+	const res = await fetch('/api/trans?prompt=' + encodeURIComponent(prompt))
+	const { data } = await res.json()
+
 	const response = await env.AI.run(aiModel.genImg, {
-		prompt: prompt
+		prompt: data || prompt
 	})
 
 	return new Response(response, { headers: { 'content-type': 'image/png' } })
