@@ -32,7 +32,13 @@ const aiModelList = [
 			{
 				name: 'm2m100',
 				model: '@cf/meta/m2m100-1.2b',
-				maxCount: 500
+				maxCount: 500,
+				items: [
+					{ source: 'zh', target: 'en', name: '中转英' },
+					{ source: 'en', target: 'zh', name: '英转中' },
+					{ source: 'zh', target: 'ja', name: '中转日' },
+					{ source: 'ja', target: 'zh', name: '日转中' }
+				]
 			}
 		]
 	}

@@ -1,5 +1,6 @@
-import { getRequestContext } from '@cloudflare/next-on-pages'
 import * as utils from '@/app/api/utils/index'
+
+import { getRequestContext } from '@cloudflare/next-on-pages'
 import { transSchema } from './schema'
 
 export const runtime = 'edge'
@@ -13,16 +14,16 @@ const aiModel = {
 export async function GET(request) {
 	const env = getRequestContext().env
 	const text = utils.getQuery(request, 'text')
-	const to = utils.getQuery(request, 'to')
+	const source = utils.getQuery(request, 'source')
+	const target = utils.getQuery(request, 'target')
 	const model = utils.getQuery(request, 'model')
 
-	utils.validReqSchema(transSchema, { text, to })
+	utils.validReqSchema(transSchema, { text, source, target })
 
-	const isEn = to === 'en'
 	const inputs = {
 		text: text,
-		source_lang: isEn ? 'zh' : 'en',
-		target_lang: isEn ? 'en' : 'zh'
+		source_lang: source,
+		target_lang: target
 	}
 
 	const response = await env.AI.run(aiModel.trans, inputs)

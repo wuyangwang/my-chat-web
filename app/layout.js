@@ -8,6 +8,7 @@ import { Inter } from 'next/font/google'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { ThemeProvider } from '@/provider/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
+import { isDev } from '@/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang='zh-CN'>
+			<head>
+				{isDev && <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />}
+			</head>
 			<body className={inter.className}>
 				<ThemeProvider>
 					<SidebarProvider>
