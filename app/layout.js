@@ -21,13 +21,13 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang='zh-CN'>
 			<head>
-				{isDev && <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />}
+				{!isDev && <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />}
 			</head>
 			<body className={inter.className}>
 				<ThemeProvider>
 					<SidebarProvider>
 						<AppSidebar />
-						<main className='flex flex-col w-full h-screen overflow-hidden'>
+						<main className='flex flex-col w-full h-screen'>
 							<AppNavbar />
 							{children}
 						</main>

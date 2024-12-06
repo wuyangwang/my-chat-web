@@ -1,3 +1,4 @@
+import { ChatRole } from '@/utils'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -52,7 +53,10 @@ export const useChatStore = create(
 				}),
 			addImgMessage: (message) =>
 				set((state) => {
-					let newMessages = [...state.imgMessages, message]
+					let newMessages = [
+						...state.imgMessages,
+						{ ...message, isImage: message.role === ChatRole.Assistant }
+					]
 					if (newMessages.length > 5) {
 						newMessages.shift()
 					}

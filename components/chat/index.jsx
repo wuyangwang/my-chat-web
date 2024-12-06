@@ -30,7 +30,7 @@ export function Chat({ type }) {
 
 	return (
 		<div className='w-full h-[calc(100vh-64px)] relative max-w-screen-md mx-auto flex flex-col'>
-			<ChatTop />
+			{/* <ChatTop /> */}
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
 					<ChatMessage key={message.id} message={message} />

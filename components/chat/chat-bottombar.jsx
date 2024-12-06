@@ -10,8 +10,9 @@ export function ChatBottom({ apiLoading, onInputChange, text, onSubmit }) {
 	}
 
 	return (
-		<div className='sticky w-full h-16 flex items-center'>
+		<div className='sticky w-full h-18 flex items-center py-4 px-3 border-t'>
 			<ChatInput
+				placeholder='请输入内容'
 				value={text}
 				disabled={apiLoading}
 				onChange={(e) => onInputChange(e.target.value)}
