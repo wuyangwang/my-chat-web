@@ -1,9 +1,8 @@
 'use client'
 
-import { useModel } from '@/hooks/useModel'
+import { Chat } from '@/components/chat'
+import { ChatTypeEnum } from '@/utils'
 
-export default function Translate() {
-	const { models, currentModel } = useModel()
-
-	return <div>Translate</div>
+export default function ChatPage() {
+	return <Chat type={ChatTypeEnum.translate} />
 }

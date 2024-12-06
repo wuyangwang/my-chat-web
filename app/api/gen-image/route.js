@@ -19,11 +19,11 @@ export async function GET(request) {
 	if (err) return err
 
 	// 先转为英文
-	const res = await fetch('/api/trans?prompt=' + encodeURIComponent(prompt))
-	const { data } = await res.json()
+	//const res = await fetch('/api/trans?prompt=' + encodeURIComponent(prompt))
+	//const { data } = await res.json()
 
 	const response = await env.AI.run(aiModel.genImg, {
-		prompt: data || prompt
+		prompt: prompt
 	})
 
 	return new Response(response, { headers: { 'content-type': 'image/png' } })

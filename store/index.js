@@ -10,11 +10,14 @@ export const useModelStore = create(
 			setModels: (models) => set({ models }),
 			setCurrentModel: (currentModel) =>
 				set((state) => {
-					let trans = currentModel.items && currentModel.items[0]
-					return {
-						currentModel,
-						currentTrans: state.currentTrans || `${trans.source}-${trans.target}`
+					if (currentModel.items && !state.currentTrans) {
+						let info = currentModel.items[0]
+						return {
+							currentModel,
+							currentTrans: `${info.source}-${info.target}`
+						}
 					}
+					return { currentModel }
 				}),
 			setCurrentTrans: (currentTrans) => set({ currentTrans })
 		}),

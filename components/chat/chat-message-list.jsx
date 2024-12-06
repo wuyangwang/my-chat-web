@@ -1,15 +1,13 @@
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
-const ChatMessageList = React.forwardRef(({ className, children, ...props }, ref) => {
+const ChatMessageList = React.forwardRef(({ children }, ref) => {
 	return (
-		<div
-			className={cn('flex flex-col w-full h-full p-4 gap-6 overflow-y-auto', className)}
-			ref={ref}
-			{...props}
-		>
-			{children}
+		<div className='flex-1 bg-muted/40 rounded-xl overflow-hidden'>
+			<ScrollArea className='flex flex-col p-4 gap-6 h-[calc(100%-64px)]' ref={ref}>
+				{children}
+			</ScrollArea>
 		</div>
 	)
 })

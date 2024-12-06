@@ -28,5 +28,5 @@ export async function GET(request) {
 	}
 
 	const response = await env.AI.run(aiModel.trans, inputs)
-	return utils.returnJson(response.translated_text)
+	return utils.returnJson({ text: response.translated_text })
 }

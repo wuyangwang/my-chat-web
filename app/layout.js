@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
 				<ThemeProvider>
 					<SidebarProvider>
 						<AppSidebar />
-						<main className='flex flex-col w-full h-screen'>
+						<main className='flex flex-col w-full h-screen overflow-hidden'>
 							<AppNavbar />
 							<div className='p-4 flex-1'>{children}</div>
 						</main>
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
 					<Toaster position='top-right' richColors />
 				</ThemeProvider>
 				<FullLoading />
-				<CanvasCursor />
+				{/* <CanvasCursor /> */}
 			</body>
 		</html>
 	)

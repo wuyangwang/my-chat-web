@@ -1,5 +1,11 @@
 import { nanoid } from 'nanoid'
 
+export const ChatTypeEnum = {
+	chat: 1,
+	genImage: 2,
+	translate: 3
+}
+
 // 聊天角色
 export const ChatRole = {
 	User: 'user',
@@ -7,7 +13,7 @@ export const ChatRole = {
 	Assistant: 'assistant'
 }
 
-export const genUserMessage = (content) => {
+export const genUserMessage = (content, model = '') => {
 	return {
 		id: genId(),
 		timestamp: Date.now(),

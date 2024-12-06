@@ -9,7 +9,7 @@ const CanvasCursor = () => {
 	const isMobile = useIsMobile()
 	if (isMobile) return null
 
-	return <canvas className='pointer-events-none fixed inset-0' id='canvas' />
+	return <canvas className='pointer-events-none fixed inset-0 -z-10' id='canvas' />
 }
 
 export default CanvasCursor

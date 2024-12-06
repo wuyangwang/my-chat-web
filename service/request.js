@@ -38,7 +38,7 @@ async function handleResponse(data, config = {}) {
 	// await sleep(5000)
 	if (config.isImage) {
 		let blob = await data.blob() // 解析为 Blob 数据
-		return URL.createObjectURL(blob)
+		return { url: URL.createObjectURL(blob) }
 	}
 	if (config.isFile) {
 		return await data.blob()
