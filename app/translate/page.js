@@ -1,9 +1,9 @@
 'use client'
 
-import { useModelInfo } from '@/hooks/useModelInfo'
+import { useModel } from '@/hooks/useModel'
 
 export default function Translate() {
-	const { models, currentModel } = useModelInfo()
+	const { models, currentModel } = useModel()
 
 	return <div>Translate</div>
 }

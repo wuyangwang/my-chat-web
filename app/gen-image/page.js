@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Input } from '@/components/ui/input'
 import { getImage } from '@/service'
-import { useModelInfo } from '@/hooks/useModelInfo'
+import { useModel } from '@/hooks/useModel'
 
 export default function GenImage() {
-	const { models, currentModel } = useModelInfo()
+	const { models, currentModel } = useModel()
 	const [img, setImg] = useState()
 	const [prompt, setPrompt] = useState('')
 

@@ -1,14 +1,14 @@
 import { getModels } from '@/service'
-import { useChatStore } from '@/store'
 import { useEffect } from 'react'
+import { useModelStore } from '@/store'
 import { usePathname } from 'next/navigation'
 
-export function useModelInfo() {
+export function useModel() {
 	const path = usePathname()
-	const models = useChatStore((state) => state.models)
-	const currentModel = useChatStore((state) => state.currentModel)
-	const setModels = useChatStore((state) => state.setModels)
-	const setCurrentModel = useChatStore((state) => state.setCurrentModel)
+	const models = useModelStore((state) => state.models)
+	const currentModel = useModelStore((state) => state.currentModel)
+	const setModels = useModelStore((state) => state.setModels)
+	const setCurrentModel = useModelStore((state) => state.setCurrentModel)
 
 	useEffect(() => {
 		const fetchList = async () => {

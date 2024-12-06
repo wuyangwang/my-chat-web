@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { getChat } from '@/service'
-import { useModelInfo } from '@/hooks/useModelInfo'
+import { useModel } from '@/hooks/useModel'
 
 export default function GenImage() {
-	const { models, currentModel } = useModelInfo()
+	const { models, currentModel } = useModel()
 	const [text, setText] = useState('')
 	const [prompt, setPrompt] = useState('')
 

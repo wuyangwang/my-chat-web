@@ -1,12 +1,12 @@
 'use client'
 
-import { useChatStore } from '@/store'
 import useIsMobile from '@/hooks/useIsMobile'
+import { useModelStore } from '@/store'
 import { useValidRoute } from '@/hooks/useValidRoute'
 
 export function ModelInfo() {
 	const isMobile = useIsMobile()
-	const currentModel = useChatStore((state) => state.currentModel)
+	const currentModel = useModelStore((state) => state.currentModel)
 	const isValid = useValidRoute()
 
 	if (isMobile) return null

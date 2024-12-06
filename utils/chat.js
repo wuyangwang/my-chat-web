@@ -9,12 +9,16 @@ export const ChatRole = {
 
 export const genUserMessage = (content) => {
 	return {
+		id: genId(),
+		timestamp: Date.now(),
 		role: ChatRole.User,
 		content
 	}
 }
 export const genAssistantMessage = (content) => {
 	return {
+		id: genId(),
+		timestamp: Date.now(),
 		role: ChatRole.Assistant,
 		content
 	}
