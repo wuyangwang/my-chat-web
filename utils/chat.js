@@ -45,7 +45,10 @@ export const streamReader = async (stream, cb) => {
 		const { value, done: isDone } = await reader.read()
 		done = isDone
 		if (value) {
-			cb(new TextDecoder().decode(value))
+			let str = new TextDecoder().decode(value)
+			str = str.replace(/data: /g, '')
+			str = str.replace('[DONE]', '').trim()
+			cb(JSON.parse(str).response)
 		}
 	}
 	cb('') // 流结束时的回调

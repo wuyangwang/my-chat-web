@@ -37,31 +37,25 @@ export const useChatStore = create(
 			imgMessages: [],
 			addMessage: (message) =>
 				set((state) => {
-					let newMessages = [...state.messages, message]
+					let newMessages = state.messages.concat(message)
 					if (newMessages.length > 500) {
 						newMessages.shift()
 					}
 					return { messages: newMessages }
 				}),
-			addMessageChunk: (msg) =>
+			addMessageChunk: (message) =>
 				set((state) => {
-					let isExist = false
-					let messages = state.messages.map((i) => {
-						if (i.id === msg.id) {
-							i.content = i.content + ' ' + msg.content
-							isExist = true
+					let msg = state.messages.filter((item) => item.id == message.id)[0]
+					if (!msg) {
+						let newMessages = state.messages.concat(message)
+						if (newMessages.length > 500) {
+							newMessages.shift()
 						}
-						return i
-					})
-					if (isExist) {
-						return { messages: messages }
+						return { messages: newMessages }
 					}
-
-					let newMessages = [...messages, msg]
-					if (newMessages.length > 500) {
-						newMessages.shift()
-					}
-					return { messages: newMessages }
+					let newMsg = { ...msg, ...message, content: msg.content + message.content }
+					let msgArr = state.messages.filter((item) => item.id !== message.id)
+					return { messages: msgArr.concat(newMsg) }
 				}),
 			addTransMessage: (message) =>
 				set((state) => {
