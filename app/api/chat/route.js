@@ -33,13 +33,15 @@ export async function POST(request) {
 	const [_, err] = utils.validReqSchema(chatSchema, body)
 	if (err) return err
 
+	let model = body.model || defaultChatModel
 	let inputs = {
 		messages: [
 			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
 			{ role: 'user', content: body.prompt }
 		]
+		// stream: true
 	}
 
-	const res = await env.AI.run(aiModel.chat, inputs)
+	const res = await env.AI.run(model, inputs)
 	return utils.returnJson({ text: res.response })
 }

@@ -26,7 +26,7 @@ export function Chat({ type }) {
 	}, [messages])
 
 	return (
-		<div className='w-full h-[calc(100vh-64px)] relative max-w-screen-md mx-auto flex flex-col'>
+		<div className='w-full h-[calc(100vh-64px)] relative max-w-screen-md mx-auto flex flex-col z-10'>
 			<ChatTop type={type} onClear={props.onClear} />
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
