@@ -8,13 +8,10 @@ import { ChatMessage } from './chat-message'
 import { ChatScroll } from './chat-scroll'
 import { ChatTop } from './chat-topbar'
 import { useChat } from '@/hooks/useChat'
-import { useModel } from '@/hooks/useModel'
 
 export function Chat({ type }) {
 	const chatRef = useRef(null)
-	const { currentModel } = useModel()
 	const { apiLoading, messages, ...props } = useChat(type)
-
 	const onScroll = () => {
 		if (chatRef) {
 			chatRef.current.scrollTo({
@@ -30,7 +27,7 @@ export function Chat({ type }) {
 
 	return (
 		<div className='w-full h-[calc(100vh-64px)] relative max-w-screen-md mx-auto flex flex-col'>
-			{/* <ChatTop /> */}
+			<ChatTop type={type} onClear={props.onClear} />
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
 					<ChatMessage key={message.id} message={message} />

@@ -33,7 +33,7 @@ export const useChatStore = create(
 			messages: [],
 			// 最大保存500条
 			transMessages: [],
-			// 保存最新的5条
+			// 保存最新的50条
 			imgMessages: [],
 			addMessage: (message) =>
 				set((state) => {
@@ -57,11 +57,14 @@ export const useChatStore = create(
 						...state.imgMessages,
 						{ ...message, isImage: message.role === ChatRole.Assistant }
 					]
-					if (newMessages.length > 5) {
+					if (newMessages.length > 50) {
 						newMessages.shift()
 					}
 					return { imgMessages: newMessages }
-				})
+				}),
+			clearMessages: () => set({ messages: [] }),
+			clearTransMessages: () => set({ transMessages: [] }),
+			clearImgMessages: () => set({ imgMessages: [] })
 		}),
 		{ name: 'chat-store' }
 	)

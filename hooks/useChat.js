@@ -9,6 +9,7 @@ export function useChat(type) {
 	const [text, setText] = useState('')
 
 	const currentTrans = useModelStore((s) => s.currentTrans)
+	const currentModel = useModelStore((s) => s.currentModel)
 
 	const messages = useChatStore((s) => s.messages)
 	const transMessages = useChatStore((s) => s.transMessages)
@@ -16,6 +17,9 @@ export function useChat(type) {
 	const addMessage = useChatStore((s) => s.addMessage)
 	const addTransMessage = useChatStore((s) => s.addTransMessage)
 	const addImgMessage = useChatStore((s) => s.addImgMessage)
+	const clearMessages = useChatStore((s) => s.clearMessages)
+	const clearTransMessages = useChatStore((s) => s.clearTransMessages)
+	const clearImgMessages = useChatStore((s) => s.clearImgMessages)
 
 	const onInputChange = (v) => {
 		setText(v)
@@ -23,13 +27,13 @@ export function useChat(type) {
 
 	const onSubmit = async () => {
 		if (!text) return showToast('请输入内容')
-		let msg = genUserMessage(text)
+		let msg = genUserMessage(text, currentModel.model)
 		let chatApi
 		let params
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
 			chatApi = getChat
-			params = text
+			params = { prompt: text, model: currentModel.model }
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')
@@ -38,7 +42,7 @@ export function useChat(type) {
 		} else if (type === ChatTypeEnum.genImage) {
 			addImgMessage(msg)
 			chatApi = getImage
-			params = text
+			params = { prompt: text, model: currentModel.model }
 		} else {
 			//
 		}
@@ -50,11 +54,11 @@ export function useChat(type) {
 			setText('')
 
 			if (type === ChatTypeEnum.chat) {
-				addMessage(genAssistantMessage(data.text))
+				addMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.translate) {
-				addTransMessage(genAssistantMessage(data.text))
+				addTransMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.genImage) {
-				addImgMessage(genAssistantMessage(data.url))
+				addImgMessage(genAssistantMessage(data.url, currentModel.model))
 			} else {
 				//
 			}
@@ -63,10 +67,21 @@ export function useChat(type) {
 		}
 	}
 
+	const onClear = () => {
+		if (type === ChatTypeEnum.chat) {
+			clearMessages()
+		} else if (type === ChatTypeEnum.genImage) {
+			clearImgMessages()
+		} else {
+			clearTransMessages()
+		}
+	}
+
 	return {
 		apiLoading,
 		onInputChange,
 		onSubmit,
+		onClear,
 		text,
 		messages:
 			type === ChatTypeEnum.translate

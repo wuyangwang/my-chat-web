@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang='zh-CN'>
 			<head>
-				{!isDev && <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />}
+				{/* {isDev && <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />} */}
 			</head>
 			<body className={inter.className}>
 				<ThemeProvider>
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
 					<Toaster position='top-right' richColors />
 				</ThemeProvider>
 				<FullLoading />
-				{/* <CanvasCursor /> */}
+				<CanvasCursor />
 			</body>
 		</html>
 	)

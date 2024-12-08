@@ -18,15 +18,17 @@ export const genUserMessage = (content, model = '') => {
 		id: genId(),
 		timestamp: Date.now(),
 		role: ChatRole.User,
-		content
+		content,
+		model
 	}
 }
-export const genAssistantMessage = (content) => {
+export const genAssistantMessage = (content, model = '') => {
 	return {
 		id: genId(),
 		timestamp: Date.now(),
 		role: ChatRole.Assistant,
-		content
+		content,
+		model
 	}
 }
 
