@@ -9,7 +9,6 @@ export const runtime = 'edge'
 
 export async function GET(request) {
 	const env = getRequestContext().env
-	console.log('🚀 ~ GET ~ env:', env)
 	const prompt = utils.getQuery(request, 'prompt')
 	const model = utils.getQuery(request, 'model') || defaultGenImageModel
 
