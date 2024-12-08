@@ -43,6 +43,26 @@ export const useChatStore = create(
 					}
 					return { messages: newMessages }
 				}),
+			addMessageChunk: (msg) =>
+				set((state) => {
+					let isExist = false
+					let messages = state.messages.map((i) => {
+						if (i.id === msg.id) {
+							i.content = i.content + ' ' + msg.content
+							isExist = true
+						}
+						return i
+					})
+					if (isExist) {
+						return { messages: messages }
+					}
+
+					let newMessages = [...messages, msg]
+					if (newMessages.length > 500) {
+						newMessages.shift()
+					}
+					return { messages: newMessages }
+				}),
 			addTransMessage: (message) =>
 				set((state) => {
 					let newMessages = [...state.transMessages, message]

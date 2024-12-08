@@ -1,11 +1,20 @@
 export * from './post'
 export * from './validation'
+export * from './models'
 
 export function returnJson(data) {
 	return Response.json({
 		code: 200,
 		message: 'success',
 		data: data
+	})
+}
+
+export function returnStreamText(stream) {
+	return new Response(stream, {
+		status: 200,
+		statusText: 'ok',
+		headers: { 'Content-Type': 'text/plain' }
 	})
 }
 

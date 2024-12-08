@@ -29,9 +29,24 @@ export const genAssistantMessage = (content, model = '') => {
 		role: ChatRole.Assistant,
 		content,
 		model
+		// pending: true
 	}
 }
 
 export const genId = () => {
 	return nanoid()
+}
+
+export const streamReader = async (stream, cb) => {
+	const reader = stream.getReader()
+	let done = false
+
+	while (!done) {
+		const { value, done: isDone } = await reader.read()
+		done = isDone
+		if (value) {
+			cb(new TextDecoder().decode(value))
+		}
+	}
+	cb('') // 流结束时的回调
 }

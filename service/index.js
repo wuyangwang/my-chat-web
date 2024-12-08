@@ -5,7 +5,7 @@ export async function getModels(tag) {
 }
 
 export async function getChat({ prompt, model }) {
-	return await apiPost('/api/chat', { prompt, model })
+	return await apiPost('/api/chat', { prompt, model }, { isStream: true })
 }
 export async function getTranslate({ text, source, target }) {
 	return await apiGet('/api/trans', { text, source, target })

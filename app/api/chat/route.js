@@ -18,8 +18,8 @@ export async function GET(request) {
 		messages: [
 			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
 			{ role: 'user', content: prompt }
-		],
-		stream: true
+		]
+		// stream: true
 	}
 
 	const res = await env.AI.run(model, inputs)
@@ -38,10 +38,11 @@ export async function POST(request) {
 		messages: [
 			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
 			{ role: 'user', content: body.prompt }
-		]
-		// stream: true
+		],
+		stream: true // 启用流式传输
 	}
 
-	const res = await env.AI.run(model, inputs)
-	return utils.returnJson({ text: res.response })
+	const stream = await env.AI.run(model, inputs)
+	return utils.returnStreamText(stream)
+	// return utils.returnJson({ text: res.response })
 }

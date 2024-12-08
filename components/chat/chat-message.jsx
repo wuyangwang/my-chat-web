@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 import { memo } from 'react'
 
 const ChatMessage = memo(({ message }) => {
-	const { role, loading, content, timestamp, isImage } = message
+	const { role, loading, pending, content, timestamp, isImage } = message
 
 	const isUser = role === ChatRole.User
 	const roleName = isUser ? 'self-end flex-row-reverse text-right' : 'self-start'
@@ -39,7 +39,7 @@ const ChatMessage = memo(({ message }) => {
 				{isImage && <ImagePreview src={content} />}
 				{!isImage && (
 					<div className='text-wrap text-xs md:text-sm break-words whitespace-pre-wrap group cursor-pointer'>
-						{loading && <Loader className='animate-spin' />}
+						{(loading || pending) && <Loader className='animate-spin' />}
 
 						<MarkdownPreview content={content} />
 

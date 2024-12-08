@@ -1,4 +1,4 @@
-import { ChatTypeEnum, genAssistantMessage, genUserMessage, showToast } from '@/utils'
+import { ChatTypeEnum, genAssistantMessage, genUserMessage, showToast, streamReader } from '@/utils'
 import { getChat, getImage, getTranslate, mock } from '@/service'
 import { useChatStore, useModelStore } from '@/store'
 
@@ -18,6 +18,7 @@ export function useChat(type) {
 	const transMessages = useChatStore((s) => s.transMessages)
 	const imgMessages = useChatStore((s) => s.imgMessages)
 	const addMessage = useChatStore((s) => s.addMessage)
+	const addMessageChunk = useChatStore((s) => s.addMessageChunk)
 	const addTransMessage = useChatStore((s) => s.addTransMessage)
 	const addImgMessage = useChatStore((s) => s.addImgMessage)
 	const clearMessages = useChatStore((s) => s.clearMessages)
@@ -57,7 +58,11 @@ export function useChat(type) {
 			setText('')
 
 			if (type === ChatTypeEnum.chat) {
-				addMessage(genAssistantMessage(data.text, currentModel.model))
+				let msg = genAssistantMessage('', currentModel.model)
+				addMessageChunk({ ...msg, pending: true }) // 先插入一条空消息
+				await streamReader(data, (text) => {
+					addMessageChunk({ ...msg, content: text, pending: !!text })
+				})
 			} else if (type === ChatTypeEnum.translate) {
 				addTransMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.genImage) {

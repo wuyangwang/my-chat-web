@@ -40,6 +40,9 @@ async function handleResponse(data, config = {}) {
 		let blob = await data.blob() // 解析为 Blob 数据
 		return { url: URL.createObjectURL(blob) }
 	}
+	if (config.isStream) {
+		return data.body
+	}
 	if (config.isFile) {
 		return await data.blob()
 	}
