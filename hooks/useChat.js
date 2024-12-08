@@ -2,9 +2,12 @@ import { ChatTypeEnum, genAssistantMessage, genUserMessage, showToast } from '@/
 import { getChat, getImage, getTranslate, mock } from '@/service'
 import { useChatStore, useModelStore } from '@/store'
 
+import { useModel } from './useModel'
 import { useState } from 'react'
 
 export function useChat(type) {
+	useModel()
+
 	const [apiLoading, setApiLoading] = useState(false)
 	const [text, setText] = useState('')
 
