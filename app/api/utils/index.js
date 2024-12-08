@@ -18,6 +18,10 @@ export function returnStreamText(stream) {
 	})
 }
 
+export function returnImage(response) {
+	return new Response(response, { headers: { 'content-type': 'image/png' } })
+}
+
 export function returnJsonError(msg, data = {}) {
 	return Response.json({
 		code: 0,

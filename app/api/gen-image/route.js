@@ -1,7 +1,5 @@
 import * as utils from '@/app/api/utils/index'
 
-import { defaultGenImageModel, defaultTransModel } from '../utils/models'
-
 import { genImgSchema } from './schema'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
@@ -10,7 +8,7 @@ export const runtime = 'edge'
 export async function GET(request) {
 	const env = getRequestContext().env
 	const prompt = utils.getQuery(request, 'prompt')
-	const model = utils.getQuery(request, 'model') || defaultGenImageModel
+	const model = utils.getQuery(request, 'model') || utils.defaultGenImageModel
 
 	const [_, err] = utils.validReqSchema(genImgSchema, { prompt, model })
 	if (err) return err
@@ -26,5 +24,5 @@ export async function GET(request) {
 		prompt: prompt
 	})
 
-	return new Response(response, { headers: { 'content-type': 'image/png' } })
+	return utils.returnImage(response)
 }

@@ -1,6 +1,5 @@
 import * as utils from '@/app/api/utils/index'
 
-import { defaultTransModel } from '../utils/models'
 import { getRequestContext } from '@cloudflare/next-on-pages'
 import { transSchema } from './schema'
 
@@ -11,7 +10,7 @@ export async function GET(request) {
 	const text = utils.getQuery(request, 'text')
 	const source = utils.getQuery(request, 'source') || 'zh'
 	const target = utils.getQuery(request, 'target') || 'en'
-	const model = utils.getQuery(request, 'model') || defaultTransModel
+	const model = utils.getQuery(request, 'model') || utils.defaultTransModel
 
 	const [validObj, err] = utils.validReqSchema(transSchema, { text, source, target })
 	if (err) return err

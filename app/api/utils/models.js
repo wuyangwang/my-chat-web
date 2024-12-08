@@ -24,13 +24,13 @@ export const aiModelList = [
 		tag: 'gen-image',
 		models: [
 			{
-				name: 'stable-diffusion-v1.5',
-				model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
+				name: 'stable-diffusion-xl',
+				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 				maxCount: 500
 			},
 			{
-				name: 'stable-diffusion-xl',
-				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
+				name: 'stable-diffusion-v1.5',
+				model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
 				maxCount: 500
 			}
 		]
