@@ -45,11 +45,25 @@ export const streamReader = async (stream, cb) => {
 		const { value, done: isDone } = await reader.read()
 		done = isDone
 		if (value) {
-			let str = new TextDecoder().decode(value)
-			str = str.replace(/data: /g, '')
-			str = str.replace('[DONE]', '').trim()
-			cb(JSON.parse(str).response)
+			let text = parseText(value)
+			cb(text)
 		}
 	}
 	cb('') // 流结束时的回调
+}
+
+function parseText(value) {
+	let input = new TextDecoder().decode(value)
+	const lines = input.split('\n')
+	let arr = []
+	lines.forEach((line) => {
+		let str = line.replace(/data: /g, '')
+		str = str.replace('[DONE]', '').trim()
+		if (str) {
+			arr.push(JSON.parse(str).response)
+		} else {
+			arr.push('')
+		}
+	})
+	return arr.join('')
 }

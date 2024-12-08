@@ -16,14 +16,14 @@ export async function GET(request) {
 	if (err) return err
 
 	// 先转为英文
-	const { translated_text } = await env.AI.run(defaultTransModel, {
-		text: prompt,
-		source_lang: 'zh',
-		target_lang: 'en'
-	})
+	// const { translated_text } = await env.AI.run(defaultTransModel, {
+	// 	text: prompt,
+	// 	source_lang: 'zh',
+	// 	target_lang: 'en'
+	// })
 
 	const response = await env.AI.run(model, {
-		prompt: translated_text || prompt
+		prompt: prompt
 	})
 
 	return new Response(response, { headers: { 'content-type': 'image/png' } })

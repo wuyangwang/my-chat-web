@@ -31,9 +31,11 @@ export function useChat(type) {
 
 	const onSubmit = async () => {
 		if (!text) return showToast('请输入内容')
+
 		let msg = genUserMessage(text, currentModel.model)
 		let chatApi
 		let params
+
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
 			chatApi = getChat
@@ -53,6 +55,11 @@ export function useChat(type) {
 
 		try {
 			setApiLoading(true)
+			if (type === ChatTypeEnum.genImage) {
+				// 先翻译为英文
+				const transData = await getTranslate({ text })
+				params.prompt = transData.text
+			}
 			const data = await chatApi(params)
 			// const data = await mock()
 			setText('')
