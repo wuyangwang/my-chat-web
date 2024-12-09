@@ -1,9 +1,14 @@
+'use client'
+
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 
 import { Home } from 'lucide-react'
 import Link from 'next/link'
+import { useSidebarClose } from '@/hooks/useSidebarClose'
 
 export function Header() {
+	const { onCloseSidebar } = useSidebarClose(false)
+
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
@@ -14,7 +19,7 @@ export function Header() {
 					className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
 					asChild
 				>
-					<Link href='/'>
+					<Link href='/' onClick={onCloseSidebar}>
 						<div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'>
 							<Home />
 						</div>

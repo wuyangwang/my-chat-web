@@ -9,12 +9,16 @@ import { ChatScroll } from './chat-scroll'
 import { ChatTop } from './chat-topbar'
 import { ChatTypeEnum } from '@/utils'
 import { useChat } from '@/hooks/useChat'
+import { useSidebarClose } from '@/hooks/useSidebarClose'
 
 export function Chat({ type }) {
+	const isChat = type === ChatTypeEnum.chat
 	const [showScroll, setShowScroll] = useState(false)
 	const chatRef = useRef(null)
+
+	useSidebarClose()
+
 	const { apiLoading, messages, ...props } = useChat(type)
-	const isChat = type === ChatTypeEnum.chat
 
 	const onScroll = () => {
 		if (chatRef) {
