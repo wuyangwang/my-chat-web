@@ -38,7 +38,9 @@ async function handleResponse(data, config = {}) {
 	// await sleep(5000)
 	if (config.isImage) {
 		let blob = await data.blob() // 解析为 Blob 数据
-		return { url: URL.createObjectURL(blob) }
+		let base64 = await blobToBase64(blob)
+		return { url: base64 }
+		// return { url: URL.createObjectURL(blob) }
 	}
 	if (config.isStream) {
 		return data.body
@@ -64,4 +66,13 @@ async function handleResponse(data, config = {}) {
 
 async function sleep(ms = 1000) {
 	return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function blobToBase64(blob) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader()
+		reader.onloadend = () => resolve(reader.result) // 获取 Base64 部分
+		reader.onerror = (err) => reject(err)
+		reader.readAsDataURL(blob) // 读取 Blob 为 Data URL
+	})
 }

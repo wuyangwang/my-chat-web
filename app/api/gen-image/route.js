@@ -21,7 +21,9 @@ export async function GET(request) {
 	// })
 
 	const response = await env.AI.run(model, {
-		prompt: prompt
+		prompt: prompt + ' keep size small!',
+		height: 512,
+		width: 512
 	})
 
 	return utils.returnImage(response)

@@ -27,12 +27,12 @@ export const aiModelList = [
 				name: 'stable-diffusion-xl',
 				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 				maxCount: 500
-			},
-			{
-				name: 'stable-diffusion-v1.5',
-				model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
-				maxCount: 500
 			}
+			// {
+			// 	name: 'stable-diffusion-v1.5',
+			// 	model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
+			// 	maxCount: 500
+			// }
 		]
 	},
 	{
