@@ -73,9 +73,9 @@ export function useChat(type) {
 
 			if (type === ChatTypeEnum.chat) {
 				let msg = genAssistantMessage('', currentModel.model)
-				addMessageChunk({ ...msg, pending: true }) // 先插入一条空消息
+				addMessageChunk(msg) // 先插入一条空消息
 				await streamReader(data, (text) => {
-					addMessageChunk({ ...msg, content: text, pending: text !== '[DONE]' })
+					addMessageChunk({ ...msg, content: text })
 				})
 			} else if (type === ChatTypeEnum.translate) {
 				addTransMessage(genAssistantMessage(data.text, currentModel.model))
