@@ -36,7 +36,8 @@ export const genAssistantMessage = (content, model = '') => {
 export const genChatPostParams = (msg, messages, model = '') => {
 	// 获取最新的4条消息
 	const messagesToSend = messages.slice(-4)
-	return { messages: messagesToSend.concat(msg), model }
+	const arr = messagesToSend.concat(msg).map((i) => ({ role: i.role, content: i.content }))
+	return { messages: arr, model }
 }
 
 export const genId = () => {
