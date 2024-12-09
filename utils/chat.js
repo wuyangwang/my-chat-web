@@ -35,7 +35,7 @@ export const genAssistantMessage = (content, model = '') => {
 }
 
 export const genChatPostParams = (msg, messages, model = '') => {
-	// 获取最新的4条消息
+	// 获取最新的4条消息上下文
 	const messagesToSend = messages.slice(-4)
 	const arr = messagesToSend.concat(msg).map((i) => ({ role: i.role, content: i.content }))
 	return { messages: arr, model }
@@ -53,7 +53,7 @@ export const streamReader = async (stream, cb) => {
 	function onEvent(event) {
 		if (event.event === undefined || event.event === 'message') {
 			const text = event.data.trim()
-			if (text === '[DONE]') {
+			if (text.startsWith('[DONE]')) {
 				cb(text) // 流结束时的标识
 			} else {
 				cb(JSON.parse(text).response)
@@ -67,7 +67,13 @@ export const streamReader = async (stream, cb) => {
 		if (done) break
 
 		buffer += decoder.decode(value, { stream: true })
-		parser.feed(buffer)
+		const lines = buffer.split('\n')
+		buffer = lines.pop() // 保留最后未处理的部分（可能是不完整的一行）
+
+		lines.forEach((line) => {
+			parser.feed(line + '\n') // 将完整行传递给解析器
+		})
 	}
+
 	parser.reset()
 }

@@ -54,7 +54,6 @@ export const useChatStore = create(
 						return { messages: newMessages }
 					}
 					//标识
-					console.log('🚀 ~ set ~ message:', message, msg)
 					const isDone = message.content === '[DONE]'
 					message.pending = !isDone
 
