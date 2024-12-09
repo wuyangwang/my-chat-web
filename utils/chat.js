@@ -45,6 +45,7 @@ export const genId = () => {
 }
 
 export const streamReader = async (stream, cb) => {
+	console.log('🚀 ~ streamReader ~ stream:', stream)
 	const reader = stream.getReader()
 	let done = false
 
@@ -60,6 +61,7 @@ export const streamReader = async (stream, cb) => {
 }
 
 function parseText(value) {
+	// let input = new TextDecoder().decode(value, { stream: true })
 	let input = new TextDecoder().decode(value)
 	const lines = input.split('\n')
 	let arr = []

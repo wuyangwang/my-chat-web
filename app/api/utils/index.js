@@ -14,12 +14,13 @@ export function returnStreamText(stream) {
 	return new Response(stream, {
 		status: 200,
 		statusText: 'ok',
-		headers: { 'Content-Type': 'text/plain' }
+		// text/event-stream或者text/plain
+		headers: { 'Content-Type': 'text/event-stream' }
 	})
 }
 
 export function returnImage(response) {
-	return new Response(response, { headers: { 'content-type': 'image/png' } })
+	return new Response(response, { headers: { 'Content-Type': 'image/png' } })
 }
 
 export function returnJsonError(msg, data = {}) {
