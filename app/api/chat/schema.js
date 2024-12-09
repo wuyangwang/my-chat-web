@@ -7,3 +7,8 @@ export const chatSchema = z.object({
 		.max(500, { message: '最多只支持500个字符' }),
 	model: z.string().optional()
 })
+
+export const chatPostSchema = z.object({
+	messages: z.array(z.object({ role: z.string(), content: z.string() })).min(1),
+	model: z.string().optional()
+})

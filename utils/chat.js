@@ -33,6 +33,12 @@ export const genAssistantMessage = (content, model = '') => {
 	}
 }
 
+export const genChatPostParams = (msg, messages, model = '') => {
+	// 获取最新的4条消息
+	const messagesToSend = messages.slice(-4)
+	return { messages: messagesToSend.concat(msg), model }
+}
+
 export const genId = () => {
 	return nanoid()
 }

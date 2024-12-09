@@ -1,4 +1,11 @@
-import { ChatTypeEnum, genAssistantMessage, genUserMessage, showToast, streamReader } from '@/utils'
+import {
+	ChatTypeEnum,
+	genAssistantMessage,
+	genChatPostParams,
+	genUserMessage,
+	showToast,
+	streamReader
+} from '@/utils'
 import { getChat, getImage, getTranslate, mock } from '@/service'
 import { useChatStore, useModelStore } from '@/store'
 
@@ -39,7 +46,7 @@ export function useChat(type) {
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
 			chatApi = getChat
-			params = { prompt: text, model: currentModel.model }
+			params = genChatPostParams(msg, messages, currentModel.model)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')

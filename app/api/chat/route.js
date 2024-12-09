@@ -1,6 +1,7 @@
 import * as utils from '@/app/api/utils/index'
 
-import { chatSchema } from './schema'
+import { chatPostSchema, chatSchema } from './schema'
+
 import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
@@ -29,15 +30,15 @@ export async function POST(request) {
 	const env = getRequestContext().env
 	const body = await request.json()
 
-	const [_, err] = utils.validReqSchema(chatSchema, body)
+	const [_, err] = utils.validReqSchema(chatPostSchema, body)
 	if (err) return err
 
 	let model = body.model || utils.defaultChatModel
+	let systemMsg = [
+		{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' }
+	]
 	let inputs = {
-		messages: [
-			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
-			{ role: 'user', content: body.prompt }
-		],
+		messages: systemMsg.concat(body.messages),
 		stream: true // 启用流式传输
 	}
 
