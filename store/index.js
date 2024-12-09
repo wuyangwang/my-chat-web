@@ -45,10 +45,6 @@ export const useChatStore = create(
 				}),
 			addMessageChunk: (message) =>
 				set((state) => {
-					//标识
-					const isDone = message.content === '[DONE]'
-					message.pending = !isDone
-
 					let msg = state.messages.filter((item) => item.id == message.id)[0]
 					if (!msg) {
 						let newMessages = state.messages.concat(message)
@@ -57,8 +53,16 @@ export const useChatStore = create(
 						}
 						return { messages: newMessages }
 					}
-					message.content = isDone ? msg.content : message.content
-					let newMsg = { ...msg, ...message }
+					//标识
+					console.log('🚀 ~ set ~ message:', message, msg)
+					const isDone = message.content === '[DONE]'
+					message.pending = !isDone
+
+					let newMsg = {
+						...msg,
+						...message,
+						content: isDone ? msg.content : msg.content + message.content
+					}
 					let msgArr = state.messages.filter((item) => item.id !== message.id)
 					return { messages: msgArr.concat(newMsg) }
 				}),

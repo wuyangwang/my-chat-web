@@ -69,4 +69,5 @@ export const streamReader = async (stream, cb) => {
 		buffer += decoder.decode(value, { stream: true })
 		parser.feed(buffer)
 	}
+	parser.reset()
 }
