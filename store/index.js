@@ -46,12 +46,7 @@ export const useChatStore = create(
 			addMessageChunk: (message) =>
 				set((state) => {
 					//标识
-					if (message.content === '[DONE]') {
-						message.content = ''
-						message.pending = false
-					} else {
-						message.pending = true
-					}
+					message.pending = message.content !== '[DONE]'
 					let msg = state.messages.filter((item) => item.id == message.id)[0]
 					if (!msg) {
 						let newMessages = state.messages.concat(message)
