@@ -1,3 +1,4 @@
+import { createParser } from 'eventsource-parser'
 import { nanoid } from 'nanoid'
 
 export const ChatTypeEnum = {
@@ -45,34 +46,27 @@ export const genId = () => {
 }
 
 export const streamReader = async (stream, cb) => {
-	console.log('🚀 ~ streamReader ~ stream:', stream)
 	const reader = stream.getReader()
-	let done = false
+	const decoder = new TextDecoder()
 
-	while (!done) {
-		const { value, done: isDone } = await reader.read()
-		done = isDone
-		if (value) {
-			let text = parseText(value)
-			cb(text)
+	const parser = createParser({ onEvent })
+	function onEvent(event) {
+		if (event.event === undefined || event.event === 'message') {
+			const text = event.data.trim()
+			if (text === '[DONE]') {
+				cb(text) // 流结束时的标识
+			} else {
+				cb(JSON.parse(text).response)
+			}
 		}
 	}
-	cb('') // 流结束时的回调
-}
 
-function parseText(value) {
-	// let input = new TextDecoder().decode(value, { stream: true })
-	let input = new TextDecoder().decode(value)
-	const lines = input.split('\n')
-	let arr = []
-	lines.forEach((line) => {
-		let str = line.replace(/data: /g, '')
-		str = str.replace('[DONE]', '').trim()
-		if (str) {
-			arr.push(JSON.parse(str).response)
-		} else {
-			arr.push('')
-		}
-	})
-	return arr.join('')
+	let buffer = ''
+	while (true) {
+		const { done, value } = await reader.read()
+		if (done) break
+
+		buffer += decoder.decode(value, { stream: true })
+		parser.feed(buffer)
+	}
 }

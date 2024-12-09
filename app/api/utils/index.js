@@ -14,7 +14,6 @@ export function returnStreamText(stream) {
 	return new Response(stream, {
 		status: 200,
 		statusText: 'ok',
-		// text/event-stream或者text/plain
 		headers: { 'Content-Type': 'text/event-stream' }
 	})
 }
