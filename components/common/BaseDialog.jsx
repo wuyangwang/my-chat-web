@@ -7,25 +7,35 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '@/components/ui/dialog'
+import { createContext, useContext, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
 
-export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
+const DialogContext = createContext()
+
+export const DialogProvider = ({ children }) => {
 	const [open, setOpen] = useState(false)
-
-	const onClose = () => {
-		setOpen(false)
-	}
-	const onClick = () => {
-		const flag = onConfirm()
-		flag && onClose()
-	}
+	const openDialog = () => setOpen(true)
+	const closeDialog = () => setOpen(false)
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<DialogContext.Provider value={{ open, openDialog, closeDialog }}>
+			{children}
+		</DialogContext.Provider>
+	)
+}
+export const useDialog = () => useContext(DialogContext)
+
+export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
+	const { open, openDialog, closeDialog } = useDialog()
+
+	const onClose = () => {
+		closeDialog()
+	}
+	return (
+		<Dialog open={open} onOpenChange={open ? closeDialog : openDialog}>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
-			<DialogContent className='sm:max-w-[360px]'>
+			<DialogContent className='max-w-[360px] md:max-w-[420px]'>
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
 					{desc && <DialogDescription>{desc}</DialogDescription>}
@@ -35,7 +45,7 @@ export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
 					<Button variant='secondary' onClick={onClose}>
 						取消
 					</Button>
-					<Button onClick={onClick}>确定</Button>
+					<Button onClick={onConfirm}>确定</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
