@@ -29,9 +29,6 @@ export const useDialog = () => useContext(DialogContext)
 export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
 	const { open, openDialog, closeDialog } = useDialog()
 
-	const onClose = () => {
-		closeDialog()
-	}
 	return (
 		<Dialog open={open} onOpenChange={open ? closeDialog : openDialog}>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
@@ -42,9 +39,6 @@ export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
 				</DialogHeader>
 				{children}
 				<DialogFooter>
-					<Button variant='secondary' onClick={onClose}>
-						取消
-					</Button>
 					<Button onClick={onConfirm}>确定</Button>
 				</DialogFooter>
 			</DialogContent>

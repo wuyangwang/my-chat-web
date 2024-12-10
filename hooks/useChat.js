@@ -8,6 +8,7 @@ import {
 	streamReader
 } from '@/utils'
 import { getImage, getTranslate, mock, postChat } from '@/service'
+import { postOllamaChat, streamReaderOllama } from '@/service/ollama'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -60,6 +61,9 @@ export function useChat(type) {
 			//
 		}
 
+		if (isDev) {
+			chatApi = type === ChatTypeEnum.chat ? postOllamaChat : mock
+		}
 		try {
 			setApiLoading(true)
 			if (type === ChatTypeEnum.genImage) {
@@ -68,16 +72,17 @@ export function useChat(type) {
 				params.prompt = transData.text
 			}
 
-			// 开发环境使用mock数据
-			if (isDev) {
-				chatApi = mock
-			}
 			const data = await chatApi(params)
 			setText('')
 
 			if (type === ChatTypeEnum.chat) {
 				if (isDev) {
-					addMessage(genAssistantMessage(data.text, currentModel.model))
+					// addMessage(genAssistantMessage(data.text, currentModel.model))
+					let msg = genAssistantMessage('', currentModel.model)
+					addMessageChunk(msg) // 先插入一条空消息
+					await streamReaderOllama(data, (text, done) => {
+						addMessageChunk({ ...msg, content: done ? '[DONE]' : text }) // 兼容
+					})
 				} else {
 					let msg = genAssistantMessage('', currentModel.model)
 					addMessageChunk(msg) // 先插入一条空消息
