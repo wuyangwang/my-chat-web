@@ -35,14 +35,16 @@ async function handleResponse(data, config = {}) {
 		throw new Error(message || msg)
 	}
 
+	const contentType = data.headers.get('Content-Type')
+	const isJson = contentType.includes('application/json')
 	// await sleep(5000)
-	if (config.isImage) {
+	if (config.isImage && !isJson) {
 		let blob = await data.blob() // 解析为 Blob 数据
 		let base64 = await blobToBase64(blob)
 		return { url: base64 }
 		// return { url: URL.createObjectURL(blob) }
 	}
-	if (config.isStream) {
+	if (config.isStream && !isJson) {
 		return data.body
 	}
 	if (config.isFile) {
