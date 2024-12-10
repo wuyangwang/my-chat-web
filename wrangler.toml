@@ -1,6 +1,6 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "my-page-web"
-compatibility_date = "2024-11-12"
+compatibility_date = "2024-11-11"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 

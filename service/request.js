@@ -36,7 +36,7 @@ async function handleResponse(data, config = {}) {
 	}
 
 	const contentType = data.headers.get('Content-Type')
-	const isJson = contentType.includes('application/json')
+	const isJson = contentType.includes('application/json') // 判断是否为 JSON 数据 主要是错误响应是json格式
 	// await sleep(5000)
 	if (config.isImage && !isJson) {
 		let blob = await data.blob() // 解析为 Blob 数据

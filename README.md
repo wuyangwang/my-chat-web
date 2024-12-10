@@ -6,6 +6,8 @@
 - 使用 cloudflare 提供的 ai 功能
 - 参考/app/api 目录
 
+体验地址：https://my-page-web.pages.dev
+
 ### 主要模型有
 
 - 聊天 @cf/qwen/qwen1.5-14b-chat-awq/@cf/meta/llama-3.3-70b-instruct-fp8-fast
