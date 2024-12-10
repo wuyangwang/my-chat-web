@@ -21,7 +21,7 @@ export function GoogleAnalysis() {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', ${tagId});
+            gtag('config', '${tagId}');
           `
 				}}
 			/>
