@@ -25,6 +25,7 @@
 - https://github.com/bundui/components
 - https://github.com/Edil-ozi/edil-ozi
 - https://github.com/nikhils4/ui-beats
+- https://github.com/baiwumm/next-daily-hot
 
 ## 开发
 
