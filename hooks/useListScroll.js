@@ -1,10 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useMotionValueEvent, useScroll } from 'framer-motion'
 
-import { useScroll } from 'framer-motion'
+import { useState } from 'react'
 
 export function useListScroll(listRef) {
 	const [showScroll, setShowScroll] = useState(false)
 	const { scrollYProgress } = useScroll({ container: listRef })
+
+	useMotionValueEvent(scrollYProgress, 'change', (val) => {
+		setShowScroll(val <= 0.8)
+	})
 
 	// 滑动到底部
 	const onScroll = () => {
@@ -15,10 +19,6 @@ export function useListScroll(listRef) {
 			})
 		}
 	}
-
-	useEffect(() => {
-		setShowScroll(scrollYProgress.get() >= 0.9)
-	}, [scrollYProgress])
 
 	return {
 		showScroll,
