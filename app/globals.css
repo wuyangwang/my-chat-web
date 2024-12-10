@@ -106,5 +106,5 @@
 
 /* 重置样式 */
 #scroll-area-viewport > div {
-	display: block;
+	display: block !important;
 }
