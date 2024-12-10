@@ -103,8 +103,8 @@ export const useChatStatusStore = create((set) => ({
 export const useUserStore = create(
 	persist(
 		(set) => ({
-			nickname: '',
-			setNickname: (nickname) => set({ nickname })
+			nickName: '',
+			setNickname: (nickName) => set({ nickName })
 		}),
 		{ name: 'user-store' }
 	)
