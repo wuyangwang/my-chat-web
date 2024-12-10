@@ -103,3 +103,8 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+/* 重置样式 */
+#scroll-area-viewport > div {
+	display: block;
+}
