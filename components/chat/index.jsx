@@ -10,13 +10,15 @@ import { ChatTop } from './chat-topbar'
 import { ChatTypeEnum } from '@/utils'
 import { useChat } from '@/hooks/useChat'
 import { useListScroll } from '@/hooks/useListScroll'
+import { useModel } from '@/hooks/useModel'
 import { useSidebarClose } from '@/hooks/useSidebarClose'
 
 export function Chat({ type }) {
 	const isChat = type === ChatTypeEnum.chat
 	const chatRef = useRef(null)
 
-	useSidebarClose()
+	useModel()
+	useSidebarClose() // 确保进入页面 关闭侧边栏
 	const { onScroll, showScroll } = useListScroll(chatRef)
 	const { apiLoading, messages } = useChat(type)
 

@@ -10,12 +10,9 @@ import {
 import { getImage, getTranslate, mock, postChat } from '@/service'
 import { useChatStore, useModelStore } from '@/store'
 
-import { useModel } from './useModel'
 import { useState } from 'react'
 
 export function useChat(type) {
-	useModel()
-
 	const [text, setText] = useState('')
 
 	const currentTrans = useModelStore((s) => s.currentTrans)
