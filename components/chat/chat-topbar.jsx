@@ -3,8 +3,9 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { ChatTypeEnum } from '@/utils'
 import { CircleAlert } from 'lucide-react'
 import { Trash2 } from 'lucide-react'
+import { memo } from 'react'
 
-export function ChatTop({ type, onClear }) {
+const ChatTop = memo(({ type, onClear }) => {
 	return (
 		<div className='p-1 px-2 flex items-center gap-3'>
 			<div className='text-xs text-muted-foreground flex items-center gap-2'>
@@ -28,4 +29,7 @@ export function ChatTop({ type, onClear }) {
 			</TooltipProvider>
 		</div>
 	)
-}
+})
+
+ChatTop.displayName = 'ChatTop'
+export { ChatTop }
