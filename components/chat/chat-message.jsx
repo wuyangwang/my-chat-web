@@ -32,7 +32,7 @@ const ChatMessage = memo(({ message }) => {
 			</div>
 			<div
 				className={cn(
-					'p-4 bg-accent text-foreground rounded-lg max-w-[80%] md:max-w-[60%] relative',
+					'p-4 bg-accent text-foreground rounded-lg max-w-[90%] md:max-w-[70%] relative',
 					roleName
 				)}
 			>

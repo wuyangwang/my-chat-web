@@ -19,6 +19,7 @@ export function MarkdownPreview({ content }) {
 							PreTag='div'
 							wrapLongLines
 							showLineNumbers
+							className='overflow-x-auto max-w-[90vw]'
 							{...props}
 						>
 							{String(children).replace(/\n$/, '')}
