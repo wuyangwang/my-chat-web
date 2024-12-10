@@ -107,6 +107,7 @@ export function useChat(type) {
 		} else {
 			clearTransMessages()
 		}
+		showToast('清除成功')
 	}
 
 	return {
