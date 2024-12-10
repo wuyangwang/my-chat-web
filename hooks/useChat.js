@@ -3,6 +3,7 @@ import {
 	genAssistantMessage,
 	genChatPostParams,
 	genUserMessage,
+	isDev,
 	showToast,
 	streamReader
 } from '@/utils'
@@ -15,12 +16,13 @@ import { useState } from 'react'
 export function useChat(type) {
 	useModel()
 
-	const [apiLoading, setApiLoading] = useState(false)
 	const [text, setText] = useState('')
 
 	const currentTrans = useModelStore((s) => s.currentTrans)
 	const currentModel = useModelStore((s) => s.currentModel)
 
+	const apiLoading = useChatStore((s) => s.apiLoading)
+	const setApiLoading = useChatStore((s) => s.setApiLoading)
 	const messages = useChatStore((s) => s.messages)
 	const transMessages = useChatStore((s) => s.transMessages)
 	const imgMessages = useChatStore((s) => s.imgMessages)
@@ -67,16 +69,24 @@ export function useChat(type) {
 				const transData = await getTranslate({ text })
 				params.prompt = transData.text
 			}
+
+			// 开发环境使用mock数据
+			if (isDev) {
+				chatApi = mock
+			}
 			const data = await chatApi(params)
-			// const data = await mock()
 			setText('')
 
 			if (type === ChatTypeEnum.chat) {
-				let msg = genAssistantMessage('', currentModel.model)
-				addMessageChunk(msg) // 先插入一条空消息
-				await streamReader(data, (text) => {
-					addMessageChunk({ ...msg, content: text })
-				})
+				if (isDev) {
+					addMessage(genAssistantMessage(data.text, currentModel.model))
+				} else {
+					let msg = genAssistantMessage('', currentModel.model)
+					addMessageChunk(msg) // 先插入一条空消息
+					await streamReader(data, (text) => {
+						addMessageChunk({ ...msg, content: text })
+					})
+				}
 			} else if (type === ChatTypeEnum.translate) {
 				addTransMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.genImage) {

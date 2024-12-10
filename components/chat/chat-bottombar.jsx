@@ -1,7 +1,10 @@
 import { Button } from '@/components/ui/button'
 import { ChatInput } from './chat-input'
+import { memo } from 'react'
+import { useChat } from '@/hooks/useChat'
 
-export function ChatBottom({ apiLoading, onInputChange, text, onSubmit }) {
+const ChatBottom = memo(({ type }) => {
+	const { apiLoading, onInputChange, text, onSubmit } = useChat(type)
 	const onKeyDown = (e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault()
@@ -23,4 +26,7 @@ export function ChatBottom({ apiLoading, onInputChange, text, onSubmit }) {
 			</Button>
 		</div>
 	)
-}
+})
+
+ChatBottom.displayName = 'ChatBottom'
+export { ChatBottom }

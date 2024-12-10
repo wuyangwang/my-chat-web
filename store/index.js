@@ -29,12 +29,14 @@ export const useModelStore = create(
 export const useChatStore = create(
 	persist(
 		(set) => ({
+			apiLoading: false,
 			// 最大保存500条
 			messages: [],
 			// 最大保存500条
 			transMessages: [],
 			// 保存最新的50条
 			imgMessages: [],
+			setApiLoading: (apiLoading) => set({ apiLoading }),
 			addMessage: (message) =>
 				set((state) => {
 					let newMessages = state.messages.concat(message)

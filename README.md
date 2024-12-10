@@ -45,3 +45,4 @@ pnpm run deploy
   - 图片最大保存 50 张
   - 翻译最大保存 500 条
 - 目前都是本地 localstorage 存储
+- 本地开发时无法调用真实的接口如/api/chat，使用 mock 接口模拟

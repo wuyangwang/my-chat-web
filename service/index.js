@@ -15,6 +15,6 @@ export async function getImage({ prompt, model = '' }) {
 }
 export async function mock() {
 	return new Promise((resolve) => {
-		setTimeout(() => resolve({ text: 'mock', url: 'xxx' }), 2000)
+		setTimeout(() => resolve({ text: '注意：开发环境使用mock接口数据', url: 'xxx' }), 2000)
 	})
 }

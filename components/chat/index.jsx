@@ -18,7 +18,7 @@ export function Chat({ type }) {
 
 	useSidebarClose()
 	const { onScroll, showScroll } = useListScroll(chatRef)
-	const { apiLoading, messages, ...props } = useChat(type)
+	const { apiLoading, messages } = useChat(type)
 
 	useEffect(() => {
 		onScroll()
@@ -27,7 +27,7 @@ export function Chat({ type }) {
 
 	return (
 		<div className='w-full h-[calc(100vh-64px)] relative bg-background max-w-screen-md mx-auto flex flex-col z-10'>
-			<ChatTop type={type} onClear={props.onClear} />
+			<ChatTop type={type} />
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
 					<ChatMessage key={message.id} message={message} />
@@ -37,7 +37,7 @@ export function Chat({ type }) {
 				)}
 			</ChatList>
 			{showScroll && <ChatScroll onScroll={onScroll} />}
-			<ChatBottom apiLoading={apiLoading} {...props} />
+			<ChatBottom type={type} />
 		</div>
 	)
 }

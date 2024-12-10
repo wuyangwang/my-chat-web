@@ -4,8 +4,10 @@ import { ChatTypeEnum } from '@/utils'
 import { CircleAlert } from 'lucide-react'
 import { Trash2 } from 'lucide-react'
 import { memo } from 'react'
+import { useChat } from '@/hooks/useChat'
 
-const ChatTop = memo(({ type, onClear }) => {
+const ChatTop = memo(({ type }) => {
+	const { onClear } = useChat(type)
 	return (
 		<div className='p-1 px-2 flex items-center gap-3'>
 			<div className='text-xs text-muted-foreground flex items-center gap-2'>

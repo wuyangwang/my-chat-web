@@ -1,6 +1,8 @@
 import { CircleArrowDown } from 'lucide-react'
+import { memo } from 'react'
 import { motion } from 'framer-motion'
-export function ChatScroll({ onScroll }) {
+
+const ChatScroll = memo(({ onScroll }) => {
 	return (
 		<motion.div
 			onClick={onScroll}
@@ -13,4 +15,7 @@ export function ChatScroll({ onScroll }) {
 			<CircleArrowDown className='h-8 w-8 text-primary hover:text-primary/80 animate-bounce' />
 		</motion.div>
 	)
-}
+})
+
+ChatScroll.displayName = 'ChatScroll'
+export { ChatScroll }
