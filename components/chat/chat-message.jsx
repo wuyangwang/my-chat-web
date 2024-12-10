@@ -1,12 +1,9 @@
-import { ChatRole, showToast } from '@/utils'
+import { BotMessageSquare, Loader, User } from 'lucide-react'
 
-import { BotMessageSquare } from 'lucide-react'
-import { Clipboard } from 'lucide-react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
-import { ImagePreview } from '@/components/common/ImagePrivew'
-import { Loader } from 'lucide-react'
-import { MarkdownPreview } from '@/components/common/markdown'
-import { User } from 'lucide-react'
+import { ChatRole } from '@/utils'
+import { CopyContent } from '@/components/common/CopyContent'
+import { ImagePreview } from '@/components/common/ImagePreview'
+import { MarkdownPreview } from '@/components/common/MarkdownPreview'
 import { cn } from '@/lib/utils'
 import { memo } from 'react'
 
@@ -16,10 +13,6 @@ const ChatMessage = memo(({ message }) => {
 	const isUser = role === ChatRole.User
 	const roleName = isUser ? 'self-end flex-row-reverse text-right' : 'self-start'
 	const timeStr = timestamp ? new Date(timestamp).toLocaleString() : ''
-
-	const onCopy = () => {
-		showToast('复制成功')
-	}
 
 	return (
 		<div className='flex flex-col gap-2 mb-3'>
@@ -42,10 +35,7 @@ const ChatMessage = memo(({ message }) => {
 						{(loading || pending) && <Loader className='animate-spin' />}
 
 						<MarkdownPreview content={content} />
-
-						<CopyToClipboard text={content} onCopy={onCopy}>
-							<Clipboard className='absolute hidden group-hover:block right-1 bottom-0 h4 w-4 text-foreground hover:text-foreground/80' />
-						</CopyToClipboard>
+						<CopyContent content={content} className='hidden group-hover:block right-1 bottom-0' />
 					</div>
 				)}
 			</div>

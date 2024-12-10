@@ -90,7 +90,15 @@ export const useChatStore = create(
 			clearTransMessages: () => set({ transMessages: [] }),
 			clearImgMessages: () => set({ imgMessages: [] })
 		}),
-		{ name: 'chat-store' }
+		{
+			name: 'chat-store',
+			onRehydrateStorage: () => (state) => {
+				if (state) {
+					// 重置状态
+					state.setApiLoading(false)
+				}
+			}
+		}
 	)
 )
 
