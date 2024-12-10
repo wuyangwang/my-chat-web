@@ -29,14 +29,12 @@ export const useModelStore = create(
 export const useChatStore = create(
 	persist(
 		(set) => ({
-			apiLoading: false,
 			// 最大保存500条
 			messages: [],
 			// 最大保存500条
 			transMessages: [],
 			// 保存最新的50条
 			imgMessages: [],
-			setApiLoading: (apiLoading) => set({ apiLoading }),
 			addMessage: (message) =>
 				set((state) => {
 					let newMessages = state.messages.concat(message)
@@ -91,16 +89,16 @@ export const useChatStore = create(
 			clearImgMessages: () => set({ imgMessages: [] })
 		}),
 		{
-			name: 'chat-store',
-			onRehydrateStorage: () => (state) => {
-				if (state) {
-					// 重置状态
-					state.setApiLoading(false)
-				}
-			}
+			name: 'chat-store'
 		}
 	)
 )
+
+// 不需要存到localstorage，单独抽出
+export const useChatStatusStore = create((set) => ({
+	apiLoading: false,
+	setApiLoading: (apiLoading) => set({ apiLoading })
+}))
 
 export const useUserStore = create(
 	persist(

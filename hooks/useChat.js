@@ -8,7 +8,7 @@ import {
 	streamReader
 } from '@/utils'
 import { getImage, getTranslate, mock, postChat } from '@/service'
-import { useChatStore, useModelStore } from '@/store'
+import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
 
@@ -18,8 +18,9 @@ export function useChat(type) {
 	const currentTrans = useModelStore((s) => s.currentTrans)
 	const currentModel = useModelStore((s) => s.currentModel)
 
-	const apiLoading = useChatStore((s) => s.apiLoading)
-	const setApiLoading = useChatStore((s) => s.setApiLoading)
+	const apiLoading = useChatStatusStore((s) => s.apiLoading)
+	const setApiLoading = useChatStatusStore((s) => s.setApiLoading)
+
 	const messages = useChatStore((s) => s.messages)
 	const transMessages = useChatStore((s) => s.transMessages)
 	const imgMessages = useChatStore((s) => s.imgMessages)

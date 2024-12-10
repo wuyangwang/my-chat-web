@@ -34,8 +34,9 @@ export function Chat({ type }) {
 				{messages.map((message) => (
 					<ChatMessage key={message.id} message={message} />
 				))}
+				{/* 聊天是流式的 content是动态的 */}
 				{apiLoading && !isChat && (
-					<ChatMessage message={{ role: 'assistant', loading: true, content: '正在生成中...' }} />
+					<ChatMessage message={{ role: 'assistant', pending: true, content: '正在生成中...' }} />
 				)}
 			</ChatList>
 			{showScroll && <ChatScroll onScroll={onScroll} />}
