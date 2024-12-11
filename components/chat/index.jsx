@@ -12,6 +12,7 @@ import { useChat } from '@/hooks/useChat'
 import { useListScroll } from '@/hooks/useListScroll'
 import { useModel } from '@/hooks/useModel'
 import { useSidebarClose } from '@/hooks/useSidebarClose'
+import { useUserStore } from '@/store'
 
 export function Chat({ type }) {
 	const isChat = type === ChatTypeEnum.chat
@@ -20,6 +21,7 @@ export function Chat({ type }) {
 	useModel()
 	useSidebarClose() // 确保进入页面 关闭侧边栏
 	const { showScroll, onScroll } = useListScroll(chatRef)
+	const nickName = useUserStore((state) => state.nickName)
 	const { apiLoading, messages } = useChat(type)
 
 	useEffect(() => {
@@ -32,7 +34,7 @@ export function Chat({ type }) {
 			<ChatTop type={type} />
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
-					<ChatMessage key={message.id} message={message} />
+					<ChatMessage key={message.id} message={{ ...message, nickName }} />
 				))}
 				{/* 聊天是流式的 content是动态的 */}
 				{apiLoading && !isChat && (
