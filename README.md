@@ -8,6 +8,8 @@
 
 体验地址：https://my-page-web.pages.dev
 
+![image](https://github.com/user-attachments/assets/fe25176f-8b02-4f7b-918b-08a512224647)
+
 ### 主要模型有
 
 - 聊天 @cf/qwen/qwen1.5-14b-chat-awq/@cf/meta/llama-3.3-70b-instruct-fp8-fast
