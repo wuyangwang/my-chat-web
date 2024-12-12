@@ -22,19 +22,31 @@ export function Chat({ type }) {
 	useSidebarClose() // 确保进入页面 关闭侧边栏
 	const { showScroll, onScroll } = useListScroll(chatRef)
 	const nickName = useUserStore((state) => state.nickName)
-	const { apiLoading, messages } = useChat(type)
+	const { apiLoading, messages, onInputChange, onSubmit } = useChat(type)
 
 	useEffect(() => {
 		onScroll()
 		// eslint-disable-next-line
 	}, [messages])
 
+	const onRegenerate = (text) => {
+		if (apiLoading) return
+		onInputChange(text)
+		setTimeout(() => {
+			onSubmit()
+		}, 500)
+	}
+
 	return (
 		<div className='w-full h-[calc(100vh-64px)] relative bg-background max-w-screen-md mx-auto flex flex-col z-10'>
 			<ChatTop type={type} />
 			<ChatList ref={chatRef}>
 				{messages.map((message) => (
-					<ChatMessage key={message.id} message={{ ...message, nickName }} />
+					<ChatMessage
+						key={message.id}
+						message={{ ...message, nickName }}
+						onRegenerate={onRegenerate}
+					/>
 				))}
 				{/* 聊天是流式的 content是动态的 */}
 				{apiLoading && !isChat && (
