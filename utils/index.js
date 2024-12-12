@@ -14,3 +14,10 @@ export function showToast(message, type) {
 		toast(message)
 	}
 }
+
+export function downloadImg(base64Str) {
+	const a = document.createElement('a')
+	a.href = base64Str
+	a.download = `${Date.now()}.png`
+	a.click()
+}
