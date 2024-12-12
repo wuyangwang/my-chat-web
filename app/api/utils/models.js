@@ -27,6 +27,16 @@ export const aiModelList = [
 				name: 'stable-diffusion-xl',
 				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 				maxCount: 500
+			},
+			{
+				name: 'stable-diffusion-xl-lightning',
+				model: '@cf/bytedance/stable-diffusion-xl-lightning',
+				maxCount: 500
+			},
+			{
+				name: 'lykon/dreamshaper',
+				model: '@cf/lykon/dreamshaper-8-lcm',
+				maxCount: 500
 			}
 			// {
 			// 	name: 'stable-diffusion-v1.5',
