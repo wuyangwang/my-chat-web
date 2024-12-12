@@ -35,6 +35,7 @@ export const useChatStore = create(
 			transMessages: [],
 			// 保存最新的50条
 			imgMessages: [],
+			preTrans: false,
 			addMessage: (message) =>
 				set((state) => {
 					let newMessages = state.messages.concat(message)
@@ -86,7 +87,8 @@ export const useChatStore = create(
 				}),
 			clearMessages: () => set({ messages: [] }),
 			clearTransMessages: () => set({ transMessages: [] }),
-			clearImgMessages: () => set({ imgMessages: [] })
+			clearImgMessages: () => set({ imgMessages: [] }),
+			setPreTrans: (preTrans) => set({ preTrans })
 		}),
 		{
 			name: 'chat-store'
