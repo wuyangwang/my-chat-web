@@ -25,6 +25,7 @@ export function useChat(type) {
 	const messages = useChatStore((s) => s.messages)
 	const transMessages = useChatStore((s) => s.transMessages)
 	const imgMessages = useChatStore((s) => s.imgMessages)
+	const preTrans = useChatStore((s) => s.preTrans)
 	const addMessage = useChatStore((s) => s.addMessage)
 	const addMessageChunk = useChatStore((s) => s.addMessageChunk)
 	const addTransMessage = useChatStore((s) => s.addTransMessage)
@@ -32,6 +33,7 @@ export function useChat(type) {
 	const clearMessages = useChatStore((s) => s.clearMessages)
 	const clearTransMessages = useChatStore((s) => s.clearTransMessages)
 	const clearImgMessages = useChatStore((s) => s.clearImgMessages)
+	const setPreTrans = useChatStore((s) => s.setPreTrans)
 
 	const onInputChange = (v) => {
 		setText(v)
@@ -66,7 +68,7 @@ export function useChat(type) {
 		}
 		try {
 			setApiLoading(true)
-			if (type === ChatTypeEnum.genImage && !isDev) {
+			if (type === ChatTypeEnum.genImage && !isDev && preTrans) {
 				// 先翻译为英文
 				const transData = await getTranslate({ text })
 				params.prompt = transData.text
@@ -122,6 +124,8 @@ export function useChat(type) {
 		onSubmit,
 		onClear,
 		text,
+		preTrans,
+		setPreTrans,
 		messages:
 			type === ChatTypeEnum.translate
 				? transMessages
