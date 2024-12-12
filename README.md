@@ -41,6 +41,15 @@ pnpm run dev
 pnpm run deploy
 ```
 
+### ollama 使用（仅本地）
+
+聊天兼容了 ollama api，如果你本地安装了 ollama，可以在开发时使用 ollama 的/api/chat 接口，需要.env.development 文件配置：
+
+```
+NEXT_PUBLIC_LOCAL_API_HOST="http://localhost:11434"
+NEXT_PUBLIC_ENABLE_OLLAMA_API="true"
+```
+
 ## 说明
 
 - 使用 Cloudflare Pages 部署，每天免费 100000 次请求

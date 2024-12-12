@@ -7,8 +7,8 @@ import {
 	showToast,
 	streamReader
 } from '@/utils'
+import { enableOllama, postOllamaChat, streamReaderOllama } from '@/service/ollama'
 import { getImage, getTranslate, mock, postChat } from '@/service'
-import { postOllamaChat, streamReaderOllama } from '@/service/ollama'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -62,11 +62,11 @@ export function useChat(type) {
 		}
 
 		if (isDev) {
-			chatApi = type === ChatTypeEnum.chat ? postOllamaChat : mock
+			chatApi = type === ChatTypeEnum.chat && enableOllama ? postOllamaChat : mock
 		}
 		try {
 			setApiLoading(true)
-			if (type === ChatTypeEnum.genImage) {
+			if (type === ChatTypeEnum.genImage && !isDev) {
 				// 先翻译为英文
 				const transData = await getTranslate({ text })
 				params.prompt = transData.text
@@ -77,12 +77,15 @@ export function useChat(type) {
 
 			if (type === ChatTypeEnum.chat) {
 				if (isDev) {
-					// addMessage(genAssistantMessage(data.text, currentModel.model))
-					let msg = genAssistantMessage('', currentModel.model)
-					addMessageChunk(msg) // 先插入一条空消息
-					await streamReaderOllama(data, (text, done) => {
-						addMessageChunk({ ...msg, content: done ? '[DONE]' : text }) // 兼容
-					})
+					if (enableOllama) {
+						let msg = genAssistantMessage('', currentModel.model)
+						addMessageChunk(msg) // 先插入一条空消息
+						await streamReaderOllama(data, (text, done) => {
+							addMessageChunk({ ...msg, content: done ? '[DONE]' : text }) // 兼容
+						})
+					} else {
+						addMessage(genAssistantMessage(data.text, currentModel.model))
+					}
 				} else {
 					let msg = genAssistantMessage('', currentModel.model)
 					addMessageChunk(msg) // 先插入一条空消息
