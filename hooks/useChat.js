@@ -14,7 +14,7 @@ import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 import { useState } from 'react'
 
 export function useChat(type) {
-	const [text, setText] = useState('')
+	const [input, setInput] = useState('')
 
 	const currentTrans = useModelStore((s) => s.currentTrans)
 	const currentModel = useModelStore((s) => s.currentModel)
@@ -36,10 +36,11 @@ export function useChat(type) {
 	const setPreTrans = useChatStore((s) => s.setPreTrans)
 
 	const onInputChange = (v) => {
-		setText(v)
+		setInput(v)
 	}
 
-	const onSubmit = async () => {
+	const onSubmit = async (content) => {
+		let text = content || input
 		if (!text) return showToast('请输入内容')
 
 		let msg = genUserMessage(text, currentModel.model)
@@ -75,7 +76,7 @@ export function useChat(type) {
 			}
 
 			const data = await chatApi(params)
-			setText('')
+			setInput('')
 
 			if (type === ChatTypeEnum.chat) {
 				if (isDev) {
@@ -123,7 +124,7 @@ export function useChat(type) {
 		onInputChange,
 		onSubmit,
 		onClear,
-		text,
+		input,
 		preTrans,
 		setPreTrans,
 		messages:
