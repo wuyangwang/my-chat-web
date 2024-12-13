@@ -5,10 +5,8 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
 
-const promptDefault =
-	' ((extremely detailed CG unity 8k wallpaper),(masterpiece), (best quality), (ultra-detailed), (best illustration),(best shadow), (an extremely delicate and beautiful),dynamic angle, floating, finely detail, (bloom), (shine), glinting stars, classic)'
-const negativePromptDefault =
-	'(EasyNegative ,ng_deepnegative_v1_75t ,bad-image-v2-39000, bad-artist, bad-hands-5, bad_prompt_version2, bad-artist-anime,, (worst quality, low quality:1.4), (painting by bad-artist-anime:0.9), (painting by bad-artist:0.9), (bad_prompt_version2:0.8), (disfigured), (bad art), (deformed), (poorly drawn), (extra limbs), (close up), strange colours, blurry, boring, lackluster, letters, grayscale, huge breasts, large breasts jpeg artifacts, (signature), watermark, username, artist name, bad anatomy)'
+const promptDefault = ' photorealistic ultra-realistic natural lighting vivid colors natural beauty'
+const negativePromptDefault = ''
 
 export async function GET(request) {
 	const env = getRequestContext().env
