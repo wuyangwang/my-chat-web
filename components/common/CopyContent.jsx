@@ -21,7 +21,7 @@ const CopyContent = memo(({ className, content }) => {
 		<CopyToClipboard text={content} onCopy={() => setCopied(true)}>
 			<Icon
 				className={cn(
-					'h-4 w-4 text-foreground hover:text-foreground/80',
+					'h-4 w-4 text-muted-foreground hover:text-muted-foreground/80',
 					copied && 'text-primary',
 					className
 				)}

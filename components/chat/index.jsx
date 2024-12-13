@@ -22,7 +22,7 @@ export function Chat({ type }) {
 	useSidebarClose() // 确保进入页面 关闭侧边栏
 	const { showScroll, onScroll } = useListScroll(chatRef)
 	const nickName = useUserStore((state) => state.nickName)
-	const { apiLoading, messages, onInputChange, onSubmit } = useChat(type)
+	const { apiLoading, messages, onSubmit } = useChat(type)
 
 	useEffect(() => {
 		onScroll()
@@ -31,10 +31,7 @@ export function Chat({ type }) {
 
 	const onRegenerate = (text) => {
 		if (apiLoading) return
-		onInputChange(text)
-		setTimeout(() => {
-			onSubmit()
-		}, 500)
+		onSubmit(text)
 	}
 
 	return (

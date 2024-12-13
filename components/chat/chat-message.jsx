@@ -51,8 +51,8 @@ const ChatMessage = memo(({ message, onRegenerate }) => {
 					)}
 				</div>
 				<div className={cn('flex items-center gap-2', isUser && 'justify-end')}>
-					{isImage && <IconWrap Icon={Download} title='重新生成' onClick={onDownload} />}
-					{!isImage && (
+					{isImage && !pending && <IconWrap Icon={Download} title='下载' onClick={onDownload} />}
+					{!isImage && !pending && (
 						<div title='复制内容'>
 							<CopyContent content={content} className='block cursor-pointer' />
 						</div>

@@ -72,7 +72,7 @@ function UserDialog() {
 					<Input
 						id='name'
 						clearable
-						defaultValue={nickName}
+						value={nickName}
 						placeholder='请输入昵称 最多8个字符'
 						className='col-span-3'
 						onChange={(e) => setInput(e.target.value)}
