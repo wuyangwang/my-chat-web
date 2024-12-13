@@ -83,9 +83,9 @@ export function useChat(type) {
 					if (enableOllama) {
 						let msg = genAssistantMessage('', currentModel.model)
 						addMessageChunk(msg) // 先插入一条空消息
-						await streamReaderOllama(data, (text, done) => {
+						for await (const [text, done] of streamReaderOllama(data)) {
 							addMessageChunk({ ...msg, content: done ? '[DONE]' : text }) // 兼容
-						})
+						}
 					} else {
 						addMessage(genAssistantMessage(data.text, currentModel.model))
 					}
