@@ -37,7 +37,7 @@ async function getOllamaModels() {
 	return ollamaModel
 }
 
-export const streamReaderOllama = async (stream, cb) => {
+export async function* streamReaderOllama(stream) {
 	const reader = stream.getReader()
 	const decoder = new TextDecoder('utf-8')
 	let buffer = ''
@@ -56,9 +56,9 @@ export const streamReaderOllama = async (stream, cb) => {
 				try {
 					const parsed = JSON.parse(line)
 					// console.log("🚀 ~ streamReaderOllama ~ parsed:", parsed)
-					cb(parsed.message.content, parsed.done)
+					yield [parsed.message.content, parsed.done]
 				} catch (err) {
-					cb('', true)
+					yield ['', true]
 				}
 			}
 		}
@@ -68,9 +68,9 @@ export const streamReaderOllama = async (stream, cb) => {
 	if (buffer.trim()) {
 		try {
 			const parsed = JSON.parse(buffer)
-			cb(parsed.message.content, parsed.done)
+			yield [parsed.message.content, parsed.done]
 		} catch (err) {
-			cb('', true)
+			yield ['', true]
 		}
 	}
 }
