@@ -46,6 +46,11 @@ function UserDialog() {
 		closeDialog()
 	}
 
+	const onOpen = () => {
+		setInput(nickName)
+		openDialog()
+	}
+
 	return (
 		<BaseDialog
 			title='设置昵称'
@@ -53,12 +58,12 @@ function UserDialog() {
 			trigger={
 				<>
 					<div
-						onClick={openDialog}
+						onClick={onOpen}
 						className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'
 					>
 						<Settings />
 					</div>
-					<div onClick={openDialog} className='grid flex-1 text-left text-sm leading-tight'>
+					<div onClick={onOpen} className='grid flex-1 text-left text-sm leading-tight'>
 						<span className='truncate font-semibold'>{nickName || '设置'}</span>
 					</div>
 				</>
@@ -72,7 +77,7 @@ function UserDialog() {
 					<Input
 						id='name'
 						clearable
-						value={nickName}
+						value={input}
 						placeholder='请输入昵称 最多8个字符'
 						className='col-span-3'
 						onChange={(e) => setInput(e.target.value)}
