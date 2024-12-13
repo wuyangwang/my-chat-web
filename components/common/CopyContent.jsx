@@ -1,4 +1,4 @@
-import { Clipboard, ClipboardCheck } from 'lucide-react'
+import { Copy, CopyCheck } from 'lucide-react'
 import { memo, useEffect, useState } from 'react'
 
 import { CopyToClipboard } from 'react-copy-to-clipboard'
@@ -16,7 +16,7 @@ const CopyContent = memo(({ className, content }) => {
 		return () => clearTimeout(timer)
 	}, [copied])
 
-	const Icon = copied ? ClipboardCheck : Clipboard
+	const Icon = copied ? CopyCheck : Copy
 	return (
 		<CopyToClipboard text={content} onCopy={() => setCopied(true)}>
 			<Icon
