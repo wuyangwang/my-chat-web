@@ -1,5 +1,6 @@
 'use client'
 
+import { ChatRole, ChatTypeEnum } from '@/utils'
 import { useEffect, useRef } from 'react'
 
 import { ChatBottom } from './chat-bottombar'
@@ -7,7 +8,6 @@ import { ChatList } from './chat-list'
 import { ChatMessage } from './chat-message'
 import { ChatScroll } from './chat-scroll'
 import { ChatTop } from './chat-topbar'
-import { ChatTypeEnum } from '@/utils'
 import { useChat } from '@/hooks/useChat'
 import { useListScroll } from '@/hooks/useListScroll'
 import { useModel } from '@/hooks/useModel'
@@ -29,8 +29,10 @@ export function Chat({ type }) {
 		// eslint-disable-next-line
 	}, [messages])
 
-	const onRegenerate = (text) => {
+	const onRegenerate = () => {
 		if (apiLoading) return
+		// 找到最新的是用户的聊天内容
+		let text = messages.findLast((item) => item.role === ChatRole.User)?.content
 		onSubmit(text)
 	}
 

@@ -21,7 +21,7 @@ const ChatBottom = memo(({ type }) => {
 				onChange={(e) => onInputChange(e.target.value)}
 				onKeyDown={onKeyDown}
 			/>
-			<Button disabled={apiLoading} className='ml-2' onClick={() => onSubmit()}>
+			<Button disabled={apiLoading} className='ml-2' onClick={onSubmit}>
 				发送
 			</Button>
 		</div>
