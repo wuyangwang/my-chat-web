@@ -42,8 +42,8 @@ export function useChat(type) {
 	const onSubmit = async (content) => {
 		let text = content || input
 		if (!text) return showToast('请输入内容')
-		if (text.length > currentModel.maxCount || 1000)
-			return showToast('不能超过' + currentModel.maxCount + '文字')
+		let maxCount = currentModel.maxCount || 1000
+		if (text.length > maxCount) return showToast('不能超过' + maxCount + '文字')
 
 		let msg = genUserMessage(text, currentModel.model)
 		let chatApi
