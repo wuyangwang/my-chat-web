@@ -8,6 +8,15 @@ export async function postChat(data) {
 	return await apiPost('/api/chat', data, { isStream: true })
 }
 
+// 谷歌gemini chat
+export async function postGeminiChat(data) {
+	return await apiPost(
+		'/api/chat_gemini',
+		{ ...data, accessKey: '', model: undefined },
+		{ isStream: true }
+	)
+}
+
 export async function getChat(data) {
 	return await apiGet('/api/chat', data)
 }
