@@ -14,7 +14,7 @@ const ChatMessage = memo(({ message, onRegenerate }) => {
 	const { role, pending, content, timestamp, isImage, nickName } = message
 
 	const isUser = role === ChatRole.User
-	const roleName = isUser ? 'self-end flex-row-reverse text-right' : 'self-start'
+	const roleName = isUser ? 'self-end flex-row-reverse' : 'self-start'
 	const timeStr = timestamp ? new Date(timestamp).toLocaleString() : ''
 
 	const onDownload = () => {

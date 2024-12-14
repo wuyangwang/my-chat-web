@@ -8,7 +8,7 @@ import {
 	streamReader
 } from '@/utils'
 import { enableOllama, postOllamaChat, streamReaderOllama } from '@/service/ollama'
-import { getImage, getTranslate, mock, postChat } from '@/service'
+import { getChat, getImage, getTranslate, mock, postChat } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -42,6 +42,8 @@ export function useChat(type) {
 	const onSubmit = async (content) => {
 		let text = content || input
 		if (!text) return showToast('请输入内容')
+		if (text.length > currentModel.maxCount || 1000)
+			return showToast('不能超过' + currentModel.maxCount + '文字')
 
 		let msg = genUserMessage(text, currentModel.model)
 		let chatApi
@@ -70,8 +72,8 @@ export function useChat(type) {
 		try {
 			setApiLoading(true)
 			if (type === ChatTypeEnum.genImage && !isDev && preTrans) {
-				// 先翻译为英文
-				const transData = await getTranslate({ text })
+				// 先使用接口翻译为英文
+				const transData = await getChat({ prompt: '翻译为英文：' + text })
 				params.prompt = transData.text
 			}
 

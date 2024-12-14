@@ -7,6 +7,10 @@ export async function getModels(tag) {
 export async function postChat(data) {
 	return await apiPost('/api/chat', data, { isStream: true })
 }
+
+export async function getChat(data) {
+	return await apiGet('/api/chat', data)
+}
 export async function getTranslate({ text, source = '', target = '' }) {
 	return await apiGet('/api/trans', { text, source, target })
 }

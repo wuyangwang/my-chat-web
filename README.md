@@ -61,6 +61,11 @@ NEXT_PUBLIC_ENABLE_OLLAMA_API="true"
 - 目前都是本地 localstorage 存储
 - 本地开发时无法调用真实的接口如/api/chat，使用 mock 接口模拟
 
+## TODO
+
+- [ ] gemini 模型接入
+- [ ] 语音输入-转文字
+
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=wuyangwang/my-chat-web&type=Date)](https://star-history.com/#wuyangwang/my-chat-web&Date)

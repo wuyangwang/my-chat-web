@@ -2,21 +2,21 @@ export const aiModelList = [
 	{
 		tag: 'chat',
 		models: [
-			{ name: 'qwen1.5-14b', model: '@cf/qwen/qwen1.5-14b-chat-awq', maxCount: 500 },
+			{ name: 'qwen1.5-14b', model: '@cf/qwen/qwen1.5-14b-chat-awq', maxCount: 1000 },
 			{
 				name: 'llama3.3-70b',
 				model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
-				maxCount: 500
+				maxCount: 1000
 			},
 			{
 				name: 'llama3.1-70b',
 				model: '@cf/meta/llama-3.1-70b-instruct',
-				maxCount: 500
+				maxCount: 1000
 			},
 			{
 				name: 'llama3.1-8b',
 				model: '@cf/meta/llama-3.1-8b-instruct',
-				maxCount: 500
+				maxCount: 1000
 			}
 		]
 	},
@@ -26,22 +26,22 @@ export const aiModelList = [
 			{
 				name: 'stable-diffusion-xl-lightning',
 				model: '@cf/bytedance/stable-diffusion-xl-lightning',
-				maxCount: 500
+				maxCount: 1000
 			},
 			{
 				name: 'stable-diffusion-xl',
 				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
-				maxCount: 500
+				maxCount: 1000
 			},
 			{
 				name: 'lykon/dreamshaper',
 				model: '@cf/lykon/dreamshaper-8-lcm',
-				maxCount: 500
+				maxCount: 1000
 			}
 			// {
 			// 	name: 'stable-diffusion-v1.5',
 			// 	model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
-			// 	maxCount: 500
+			// 	maxCount: 1000
 			// }
 		]
 	},
@@ -51,7 +51,7 @@ export const aiModelList = [
 			{
 				name: 'm2m100',
 				model: '@cf/meta/m2m100-1.2b',
-				maxCount: 500,
+				maxCount: 1000,
 				items: [
 					{ source: 'zh', target: 'en', name: '中转英' },
 					{ source: 'en', target: 'zh', name: '英转中' },

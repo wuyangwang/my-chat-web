@@ -5,7 +5,7 @@ import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const runtime = 'edge'
 
-const promptDefault = ' photorealistic ultra-realistic natural lighting vivid colors natural beauty'
+const promptDefault = ''
 const negativePromptDefault = ''
 
 export async function GET(request) {
@@ -15,13 +15,6 @@ export async function GET(request) {
 
 	const [_, err] = utils.validReqSchema(genImgSchema, { prompt, model })
 	if (err) return err
-
-	// 先转为英文
-	// const { translated_text } = await env.AI.run(defaultTransModel, {
-	// 	text: prompt,
-	// 	source_lang: 'zh',
-	// 	target_lang: 'en'
-	// })
 
 	const response = await env.AI.run(model, {
 		prompt: prompt + promptDefault,
