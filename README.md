@@ -41,6 +41,18 @@ pnpm run dev
 pnpm run deploy
 ```
 
+## 部署
+
+> 仅支持部署到cloudflare
+
+通过cf提供的cli部署
+
+- 仓库下载到本地 安装依赖 pnpm i
+- 更改wrangler.toml里的name为你想要的名字
+- 执行pnpm run deploy
+- 看终端提示 第一次需要登录
+- 完成 可以到cf dashboard里查看
+
 ### ollama 使用（仅本地）
 
 聊天兼容了 ollama api，如果你本地安装了 ollama，可以在开发时使用 ollama 的/api/chat 接口，需要.env.development 文件配置：
