@@ -1,19 +1,7 @@
-import { isDev, showToast } from '@/utils'
+import { getOllamaHost, showToast } from '@/utils'
 
-// local ollama测试
-const ollamaUrl = process.env.NEXT_PUBLIC_LOCAL_API_HOST
-// const respContentType = 'application/x-ndjson'
-
-export const enableOllama =
-	isDev && ollamaUrl && process.env.NEXT_PUBLIC_ENABLE_OLLAMA_API === 'true'
-
-let ollamaModel = ''
-
-export async function postOllamaChat(data) {
-	let model = await getOllamaModels()
-	console.log('🚀 ~ postOllamaChat使用的model为:', model)
-
-	const res = await fetch(ollamaUrl + '/api/chat', {
+export async function chatWithOllama(data, onCb) {
+	const res = await fetch(getOllamaHost() + '/api/chat', {
 		body: JSON.stringify({ ...data, model, stream: true }),
 		method: 'POST',
 		headers: {
@@ -26,15 +14,17 @@ export async function postOllamaChat(data) {
 		showToast(msg, 'error')
 		throw new Error(msg)
 	}
-	return res.body
-}
-async function getOllamaModels() {
-	if (ollamaModel) return ollamaModel
 
-	const res = await fetch(ollamaUrl + '/api/tags')
+	for await (const [text, done] of streamReaderOllama(res.body)) {
+		onCb(text)
+	}
+	onCb('[DONE]') // 兼容格式
+}
+
+async function getOllamaModels() {
+	const res = await fetch(getOllamaHost() + '/api/tags')
 	const { models } = await res.json()
-	ollamaModel = models[0].name
-	return ollamaModel
+	return models
 }
 
 export async function* streamReaderOllama(stream) {
@@ -55,7 +45,6 @@ export async function* streamReaderOllama(stream) {
 			if (line.trim()) {
 				try {
 					const parsed = JSON.parse(line)
-					// console.log("🚀 ~ streamReaderOllama ~ parsed:", parsed)
 					yield [parsed.message.content, parsed.done]
 				} catch (err) {
 					yield ['', true]
