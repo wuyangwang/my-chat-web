@@ -9,7 +9,7 @@ export async function getModels(tag) {
 
 export async function chatWithApi(data, onCb) {
 	const result = await apiPost('/api/chat', data, { isStream: true })
-	await streamReader(result.body, onCb)
+	await streamReader(result, onCb)
 }
 
 export async function chatWithApiGet(data) {
