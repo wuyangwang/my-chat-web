@@ -38,7 +38,7 @@ export function ModelSelect() {
 	const setCurrentTrans = useModelStore((state) => state.setCurrentTrans)
 	const setOllamaModel = useModelStore((state) => state.setOllamaModel)
 
-	const [isValid, isTransPath] = useValidRoute()
+	const [isValid, isChatPath, isTransPath] = useValidRoute()
 	const [ollamaModels, setOllamaModels] = useState([])
 	const modalRef = useRef()
 
@@ -104,14 +104,16 @@ export function ModelSelect() {
 							</SelectItem>
 						))}
 					</SelectGroup>
-					<SelectGroup>
-						<SelectLabel>外部模型</SelectLabel>
-						{ExternalChatModelList.map((model) => (
-							<SelectItem key={model.name} value={model.name}>
-								{model.name}
-							</SelectItem>
-						))}
-					</SelectGroup>
+					{isChatPath && (
+						<SelectGroup>
+							<SelectLabel>外部模型</SelectLabel>
+							{ExternalChatModelList.map((model) => (
+								<SelectItem key={model.name} value={model.name}>
+									{model.name}
+								</SelectItem>
+							))}
+						</SelectGroup>
+					)}
 				</SelectContent>
 			</Select>
 
@@ -161,7 +163,7 @@ const KeyInput = forwardRef(({ type, name }, ref) => {
 
 	const onConfirm = () => {
 		if (!input.trim()) {
-			return showToast('请输入key', 'error')
+			return showToast('请输入API kEY', 'error')
 		}
 		if (type === ModelTypeEnum.grok) {
 			setGrokKey(input)
@@ -179,16 +181,18 @@ const KeyInput = forwardRef(({ type, name }, ref) => {
 	return (
 		<BaseDialog title='请设置key' onConfirm={onConfirm}>
 			<div className='grid gap-4 py-4'>
-				<div className='mb-2 text-accent-foreground/70'>当前模型{name}需要key进行访问，请输入</div>
+				<div className='mb-2 text-accent-foreground/70'>
+					提示：当前模型{name}需要API KEY进行访问
+				</div>
 				<div className='grid grid-cols-4 items-center gap-4'>
 					<Label htmlFor='name' className='text-right'>
-						Key
+						API Key
 					</Label>
 					<Input
 						id='name'
 						clearable
 						value={input}
-						placeholder='请输入key'
+						placeholder='请输入API Key'
 						className='col-span-3'
 						onChange={(e) => setInput(e.target.value)}
 					/>

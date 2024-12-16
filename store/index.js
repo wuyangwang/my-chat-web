@@ -50,7 +50,7 @@ export const useChatStore = create(
 				set((state) => {
 					let msg = state.messages.filter((item) => item.id == message.id)[0]
 					if (!msg) {
-						let newMessages = state.messages.concat(message)
+						let newMessages = state.messages.concat({ ...message, pending: true })
 						if (newMessages.length > 500) {
 							newMessages.shift()
 						}
