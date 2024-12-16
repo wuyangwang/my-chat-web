@@ -1,10 +1,10 @@
 import { ModelTypeEnum } from '@/utils'
 import { chatWithApi } from './api'
+import { chatWithGemini } from './gemini'
+import { chatWithGrok } from './grok'
+import { chatWithOllama } from './ollama'
+import { chatWithOpenAI } from './openai'
 
-export * from './gemini'
-export * from './grok'
-export * from './ollama'
-export * from './openai'
 export * from './api'
 
 export async function mock() {

@@ -1,13 +1,31 @@
 'use client'
 
+import { BaseDialog, DialogProvider, useDialog } from '@/components/common/BaseDialog'
+import {
+	ExternalChatModelList,
+	ModelTypeEnum,
+	getGeminiKey,
+	getGrokKey,
+	getOpenAiKey,
+	setGeminiKey,
+	setGrokKey,
+	setOpenAiKey,
+	showToast
+} from '@/utils'
 import {
 	Select,
 	SelectContent,
+	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { getOllamaModels } from '@/service/ollama'
 import { useModelStore } from '@/store'
 import { useValidRoute } from '@/hooks/useValidRoute'
 
@@ -15,14 +33,59 @@ export function ModelSelect() {
 	const models = useModelStore((state) => state.models)
 	const currentModel = useModelStore((state) => state.currentModel)
 	const currentTrans = useModelStore((state) => state.currentTrans)
+	const ollamaModel = useModelStore((state) => state.ollamaModel)
 	const setCurrentModel = useModelStore((state) => state.setCurrentModel)
 	const setCurrentTrans = useModelStore((state) => state.setCurrentTrans)
+	const setOllamaModel = useModelStore((state) => state.setOllamaModel)
+
 	const [isValid, isTransPath] = useValidRoute()
+	const [ollamaModels, setOllamaModels] = useState([])
+	const modalRef = useRef()
+
+	const isOllama = currentModel?.type === ModelTypeEnum.ollama
 
 	const onChange = (value) => {
-		let obj = models.find((model) => model.name === value)
+		let list = models.concat(ExternalChatModelList)
+		let obj = list.find((model) => model.name === value)
 		setCurrentModel(obj)
 	}
+
+	const updateModel = (value) => {
+		const model = ollamaModels.find((item) => item.model === value)
+		setOllamaModel(model)
+	}
+
+	useEffect(() => {
+		if (!currentModel) return
+		if (!isOllama) return
+
+		getOllamaModels().then((res) => {
+			setOllamaModels(res)
+			setOllamaModel(res[0].model)
+		})
+		// eslint-disable-next-line
+	}, [isOllama, currentModel])
+
+	useEffect(() => {
+		if (!currentModel) return
+
+		if (currentModel.type === ModelTypeEnum.grok) {
+			if (!getGrokKey()) {
+				modalRef.current.onOpen()
+			}
+		}
+		if (currentModel.type === ModelTypeEnum.gemini) {
+			if (!getGeminiKey()) {
+				modalRef.current.onOpen()
+			}
+		}
+		if (currentModel.type === ModelTypeEnum.openai) {
+			if (!getOpenAiKey()) {
+				modalRef.current.onOpen()
+			}
+		}
+	}, [currentModel])
+
 	if (!isValid) return null
 	if (!currentModel) return null
 
@@ -33,11 +96,22 @@ export function ModelSelect() {
 					<SelectValue placeholder='选择一个模型' />
 				</SelectTrigger>
 				<SelectContent>
-					{models.map((model) => (
-						<SelectItem key={model.name} value={model.name}>
-							{model.name}
-						</SelectItem>
-					))}
+					<SelectGroup>
+						<SelectLabel>默认模型</SelectLabel>
+						{models.map((model) => (
+							<SelectItem key={model.name} value={model.name}>
+								{model.name}
+							</SelectItem>
+						))}
+					</SelectGroup>
+					<SelectGroup>
+						<SelectLabel>外部模型</SelectLabel>
+						{ExternalChatModelList.map((model) => (
+							<SelectItem key={model.name} value={model.name}>
+								{model.name}
+							</SelectItem>
+						))}
+					</SelectGroup>
 				</SelectContent>
 			</Select>
 
@@ -55,6 +129,73 @@ export function ModelSelect() {
 					</SelectContent>
 				</Select>
 			)}
+			{isOllama && ollamaModels.length && (
+				<Select value={ollamaModel} onValueChange={updateModel}>
+					<SelectTrigger className='w-[110px]'>
+						<SelectValue />
+					</SelectTrigger>
+					<SelectContent>
+						{ollamaModels.map((item, idx) => (
+							<SelectItem key={idx} value={item.model}>
+								{item.name}
+							</SelectItem>
+						))}
+					</SelectContent>
+				</Select>
+			)}
+
+			<DialogProvider>
+				<KeyInput type={currentModel.type} name={currentModel.name} ref={modalRef} />
+			</DialogProvider>
 		</div>
 	)
 }
+
+const KeyInput = forwardRef(({ type, name }, ref) => {
+	const [input, setInput] = useState('')
+	const { openDialog, closeDialog } = useDialog()
+
+	useImperativeHandle(ref, () => ({
+		onOpen: () => openDialog()
+	}))
+
+	const onConfirm = () => {
+		if (!input.trim()) {
+			return showToast('请输入key', 'error')
+		}
+		if (type === ModelTypeEnum.grok) {
+			setGrokKey(input)
+		}
+		if (type === ModelTypeEnum.gemini) {
+			setGeminiKey(input)
+		}
+		if (type === ModelTypeEnum.openai) {
+			setOpenAiKey(input)
+		}
+		setInput('')
+		closeDialog()
+	}
+
+	return (
+		<BaseDialog title='请设置key' onConfirm={onConfirm}>
+			<div className='grid gap-4 py-4'>
+				<div className='mb-2 text-accent-foreground/70'>当前模型{name}需要key进行访问，请输入</div>
+				<div className='grid grid-cols-4 items-center gap-4'>
+					<Label htmlFor='name' className='text-right'>
+						Key
+					</Label>
+					<Input
+						id='name'
+						clearable
+						value={input}
+						placeholder='请输入key'
+						className='col-span-3'
+						onChange={(e) => setInput(e.target.value)}
+					/>
+				</div>
+			</div>
+		</BaseDialog>
+	)
+})
+
+KeyInput.displayName = 'KeyInput'

@@ -1,8 +1,9 @@
-import { getOllamaHost, showToast } from '@/utils'
+import { ExternalModelHost, ModelTypeEnum, genSystemMessage, showToast } from '@/utils'
 
-export async function chatWithOllama(data, onCb) {
-	const res = await fetch(getOllamaHost() + '/api/chat', {
-		body: JSON.stringify({ ...data, model, stream: true }),
+const host = ExternalModelHost[ModelTypeEnum.ollama]
+export async function chatWithOllama({ model, messages }, onCb) {
+	const res = await fetch(host + '/api/chat', {
+		body: JSON.stringify({ messages: genSystemMessage().concat(messages), model, stream: true }),
 		method: 'POST',
 		headers: {
 			'content-type': 'application/json;charset=UTF-8'
@@ -21,8 +22,8 @@ export async function chatWithOllama(data, onCb) {
 	onCb('[DONE]') // 兼容格式
 }
 
-async function getOllamaModels() {
-	const res = await fetch(getOllamaHost() + '/api/tags')
+export async function getOllamaModels() {
+	const res = await fetch(host + '/api/tags')
 	const { models } = await res.json()
 	return models
 }

@@ -7,7 +7,7 @@ const openaiKey = 'openai_key'
 const ollamaHostKey = 'ollamaHostKey'
 
 export function getStorage(key) {
-	return JSON.parse(localStorage.getItem(prefix + key))
+	return localStorage.getItem(prefix + key)
 }
 
 export function setStorage(key, value) {
