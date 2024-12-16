@@ -57,13 +57,14 @@ export const useChatStore = create(
 						return { messages: newMessages }
 					}
 					//标识
-					const isDone = message.content === '[DONE]'
+					let text = msg.content + message.content
+					const isDone = message.content.endsWith('[DONE]')
 					message.pending = !isDone
 
 					let newMsg = {
 						...msg,
 						...message,
-						content: isDone ? msg.content : msg.content + message.content
+						content: isDone ? text.replace('[DONE]', '') : text
 					}
 					let msgArr = state.messages.filter((item) => item.id !== message.id)
 					return { messages: msgArr.concat(newMsg) }

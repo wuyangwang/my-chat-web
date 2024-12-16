@@ -7,6 +7,7 @@ import {
 	getGeminiKey,
 	getGrokKey,
 	getOpenAiKey,
+	isDev,
 	setGeminiKey,
 	setGrokKey,
 	setOpenAiKey,
@@ -21,7 +22,7 @@ import {
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
 import { Input } from '../ui/input'
 import { Label } from '../ui/label'
@@ -44,8 +45,14 @@ export function ModelSelect() {
 
 	const isOllama = currentModel?.type === ModelTypeEnum.ollama
 
+	const externalModels = useMemo(() => {
+		return ExternalChatModelList.map((i) => ({
+			...i,
+			disabled: !isDev && i.type === ModelTypeEnum.ollama
+		}))
+	}, [])
 	const onChange = (value) => {
-		let list = models.concat(ExternalChatModelList)
+		let list = models.concat(externalModels)
 		let obj = list.find((model) => model.name === value)
 		setCurrentModel(obj)
 	}
@@ -107,8 +114,8 @@ export function ModelSelect() {
 					{isChatPath && (
 						<SelectGroup>
 							<SelectLabel>外部模型</SelectLabel>
-							{ExternalChatModelList.map((model) => (
-								<SelectItem key={model.name} value={model.name}>
+							{externalModels.map((model) => (
+								<SelectItem key={model.name} value={model.name} disabled={model.disabled}>
 									{model.name}
 								</SelectItem>
 							))}

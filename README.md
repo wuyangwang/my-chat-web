@@ -41,6 +41,11 @@ pnpm run dev
 pnpm run deploy
 ```
 
+本地开发调试接口时，
+
+- 可以设置.env 文件`NEXT_PUBLIC_MOCK_API='true'`来启用 mock 数据，不调用正式接口。
+- 或者使用本地 Ollama 模型或者使用 Grok 等自己有 api key 的模型。
+
 ## 部署
 
 > 仅支持部署到 cloudflare
@@ -75,7 +80,6 @@ pnpm run deploy
 
 ## TODO
 
-- [ ] gemini 模型接入
 - [ ] 语音输入-转文字
 
 ## Star History

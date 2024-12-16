@@ -4,9 +4,10 @@ import {
 	genAssistantMessage,
 	genChatPostParams,
 	genUserMessage,
+	mockApi,
 	showToast
 } from '@/utils'
-import { genImageWithApi, getChatApi, transWithApi } from '@/service'
+import { chatWithMock, genImageWithApi, getChatApi, transWithApi } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -66,23 +67,31 @@ export function useChat(type) {
 			params = { prompt: text, model: fModel }
 		}
 
+		if (mockApi) {
+			chatApi = chatWithMock
+		}
 		setApiLoading(true)
 		try {
 			if (type === ChatTypeEnum.chat) {
 				let msg = genAssistantMessage('', fModel)
 				addMessageChunk(msg) // 先插入一条空消息
-				await chatApi(params, (text) => {
-					addMessageChunk({ ...msg, content: text })
-				})
+				if (mockApi) {
+					const data = await chatApi(params)
+					addMessageChunk({ ...msg, content: data.text })
+					addMessageChunk({ ...msg, content: '[DONE]' })
+				} else {
+					await chatApi(params, (text) => {
+						addMessageChunk({ ...msg, content: text })
+					})
+				}
 			} else if (type === ChatTypeEnum.translate) {
 				const data = await chatApi(params)
 				addTransMessage(genAssistantMessage(data.text, fModel))
 			} else if (type === ChatTypeEnum.genImage) {
 				const data = await chatApi(params, preTrans)
 				addImgMessage(genAssistantMessage(data.url, fModel))
-			} else {
-				//
 			}
+
 			setInput('')
 		} finally {
 			setApiLoading(false)
