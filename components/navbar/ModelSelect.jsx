@@ -138,7 +138,7 @@ export function ModelSelect() {
 					</SelectContent>
 				</Select>
 			)}
-			{isOllama && ollamaModels.length && (
+			{ollamaModels.length && isOllama && (
 				<Select value={ollamaModel} onValueChange={updateModel}>
 					<SelectTrigger className='w-[110px]'>
 						<SelectValue />

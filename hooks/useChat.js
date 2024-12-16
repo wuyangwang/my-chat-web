@@ -10,6 +10,7 @@ import {
 import { chatWithMock, genImageWithApi, getChatApi, transWithApi } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
+import queue from '@/utils/queue'
 import { useState } from 'react'
 
 export function useChat(type) {
@@ -80,9 +81,12 @@ export function useChat(type) {
 					addMessageChunk({ ...msg, content: data.text })
 					addMessageChunk({ ...msg, content: '[DONE]' })
 				} else {
-					await chatApi(params, (text) => {
-						addMessageChunk({ ...msg, content: text })
-					})
+					await chatApi(
+						params,
+						queue.startQueue((text) => {
+							addMessageChunk({ ...msg, content: text })
+						})
+					)
 				}
 			} else if (type === ChatTypeEnum.translate) {
 				const data = await chatApi(params)
