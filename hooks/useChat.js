@@ -6,7 +6,7 @@ import {
 	isDev,
 	showToast
 } from '@/utils'
-import { chatWithApi, chatWithApiGet, genImageWithApi, transWithApi } from '@/service'
+import { chatWithApiGet, genImageWithApi, getChatApi, transWithApi } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -49,7 +49,7 @@ export function useChat(type) {
 
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
-			chatApi = chatWithApi
+			chatApi = getChatApi()
 			params = genChatPostParams(msg, messages, currentModel.model)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
@@ -60,18 +60,10 @@ export function useChat(type) {
 			addImgMessage(msg)
 			chatApi = genImageWithApi
 			params = { prompt: text, model: currentModel.model }
-		} else {
-			//
 		}
 
 		try {
 			setApiLoading(true)
-			if (type === ChatTypeEnum.genImage && !isDev && preTrans) {
-				// 先使用接口翻译为英文
-				const transData = await chatWithApiGet({ prompt: '翻译为英文：' + text })
-				params.prompt = transData.text
-			}
-
 			setInput('')
 
 			if (type === ChatTypeEnum.chat) {
@@ -84,7 +76,7 @@ export function useChat(type) {
 				const data = await chatApi(params)
 				addTransMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.genImage) {
-				const data = await chatApi(params)
+				const data = await chatApi(params, preTrans)
 				addImgMessage(genAssistantMessage(data.url, currentModel.model))
 			} else {
 				//
