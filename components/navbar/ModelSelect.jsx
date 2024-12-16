@@ -138,7 +138,7 @@ export function ModelSelect() {
 					</SelectContent>
 				</Select>
 			)}
-			{ollamaModels.length && isOllama && (
+			{isOllama && ollamaModels.length ? (
 				<Select value={ollamaModel} onValueChange={updateModel}>
 					<SelectTrigger className='w-[110px]'>
 						<SelectValue />
@@ -151,7 +151,7 @@ export function ModelSelect() {
 						))}
 					</SelectContent>
 				</Select>
-			)}
+			) : null}
 
 			<DialogProvider>
 				<KeyInput type={currentModel.type} name={currentModel.name} ref={modalRef} />
