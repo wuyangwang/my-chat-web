@@ -4,11 +4,9 @@ import {
 	genChatPostParams,
 	genUserMessage,
 	isDev,
-	showToast,
-	streamReader
+	showToast
 } from '@/utils'
-import { enableOllama, postOllamaChat, streamReaderOllama } from '@/service/ollama'
-import { getChat, getImage, getTranslate, mock, postChat } from '@/service'
+import { chatWithApi, chatWithApiGet, genImageWithApi, transWithApi } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -51,56 +49,42 @@ export function useChat(type) {
 
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
-			chatApi = postChat
+			chatApi = chatWithApi
 			params = genChatPostParams(msg, messages, currentModel.model)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')
-			chatApi = getTranslate
+			chatApi = transWithApi
 			params = { text, source, target }
 		} else if (type === ChatTypeEnum.genImage) {
 			addImgMessage(msg)
-			chatApi = getImage
+			chatApi = genImageWithApi
 			params = { prompt: text, model: currentModel.model }
 		} else {
 			//
 		}
 
-		if (isDev) {
-			chatApi = type === ChatTypeEnum.chat && enableOllama ? postOllamaChat : mock
-		}
 		try {
 			setApiLoading(true)
 			if (type === ChatTypeEnum.genImage && !isDev && preTrans) {
 				// 先使用接口翻译为英文
-				const transData = await getChat({ prompt: '翻译为英文：' + text })
+				const transData = await chatWithApiGet({ prompt: '翻译为英文：' + text })
 				params.prompt = transData.text
 			}
 
-			const data = await chatApi(params)
 			setInput('')
 
 			if (type === ChatTypeEnum.chat) {
-				if (isDev) {
-					if (enableOllama) {
-						let msg = genAssistantMessage('', currentModel.model)
-						addMessageChunk(msg) // 先插入一条空消息
-						for await (const [text, done] of streamReaderOllama(data)) {
-							addMessageChunk({ ...msg, content: done ? '[DONE]' : text }) // 兼容
-						}
-					} else {
-						addMessage(genAssistantMessage(data.text, currentModel.model))
-					}
-				} else {
-					let msg = genAssistantMessage('', currentModel.model)
-					addMessageChunk(msg) // 先插入一条空消息
-					await streamReader(data, (text) => {
-						addMessageChunk({ ...msg, content: text })
-					})
-				}
+				let msg = genAssistantMessage('', currentModel.model)
+				addMessageChunk(msg) // 先插入一条空消息
+				await chatApi(params, (text) => {
+					addMessageChunk({ ...msg, content: text })
+				})
 			} else if (type === ChatTypeEnum.translate) {
+				const data = await chatApi(params)
 				addTransMessage(genAssistantMessage(data.text, currentModel.model))
 			} else if (type === ChatTypeEnum.genImage) {
+				const data = await chatApi(params)
 				addImgMessage(genAssistantMessage(data.url, currentModel.model))
 			} else {
 				//

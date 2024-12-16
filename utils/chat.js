@@ -34,6 +34,10 @@ export const genAssistantMessage = (content, model = '') => {
 	}
 }
 
+export const genSystemMessage = () => {
+	return [{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' }]
+}
+
 export const genChatPostParams = (msg, messages, model = '') => {
 	// 获取最新的4条消息上下文
 	const messagesToSend = messages.slice(-4)

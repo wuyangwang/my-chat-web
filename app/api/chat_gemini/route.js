@@ -14,6 +14,7 @@ export async function POST(request) {
 	const [_, err] = utils.validReqSchema(chatPostSchema, body)
 	if (err) return err
 
+	// 个人私有使用 需要验证权限
 	if (body.accessKey !== env.ACCESS_KEY) return utils.returnJsonError('accessKey error')
 
 	let model = body.model || defaultModel

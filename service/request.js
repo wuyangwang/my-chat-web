@@ -1,7 +1,5 @@
 import { showToast } from '@/utils'
 
-// const host = process.env.NEXT_PUBLIC_HOST
-
 const statusMap = {
 	200: '请求成功',
 	401: '无权限',
