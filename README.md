@@ -43,24 +43,24 @@ pnpm run deploy
 
 ## 部署
 
-> 仅支持部署到cloudflare
+> 仅支持部署到 cloudflare
 
-通过cf提供的cli部署
+通过 cf 提供的 cli 部署
 
 - 仓库下载到本地 安装依赖 pnpm i
-- 更改wrangler.toml里的name为你想要的名字
-- 执行pnpm run deploy
+- 更改 wrangler.toml 里的 name 为你想要的名字
+- 执行 pnpm run deploy
 - 看终端提示 第一次需要登录
-- 完成 可以到cf dashboard里查看
+- 完成 可以到 cf dashboard 里查看
 
-### ollama 使用（仅本地）
+### 外部模型使用
 
-聊天兼容了 ollama api，如果你本地安装了 ollama，可以在开发时使用 ollama 的/api/chat 接口，需要.env.development 文件配置：
+目前兼容了以下模型 需要自己提供 api key 使用 具体见`/utils/models.js`
 
-```
-NEXT_PUBLIC_LOCAL_API_HOST="http://localhost:11434"
-NEXT_PUBLIC_ENABLE_OLLAMA_API="true"
-```
+- Gemini
+- Grok
+- OpenAi
+- Ollama 本地
 
 ## 说明
 
@@ -71,7 +71,7 @@ NEXT_PUBLIC_ENABLE_OLLAMA_API="true"
   - 图片最大保存 50 张
   - 翻译最大保存 500 条
 - 目前都是本地 localstorage 存储
-- 本地开发时无法调用真实的接口如/api/chat，使用 mock 接口模拟
+- 本地开发时无法调用真实的接口如/api/chat，可以使用 ollama 模型
 
 ## TODO
 
