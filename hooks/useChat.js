@@ -1,12 +1,12 @@
 import {
 	ChatTypeEnum,
+	ModelTypeEnum,
 	genAssistantMessage,
 	genChatPostParams,
 	genUserMessage,
-	isDev,
 	showToast
 } from '@/utils'
-import { chatWithApiGet, genImageWithApi, getChatApi, transWithApi } from '@/service'
+import { genImageWithApi, getChatApi, transWithApi } from '@/service'
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import { useState } from 'react'
@@ -16,6 +16,7 @@ export function useChat(type) {
 
 	const currentTrans = useModelStore((s) => s.currentTrans)
 	const currentModel = useModelStore((s) => s.currentModel)
+	const ollamaModel = useModelStore((s) => s.ollamaModel)
 
 	const apiLoading = useChatStatusStore((s) => s.apiLoading)
 	const setApiLoading = useChatStatusStore((s) => s.setApiLoading)
@@ -43,14 +44,17 @@ export function useChat(type) {
 		let maxCount = currentModel.maxCount || 1000
 		if (text.length > maxCount) return showToast('不能超过' + maxCount + '文字')
 
-		let msg = genUserMessage(text, currentModel.model)
+		let fModel = currentModel.type === ModelTypeEnum.ollama ? ollamaModel : currentModel.model
+		if (!fModel) return showToast('请先选择模型')
+
+		let msg = genUserMessage(text, fModel)
 		let chatApi
 		let params
 
 		if (type === ChatTypeEnum.chat) {
 			addMessage(msg)
-			chatApi = getChatApi()
-			params = genChatPostParams(msg, messages, currentModel.model)
+			chatApi = getChatApi(currentModel.type)
+			params = genChatPostParams(msg, messages, fModel)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
 			let [source, target] = currentTrans.split('-')
@@ -59,28 +63,27 @@ export function useChat(type) {
 		} else if (type === ChatTypeEnum.genImage) {
 			addImgMessage(msg)
 			chatApi = genImageWithApi
-			params = { prompt: text, model: currentModel.model }
+			params = { prompt: text, model: fModel }
 		}
 
+		setApiLoading(true)
 		try {
-			setApiLoading(true)
-			setInput('')
-
 			if (type === ChatTypeEnum.chat) {
-				let msg = genAssistantMessage('', currentModel.model)
+				let msg = genAssistantMessage('', fModel)
 				addMessageChunk(msg) // 先插入一条空消息
 				await chatApi(params, (text) => {
 					addMessageChunk({ ...msg, content: text })
 				})
 			} else if (type === ChatTypeEnum.translate) {
 				const data = await chatApi(params)
-				addTransMessage(genAssistantMessage(data.text, currentModel.model))
+				addTransMessage(genAssistantMessage(data.text, fModel))
 			} else if (type === ChatTypeEnum.genImage) {
 				const data = await chatApi(params, preTrans)
-				addImgMessage(genAssistantMessage(data.url, currentModel.model))
+				addImgMessage(genAssistantMessage(data.url, fModel))
 			} else {
 				//
 			}
+			setInput('')
 		} finally {
 			setApiLoading(false)
 		}

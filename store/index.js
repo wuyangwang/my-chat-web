@@ -8,6 +8,7 @@ export const useModelStore = create(
 			models: [],
 			currentModel: null,
 			currentTrans: '',
+			ollamaModel: '', // 选择的ollama模型
 			setModels: (models) => set({ models }),
 			setCurrentModel: (currentModel) =>
 				set((state) => {
@@ -20,7 +21,8 @@ export const useModelStore = create(
 					}
 					return { currentModel }
 				}),
-			setCurrentTrans: (currentTrans) => set({ currentTrans })
+			setCurrentTrans: (currentTrans) => set({ currentTrans }),
+			setOllamaModel: (ollamaModel) => set({ ollamaModel })
 		}),
 		{ name: 'model-store' }
 	)

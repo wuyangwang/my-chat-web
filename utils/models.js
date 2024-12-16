@@ -15,6 +15,12 @@ export const ExternalModelHost = {
 // 本地第三方LLM 配置模型
 export const ExternalChatModelList = [
 	{
+		name: 'ollama本地',
+		model: '',
+		maxCount: 1000,
+		type: ModelTypeEnum.ollama
+	},
+	{
 		name: 'grok-2-1212',
 		model: 'grok-2-1212',
 		maxCount: 1000,
@@ -25,19 +31,19 @@ export const ExternalChatModelList = [
 		model: 'gemini-1.5-flash',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
+	},
+	{
+		name: 'gpt-3.5-turbo',
+		model: 'gpt-3.5-turbo',
+		maxCount: 1000,
+		type: ModelTypeEnum.openai
+	},
+	{
+		name: 'gpt-4o',
+		model: 'gpt-4o',
+		maxCount: 1000,
+		type: ModelTypeEnum.openai
 	}
-	// {
-	// 	name: 'gpt-3.5-turbo',
-	// 	model: 'gpt-3.5-turbo',
-	// 	maxCount: 1000,
-	// 	type: ModelTypeEnum.openai
-	// },
-	// {
-	// 	name: 'gpt-4o',
-	// 	model: 'gpt-4o',
-	// 	maxCount: 1000,
-	// 	type: ModelTypeEnum.openai
-	// }
 ]
 
 export const ExternalGenImageModelList = [

@@ -1,4 +1,4 @@
-import { genSystemMessage, getGeminiKey } from '@/utils'
+import { genSystemMessage, getGeminiKey, showToast } from '@/utils'
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
@@ -17,11 +17,15 @@ export async function chatWithGemini({ model, messages }, onCb = () => {}) {
 		contents: convertMsg(messages)
 	}
 
-	const result = await chatModel.generateContentStream(inputs)
-	for await (const chunk of result.stream) {
-		onCb(chunk.text())
+	try {
+		const result = await chatModel.generateContentStream(inputs)
+		for await (const chunk of result.stream) {
+			onCb(chunk.text())
+		}
+		onCb('[DONE]') // 兼容格式
+	} catch (error) {
+		showToast(error.message)
 	}
-	onCb('[DONE]') // 兼容格式
 }
 
 function convertMsg(arr) {
