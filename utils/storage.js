@@ -1,25 +1,20 @@
-const prefix = 'my_chat:'
-const grokKey = 'grok_key'
-const geminiKey = 'gemini_key'
-const openaiKey = 'openai_key'
-
-// url
-const ollamaHostKey = 'ollamaHostKey'
+const keyStore = 'model-store'
 
 export function getStorage(key) {
-	return localStorage.getItem(prefix + key)
+	return localStorage.getItem(key)
 }
 
 export function setStorage(key, value) {
-	localStorage.setItem(prefix + key, value)
+	localStorage.setItem(key, value)
 }
 
-export const getGrokKey = () => getStorage(grokKey)
-export const setGrokKey = (value) => setStorage(grokKey, value)
-export const getOpenAiKey = () => getStorage(openaiKey)
-export const setOpenAiKey = (value) => setStorage(openaiKey, value)
-export const getGeminiKey = () => getStorage(geminiKey)
-export const setGeminiKey = (value) => setStorage(geminiKey, value)
+function getValue(key) {
+	let value = getStorage(keyStore)
+	return JSON.parse(value).state[key]
+}
+export const getGrokKey = (key = 'grokApiKey') => getValue(key)
 
-export const getOllamaHost = () => getStorage(ollamaHostKey)
-export const setOllamaHost = (value) => setStorage(ollamaHostKey, value)
+export const getOpenAiKey = (key = 'openaiApiKey') => getValue(key)
+export const getGeminiKey = (key = 'geminiApiKey') => getValue(key)
+
+export const getOllamaHost = (key = 'ollamaApiHost') => getValue(key)

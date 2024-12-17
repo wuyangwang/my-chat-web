@@ -5,9 +5,14 @@ import OpenAI from 'openai'
 let grokClient
 
 export async function chatWithGrok({ model, messages }, onCb = () => {}) {
+	let apiKey = getGrokKey()
+	if (!apiKey) {
+		showToast('请先配置Grok Api Key', 'error')
+		throw new Error('请先配置Grok Api Key')
+	}
 	if (!grokClient) {
 		grokClient = new OpenAI({
-			apiKey: getGrokKey(),
+			apiKey: apiKey,
 			dangerouslyAllowBrowser: true,
 			baseURL: ExternalModelHost[ModelTypeEnum.grok]
 		})

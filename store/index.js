@@ -1,4 +1,5 @@
-import { ChatRole } from '@/utils'
+import { ChatRole, setOllamaHost } from '@/utils'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -9,6 +10,10 @@ export const useModelStore = create(
 			currentModel: null,
 			currentTrans: '',
 			ollamaModel: '', // 选择的ollama模型
+			ollamaApiHost: 'http://localhost:11434', // 默认
+			grokApiKey: '',
+			geminiApiKey: '',
+			openaiApiKey: '',
 			setModels: (models) => set({ models }),
 			setCurrentModel: (currentModel) =>
 				set((state) => {
@@ -22,7 +27,11 @@ export const useModelStore = create(
 					return { currentModel }
 				}),
 			setCurrentTrans: (currentTrans) => set({ currentTrans }),
-			setOllamaModel: (ollamaModel) => set({ ollamaModel })
+			setOllamaModel: (ollamaModel) => set({ ollamaModel }),
+			setOllamaApiHost: (ollamaApiHost) => set({ ollamaApiHost }),
+			setGrokApiKey: (grokApiKey) => set({ grokApiKey }),
+			setGeminiApiKey: (geminiApiKey) => set({ geminiApiKey }),
+			setOpenAiApiKey: (openAiApiKey) => set({ openAiApiKey })
 		}),
 		{ name: 'model-store' }
 	)

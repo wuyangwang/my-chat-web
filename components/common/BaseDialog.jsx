@@ -32,7 +32,7 @@ export function BaseDialog({ trigger, children, title, desc, onConfirm }) {
 	return (
 		<Dialog open={open} onOpenChange={open ? closeDialog : openDialog}>
 			<DialogTrigger asChild>{trigger}</DialogTrigger>
-			<DialogContent className='max-w-[360px] md:max-w-[420px]'>
+			<DialogContent className='max-w-[360px] md:max-w-[500px]'>
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
 					{desc && <DialogDescription>{desc}</DialogDescription>}

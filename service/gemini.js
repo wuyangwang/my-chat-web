@@ -5,8 +5,13 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 let geminiClient = null
 
 export async function chatWithGemini({ model, messages }, onCb = () => {}) {
+	let apiKey = getGeminiKey()
+	if (!apiKey) {
+		showToast('请先配置Gemini Api Key', 'error')
+		throw new Error('请先配置Gemini Api Key')
+	}
 	if (!geminiClient) {
-		geminiClient = new GoogleGenerativeAI(getGeminiKey())
+		geminiClient = new GoogleGenerativeAI(apiKey)
 	}
 	const chatModel = geminiClient.getGenerativeModel({
 		model: model,

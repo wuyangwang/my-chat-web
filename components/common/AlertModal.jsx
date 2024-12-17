@@ -14,8 +14,15 @@ import {
 
 import { useState } from 'react'
 
-export function AlertModal({ children, title = '确认操作', desc, onConfirm }) {
-	const [open, setOpen] = useState(false)
+export function AlertModal({
+	show = false,
+	children,
+	title = '确认操作',
+	desc,
+	showCancel = true,
+	onConfirm
+}) {
+	const [open, setOpen] = useState(show)
 
 	const onCancel = () => {
 		setOpen(false)
@@ -33,7 +40,7 @@ export function AlertModal({ children, title = '确认操作', desc, onConfirm }
 					<AlertDialogDescription>{desc}</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel onClick={onCancel}>取消</AlertDialogCancel>
+					{showCancel && <AlertDialogCancel onClick={onCancel}>取消</AlertDialogCancel>}
 					<AlertDialogAction onClick={onSubmit}>确定</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>

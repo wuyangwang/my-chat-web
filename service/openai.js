@@ -5,9 +5,14 @@ import OpenAI from 'openai'
 let openAiClient
 
 export async function chatWithOpenAI({ model, messages }, onCb = () => {}) {
+	let apiKey = getOpenAiKey()
+	if (!apiKey) {
+		showToast('请先配置OpenAI Api Key', 'error')
+		throw new Error('请先配置OpenAI Api Key')
+	}
 	if (!openAiClient) {
 		openAiClient = new OpenAI({
-			apiKey: getOpenAiKey(),
+			apiKey: apiKey,
 			dangerouslyAllowBrowser: true
 		})
 	}
