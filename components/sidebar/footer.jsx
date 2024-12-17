@@ -4,6 +4,7 @@ import { BaseDialog, DialogProvider, useDialog } from '@/components/common/BaseD
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { useModelStore, useUserStore } from '@/store'
 
+import { CopyContent } from '../common/CopyContent'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Settings } from 'lucide-react'
@@ -99,7 +100,8 @@ function SystemConfigDialog() {
 			}
 		>
 			<div className='grid gap-4 py-4'>
-				<div className='grid grid-cols-4 items-center gap-4'>
+				<Label className='text-center text-base font-bold'>取一个好听的名字吧</Label>
+				<div className='grid grid-cols-5 items-center gap-4'>
 					<Label htmlFor='name' className='text-right'>
 						昵称
 					</Label>
@@ -111,44 +113,42 @@ function SystemConfigDialog() {
 						onChange={(e) => onInput(e.target.value, 'nickName')}
 					/>
 				</div>
-				<div className='grid grid-cols-4 items-center gap-4'>
-					<Label htmlFor='name' className='text-right'>
-						Grok Key
-					</Label>
+				<Label className='text-center text-base font-bold'>外部模型必须的Api Key</Label>
+				<div className='grid grid-cols-5 items-center gap-4'>
+					<Label className='text-right'>Grok</Label>
 					<Input
 						value={form.grokApiKey}
 						placeholder='请输入'
 						className='col-span-3'
 						onChange={(e) => onInput(e.target.value, 'grokApiKey')}
 					/>
+					<CopyContent content={form.grokApiKey} />
 				</div>
-				<div className='grid grid-cols-4 items-center gap-4'>
-					<Label htmlFor='name' className='text-right'>
-						Gemini Key
-					</Label>
+				<div className='grid grid-cols-5 items-center gap-4'>
+					<Label className='text-right'>Gemini</Label>
 					<Input
 						value={form.geminiApiKey}
 						placeholder='请输入'
 						className='col-span-3'
 						onChange={(e) => onInput(e.target.value, 'geminiApiKey')}
 					/>
+					<CopyContent content={form.geminiApiKey} />
 				</div>
-				<div className='grid grid-cols-4 items-center gap-4'>
-					<Label htmlFor='name' className='text-right'>
-						OpenAi Key
-					</Label>
+				<div className='grid grid-cols-5 items-center gap-4'>
+					<Label className='text-right'>OpenAI</Label>
 					<Input
 						value={form.openAiApiKey}
 						placeholder='请输入'
 						className='col-span-3'
 						onChange={(e) => onInput(e.target.value, 'openAiApiKey')}
 					/>
+					<CopyContent content={form.openAiApiKey} />
 				</div>
-				<div className='grid grid-cols-4 items-center gap-4'>
-					<Label htmlFor='name' className='text-right'>
-						Ollama Host
-					</Label>
+				<Label className='text-center text-base font-bold'>Ollama本地模型Api Host</Label>
+				<div className='grid grid-cols-5 items-center gap-4'>
+					<Label className='text-right'>Host</Label>
 					<Input disabled value={form.ollamaApiHost} className='col-span-3' />
+					<CopyContent content={form.ollamaApiHost} />
 				</div>
 			</div>
 		</BaseDialog>

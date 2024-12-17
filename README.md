@@ -64,7 +64,7 @@ pnpm run deploy
 
 - Gemini
 - Grok
-- OpenAi
+- OpenAI
 - Ollama 本地
 
 ## 说明
