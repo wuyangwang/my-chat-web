@@ -33,6 +33,12 @@ export const ExternalChatModelList = [
 		type: ModelTypeEnum.gemini
 	},
 	{
+		name: 'gemini-2.0-flash-exp',
+		model: 'gemini-2.0-flash-exp',
+		maxCount: 1000,
+		type: ModelTypeEnum.gemini
+	},
+	{
 		name: 'gpt-3.5-turbo',
 		model: 'gpt-3.5-turbo',
 		maxCount: 1000,

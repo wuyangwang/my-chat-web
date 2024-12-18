@@ -16,7 +16,7 @@ export async function GET(request) {
 
 	let inputs = {
 		messages: [
-			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' },
+			{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答' },
 			{ role: 'user', content: prompt }
 		]
 		// stream: true
@@ -34,9 +34,7 @@ export async function POST(request) {
 	if (err) return err
 
 	let model = body.model || utils.defaultChatModel
-	let systemMsg = [
-		{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答，并保持简洁' }
-	]
+	let systemMsg = [{ role: 'system', content: 'You are a helpful assistant. 尽量使用中文回答' }]
 	let inputs = {
 		messages: systemMsg.concat(body.messages),
 		stream: true // 启用流式传输
