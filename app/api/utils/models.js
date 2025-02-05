@@ -2,12 +2,12 @@ export const aiModelList = [
 	{
 		tag: 'chat',
 		models: [
-			{ name: 'qwen1.5-14b', model: '@cf/qwen/qwen1.5-14b-chat-awq', maxCount: 1000 },
 			{
 				name: 'llama3.3-70b',
 				model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
 				maxCount: 1000
 			},
+			{ name: 'qwen1.5-14b', model: '@cf/qwen/qwen1.5-14b-chat-awq', maxCount: 1000 },
 			{
 				name: 'llama3.1-70b',
 				model: '@cf/meta/llama-3.1-70b-instruct',

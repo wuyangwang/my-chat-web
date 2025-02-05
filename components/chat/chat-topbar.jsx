@@ -17,7 +17,7 @@ const ChatTop = memo(({ type }) => {
 			<CircleAlert className='text-primary/80 h-4 w-4' />
 			<div className='text-muted-foreground text-wrap max-w-[260px] md:max-w-[500px]'>
 				{type === ChatTypeEnum.chat &&
-					'默认使用阿里千问模型，对中文友好，也可以在顶部切换模型，最多保存500条历史记录'}
+					'默认使用llama3.3模型，对中文友好，也可以在顶部切换模型，最多保存500条历史记录'}
 				{type === ChatTypeEnum.genImage &&
 					'尽量使用详细的文字描述，英文最好，最多保存50条历史记录。右侧可以启用预先翻译模式，先翻译为英文，可能提升效果'}
 				{type === ChatTypeEnum.translate && '选择翻译模式，进行文本翻译，最多保存500条历史记录'}
