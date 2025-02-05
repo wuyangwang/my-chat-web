@@ -2,7 +2,7 @@ class TextQueue {
 	constructor() {
 		this.queue = []
 		this.timer = null
-		this.duration = 800 // 批量更新间隔
+		this.duration = [400, 600, 800] // 批量更新间隔
 	}
 
 	startQueue(cb) {
@@ -38,7 +38,11 @@ class TextQueue {
 				cb(text) // 执行回调
 			}
 			this.timer = null // 允许下一次运行
-		}, this.duration)
+		}, this.getDuration())
+	}
+
+	getDuration() {
+		return this.duration[Math.floor(Math.random() * this.duration.length)]
 	}
 }
 
