@@ -17,6 +17,11 @@ export const aiModelList = [
 				name: 'llama3.1-8b',
 				model: '@cf/meta/llama-3.1-8b-instruct',
 				maxCount: 1000
+			},
+			{
+				name: 'deepseek-coder-6.7b',
+				model: '@hf/thebloke/deepseek-coder-6.7b-instruct-awq',
+				maxCount: 1000
 			}
 		]
 	},
