@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
 import { memo } from 'react'
 
 const ChatMessage = memo(({ message, onRegenerate }) => {
-	const { role, pending, content, timestamp, isImage, nickName } = message
+	const { role, pending, content, timestamp, isImage, nickName, model } = message
 
 	const isUser = role === ChatRole.User
 	const roleName = isUser ? 'self-end flex-row-reverse' : 'self-start'
@@ -25,7 +25,12 @@ const ChatMessage = memo(({ message, onRegenerate }) => {
 		<div className='flex flex-col gap-2 mb-5'>
 			<div className={cn('flex items-center gap-2 group', roleName)}>
 				<div className='text-primary flex items-center gap-1'>
-					{!isUser && <BotMessageSquare />}
+					{!isUser && (
+						<>
+							<BotMessageSquare />
+							<span className='text-muted-foreground text-sm'>{model}</span>
+						</>
+					)}
 					{isUser && (
 						<>
 							<span className='text-muted-foreground text-sm'>{nickName}</span>
