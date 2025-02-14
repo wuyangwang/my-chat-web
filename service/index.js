@@ -1,5 +1,6 @@
 import { ModelTypeEnum } from '@/utils'
 import { chatWithApi } from './api'
+import { chatWithDeepSeek } from './deepseek'
 import { chatWithGemini } from './gemini'
 import { chatWithGrok } from './grok'
 import { chatWithOllama } from './ollama'
@@ -16,6 +17,7 @@ export async function chatWithMock() {
 export const getChatApi = (type) => {
 	if (type === ModelTypeEnum.gemini) return chatWithGemini
 	if (type === ModelTypeEnum.grok) return chatWithGrok
+	if (type === ModelTypeEnum.deepseek) return chatWithDeepSeek
 	if (type === ModelTypeEnum.ollama) return chatWithOllama
 	if (type === ModelTypeEnum.openai) return chatWithOpenAI
 	return chatWithApi

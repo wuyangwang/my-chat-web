@@ -27,6 +27,7 @@ export function ModelSelect() {
 	const grokApiKey = useModelStore((state) => state.grokApiKey)
 	const geminiApiKey = useModelStore((state) => state.geminiApiKey)
 	const openAiApiKey = useModelStore((state) => state.openAiApiKey)
+	const deepseekApiKey = useModelStore((state) => state.deepseekApiKey)
 
 	const [isValid, isChatPath, isTransPath] = useValidRoute()
 	const [ollamaModels, setOllamaModels] = useState([])
@@ -79,7 +80,12 @@ export function ModelSelect() {
 				showToast('未检测到Api Key，请在左下角设置中配置')
 			}
 		}
-	}, [currentModel, grokApiKey, geminiApiKey, openAiApiKey])
+		if (currentModel.type === ModelTypeEnum.deepseek) {
+			if (!deepseekApiKey) {
+				showToast('未检测到Api Key，请在左下角设置中配置')
+			}
+		}
+	}, [currentModel, grokApiKey, geminiApiKey, openAiApiKey, deepseekApiKey])
 
 	if (!isValid) return null
 	if (!currentModel) return null

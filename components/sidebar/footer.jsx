@@ -35,6 +35,7 @@ function SystemConfigDialog() {
 		grokApiKey: '',
 		geminiApiKey: '',
 		openAiApiKey: '',
+		deepseekApiKey: '',
 		ollamaApiHost: ''
 	})
 	const nickName = useUserStore((state) => state.nickName)
@@ -45,7 +46,9 @@ function SystemConfigDialog() {
 	const geminiApiKey = useModelStore((state) => state.geminiApiKey)
 	const setGeminiApiKey = useModelStore((state) => state.setGeminiApiKey)
 	const openAiApiKey = useModelStore((state) => state.openAiApiKey)
+	const deepseekApiKey = useModelStore((state) => state.deepseekApiKey)
 	const setOpenAiApiKey = useModelStore((state) => state.setOpenAiApiKey)
+	const setDeepSeekApiKey = useModelStore((state) => state.setDeepSeekApiKey)
 	const ollamaApiHost = useModelStore((state) => state.ollamaApiHost)
 	// const setOllamaApiHost = useUserStore((state) => state.setOllamaApiHost)
 	const { openDialog, closeDialog } = useDialog()
@@ -54,7 +57,7 @@ function SystemConfigDialog() {
 		// if (!input.trim()) {
 		// 	return showToast('请输入昵称', 'error')
 		// }
-		const { nickName, grokApiKey, geminiApiKey, openAiApiKey } = form
+		const { nickName, grokApiKey, geminiApiKey, openAiApiKey, deepseekApiKey } = form
 		if (nickName && nickName.length > 8) {
 			return showToast('昵称最多8个字符', 'error')
 		}
@@ -62,6 +65,7 @@ function SystemConfigDialog() {
 		setGrokApiKey(grokApiKey || '')
 		setGeminiApiKey(geminiApiKey || '')
 		setOpenAiApiKey(openAiApiKey || '')
+		setDeepSeekApiKey(deepseekApiKey || '')
 		setForm({})
 		closeDialog()
 	}
@@ -76,6 +80,7 @@ function SystemConfigDialog() {
 			grokApiKey,
 			geminiApiKey,
 			openAiApiKey,
+			deepseekApiKey,
 			ollamaApiHost
 		})
 		openDialog()
@@ -115,14 +120,14 @@ function SystemConfigDialog() {
 				</div>
 				<Label className='text-center text-base font-bold'>外部模型必须的Api Key</Label>
 				<div className='grid grid-cols-5 items-center gap-4'>
-					<Label className='text-right'>Grok</Label>
+					<Label className='text-right'>DeepSeek</Label>
 					<Input
-						value={form.grokApiKey}
+						value={form.deepseekApiKey}
 						placeholder='请输入'
 						className='col-span-3'
-						onChange={(e) => onInput(e.target.value, 'grokApiKey')}
+						onChange={(e) => onInput(e.target.value, 'deepseekApiKey')}
 					/>
-					<CopyContent content={form.grokApiKey} />
+					<CopyContent content={form.deepseekApiKey} />
 				</div>
 				<div className='grid grid-cols-5 items-center gap-4'>
 					<Label className='text-right'>Gemini</Label>
@@ -143,6 +148,16 @@ function SystemConfigDialog() {
 						onChange={(e) => onInput(e.target.value, 'openAiApiKey')}
 					/>
 					<CopyContent content={form.openAiApiKey} />
+				</div>
+				<div className='grid grid-cols-5 items-center gap-4'>
+					<Label className='text-right'>Grok</Label>
+					<Input
+						value={form.grokApiKey}
+						placeholder='请输入'
+						className='col-span-3'
+						onChange={(e) => onInput(e.target.value, 'grokApiKey')}
+					/>
+					<CopyContent content={form.grokApiKey} />
 				</div>
 				<Label className='text-center text-base font-bold'>Ollama本地模型Api Host</Label>
 				<div className='grid grid-cols-5 items-center gap-4'>

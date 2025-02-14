@@ -13,7 +13,7 @@ function getValue(key) {
 	return JSON.parse(value).state[key]
 }
 export const getGrokKey = (key = 'grokApiKey') => getValue(key)
-
+export const getDeepSeekKey = (key = 'deepseekApiKey') => getValue(key)
 export const getOpenAiKey = (key = 'openaiApiKey') => getValue(key)
 export const getGeminiKey = (key = 'geminiApiKey') => getValue(key)
 

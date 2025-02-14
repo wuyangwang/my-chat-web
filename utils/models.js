@@ -2,6 +2,7 @@ export const ModelTypeEnum = {
 	ollama: 'ollama',
 	openai: 'openai',
 	gemini: 'gemini', // google
+	deepseek: 'deepseek',
 	grok: 'grok' // x
 }
 
@@ -9,7 +10,8 @@ export const ExternalModelHost = {
 	[ModelTypeEnum.openai]: 'https://api.openai.com/v1',
 	[ModelTypeEnum.ollama]: 'http://localhost:11434',
 	[ModelTypeEnum.gemini]: '',
-	[ModelTypeEnum.grok]: 'https://api.x.ai/v1'
+	[ModelTypeEnum.grok]: 'https://api.x.ai/v1',
+	[ModelTypeEnum.deepseek]: 'https://api.deepseek.com'
 }
 
 // 本地第三方LLM 配置模型
@@ -19,12 +21,6 @@ export const ExternalChatModelList = [
 		model: '',
 		maxCount: 1000,
 		type: ModelTypeEnum.ollama
-	},
-	{
-		name: 'grok-2-1212',
-		model: 'grok-2-1212',
-		maxCount: 1000,
-		type: ModelTypeEnum.grok
 	},
 	{
 		name: 'gemini-1.5-flash',
@@ -39,6 +35,18 @@ export const ExternalChatModelList = [
 		type: ModelTypeEnum.gemini
 	},
 	{
+		name: 'deepseek-chat',
+		model: 'deepseek-chat',
+		maxCount: 1000,
+		type: ModelTypeEnum.deepseek
+	},
+	{
+		name: 'deepseek-reasoner(推理)',
+		model: 'deepseek-reasoner',
+		maxCount: 1000,
+		type: ModelTypeEnum.deepseek
+	},
+	{
 		name: 'gpt-3.5-turbo',
 		model: 'gpt-3.5-turbo',
 		maxCount: 1000,
@@ -49,6 +57,12 @@ export const ExternalChatModelList = [
 		model: 'gpt-4o',
 		maxCount: 1000,
 		type: ModelTypeEnum.openai
+	},
+	{
+		name: 'grok-2-1212',
+		model: 'grok-2-1212',
+		maxCount: 1000,
+		type: ModelTypeEnum.grok
 	}
 ]
 

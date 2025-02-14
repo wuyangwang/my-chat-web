@@ -14,6 +14,7 @@ export const useModelStore = create(
 			grokApiKey: '',
 			geminiApiKey: '',
 			openaiApiKey: '',
+			deepseekApiKey: '',
 			setModels: (models) => set({ models }),
 			setCurrentModel: (currentModel) =>
 				set((state) => {
@@ -31,7 +32,8 @@ export const useModelStore = create(
 			setOllamaApiHost: (ollamaApiHost) => set({ ollamaApiHost }),
 			setGrokApiKey: (grokApiKey) => set({ grokApiKey }),
 			setGeminiApiKey: (geminiApiKey) => set({ geminiApiKey }),
-			setOpenAiApiKey: (openAiApiKey) => set({ openAiApiKey })
+			setOpenAiApiKey: (openAiApiKey) => set({ openAiApiKey }),
+			setDeepSeekApiKey: (deepseekApiKey) => set({ deepseekApiKey })
 		}),
 		{ name: 'model-store' }
 	)
