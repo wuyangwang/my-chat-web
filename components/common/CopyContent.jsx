@@ -19,16 +19,16 @@ const CopyContent = memo(({ className, content, showText = false }) => {
 	const Icon = copied ? CopyCheck : Copy
 	return (
 		<CopyToClipboard text={content} onCopy={() => setCopied(true)}>
-			<Icon
-				className={cn(
-					'cursor-pointer h-4 w-4 text-muted-foreground hover:text-muted-foreground/80',
-					copied && 'text-primary',
-					className
-				)}
-			/>
-			{showText && (
-				<span className='text-xs text-muted-foreground'>{copied ? '已复制' : '复制'}</span>
-			)}
+			<div className='cursor-pointer relative flex items-center gap-1 text-muted-foreground'>
+				<Icon
+					className={cn(
+						'h-4 w-4 hover:text-muted-foreground/80',
+						copied && 'text-primary',
+						className
+					)}
+				/>
+				{showText && <span className='text-xs'>{copied ? '已复制' : '复制'}</span>}
+			</div>
 		</CopyToClipboard>
 	)
 })
