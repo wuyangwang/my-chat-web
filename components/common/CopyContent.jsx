@@ -4,7 +4,7 @@ import { memo, useEffect, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { cn } from '@/lib/utils'
 
-const CopyContent = memo(({ className, content }) => {
+const CopyContent = memo(({ className, content, showText = false }) => {
 	const [copied, setCopied] = useState(false)
 
 	useEffect(() => {
@@ -26,6 +26,9 @@ const CopyContent = memo(({ className, content }) => {
 					className
 				)}
 			/>
+			{showText && (
+				<span className='text-xs text-muted-foreground'>{copied ? '已复制' : '复制'}</span>
+			)}
 		</CopyToClipboard>
 	)
 })
