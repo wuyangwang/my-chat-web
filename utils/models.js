@@ -17,49 +17,49 @@ export const ExternalModelHost = {
 // 本地第三方LLM 配置模型
 export const ExternalChatModelList = [
 	{
-		name: 'gemini-1.5-flash',
+		name: '谷歌gemini-1.5',
 		model: 'gemini-1.5-flash',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
 	},
 	{
-		name: 'gemini-2.0-flash-exp',
+		name: '谷歌gemini-2.0',
 		model: 'gemini-2.0-flash-exp',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
 	},
 	{
-		name: 'deepseek-chat',
+		name: 'DeepSeek',
 		model: 'deepseek-chat',
 		maxCount: 1000,
 		type: ModelTypeEnum.deepseek
 	},
 	{
-		name: 'deepseek-reasoner(推理)',
+		name: 'DeepSeek(推理)',
 		model: 'deepseek-reasoner',
 		maxCount: 1000,
 		type: ModelTypeEnum.deepseek
 	},
 	{
-		name: 'gpt-3.5-turbo',
+		name: 'OpenAi gpt-3.5',
 		model: 'gpt-3.5-turbo',
 		maxCount: 1000,
 		type: ModelTypeEnum.openai
 	},
 	{
-		name: 'gpt-4o',
+		name: 'OpenAi gpt-4o',
 		model: 'gpt-4o',
 		maxCount: 1000,
 		type: ModelTypeEnum.openai
 	},
 	{
-		name: 'grok-2-1212',
+		name: 'XAI grok-2',
 		model: 'grok-2-1212',
 		maxCount: 1000,
 		type: ModelTypeEnum.grok
 	},
 	{
-		name: 'ollama本地',
+		name: 'Ollama本地',
 		model: '',
 		maxCount: 1000,
 		type: ModelTypeEnum.ollama

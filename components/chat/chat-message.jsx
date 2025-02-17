@@ -58,7 +58,9 @@ const ChatMessage = memo(({ message, onRegenerate }) => {
 							<CopyContent content={content} className='block cursor-pointer' />
 						</div>
 					)}
-					{!isUser && <IconWrap Icon={RefreshCw} title='重新生成' onClick={onRegenerate} />}
+					{!isUser && !pending && (
+						<IconWrap Icon={RefreshCw} title='重新生成' onClick={onRegenerate} />
+					)}
 				</div>
 			</div>
 		</div>
