@@ -40,8 +40,9 @@ export function useInitModel() {
 				setCurrentModelInfo(arr[0], path)
 			}
 		}
-
-		fetchList()
+		setTimeout(() => {
+			fetchList()
+		}, 500)
 		// eslint-disable-next-line
 	}, [])
 
