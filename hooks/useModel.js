@@ -4,6 +4,26 @@ import { useEffect } from 'react'
 import { useModelStore } from '@/store'
 import { usePathname } from 'next/navigation'
 
+// 映射 获取当前模型信息
+export function useCurrentModel() {
+	const path = usePathname()
+
+	const currentModelInfo = useModelStore((state) => state.currentModelInfo)
+	let key = mapPathToKey(path)
+
+	return currentModelInfo[key] || null
+}
+
+// 映射 获取当前模型列表
+export function useModel() {
+	const path = usePathname()
+
+	const models = useModelStore((state) => state.models)
+	const key = mapPathToKey(path)
+
+	return models[key] || []
+}
+
 export function useInitModel() {
 	const path = usePathname()
 	const currentModel = useCurrentModel()
@@ -22,25 +42,8 @@ export function useInitModel() {
 		}
 
 		fetchList()
-	}, [path, setModels, setCurrentModelInfo, currentModel])
-}
+		// eslint-disable-next-line
+	}, [])
 
-// 映射 获取当前模型列表
-export function useModel() {
-	const path = usePathname()
-
-	const models = useModelStore((state) => state.models)
-	const key = mapPathToKey(path)
-
-	return models[key] || []
-}
-
-// 映射 获取当前模型信息
-export function useCurrentModel() {
-	const path = usePathname()
-
-	const currentModelInfo = useModelStore((state) => state.currentModelInfo)
-	let key = mapPathToKey(path)
-
-	return currentModelInfo[key] || null
+	return null
 }
