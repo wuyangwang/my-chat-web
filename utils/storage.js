@@ -1,3 +1,5 @@
+import { ModelTypeEnum } from './models'
+
 const keyStore = 'model-store'
 
 export function getStorage(key) {
@@ -8,13 +10,13 @@ export function setStorage(key, value) {
 	localStorage.setItem(key, value)
 }
 
-function getValue(key) {
+function getValue(type) {
 	let value = getStorage(keyStore)
-	return JSON.parse(value).state[key]
+	return JSON.parse(value).state.thirdModelInfo[type]
 }
-export const getGrokKey = (key = 'grokApiKey') => getValue(key)
-export const getDeepSeekKey = (key = 'deepseekApiKey') => getValue(key)
-export const getOpenAiKey = (key = 'openaiApiKey') => getValue(key)
-export const getGeminiKey = (key = 'geminiApiKey') => getValue(key)
+export const getGrokKey = () => getValue(ModelTypeEnum.grok).apiKey
+export const getDeepSeekKey = () => getValue(ModelTypeEnum.deepseek).apiKey
+export const getOpenAiKey = () => getValue(ModelTypeEnum.openai).apiKey
+export const getGeminiKey = () => getValue(ModelTypeEnum.gemini).apiKey
 
-export const getOllamaHost = (key = 'ollamaApiHost') => getValue(key)
+export const getOllamaHost = () => getValue(ModelTypeEnum.ollama).apiHost
