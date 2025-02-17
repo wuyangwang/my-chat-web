@@ -1,41 +1,98 @@
-import { ChatRole, setOllamaHost } from '@/utils'
+import { ChatRole, ModelTypeEnum, RouterEnum, mapPathToKey } from '@/utils'
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const useModelStore = create(
 	persist(
-		(set) => ({
-			models: [],
-			currentModel: null,
-			currentTrans: '',
-			ollamaModel: '', // 选择的ollama模型
-			ollamaApiHost: 'http://localhost:11434', // 默认
-			grokApiKey: '',
-			geminiApiKey: '',
-			openaiApiKey: '',
-			deepseekApiKey: '',
-			setModels: (models) => set({ models }),
-			setCurrentModel: (currentModel) =>
+		(set, get) => ({
+			// 所有的内部模型 {chat:[],xxx}
+			models: {},
+			// 当前模型信息 包括 翻译、聊天、图片等各自的模型信息
+			currentModelInfo: {},
+			// 第三方model信息 比如key
+			// 比如openai:{apiKey:'',apiHost:'',currentModel:'',models:[]}
+			thirdModelInfo: {
+				[ModelTypeEnum.ollama]: {
+					apiKey: '',
+					apiHost: 'http://localhost:11434', // 默认
+					model: '', // 当前选择的model
+					models: []
+				}
+			},
+			//根据类型获取第三方model key
+			thirdModelKey: (type) => {
+				const { thirdModelInfo } = get()
+				return (thirdModelInfo[type] || {}).apiKey
+			},
+			// 特别 获取ollama模型信息
+			ollamaModelInfo: () => {
+				const { thirdModelInfo } = get()
+				return thirdModelInfo[ModelTypeEnum.ollama] || {}
+			},
+			setModels: (models, path) =>
 				set((state) => {
-					if (currentModel.items && !state.currentTrans) {
-						let info = currentModel.items[0]
-						return {
-							currentModel,
-							currentTrans: `${info.source}-${info.target}`
+					let key = mapPathToKey(path)
+					return {
+						models: {
+							...state.models,
+							[key]: models
 						}
 					}
-					return { currentModel }
 				}),
-			setCurrentTrans: (currentTrans) => set({ currentTrans }),
-			setOllamaModel: (ollamaModel) => set({ ollamaModel }),
-			setOllamaApiHost: (ollamaApiHost) => set({ ollamaApiHost }),
-			setGrokApiKey: (grokApiKey) => set({ grokApiKey }),
-			setGeminiApiKey: (geminiApiKey) => set({ geminiApiKey }),
-			setOpenAiApiKey: (openAiApiKey) => set({ openAiApiKey }),
-			setDeepSeekApiKey: (deepseekApiKey) => set({ deepseekApiKey })
+			// 设置当前模型信息
+			setCurrentModelInfo: (model, path) =>
+				set((state) => {
+					let key = mapPathToKey(path)
+					let info = { ...state.currentModelInfo, [key]: model }
+					// 翻译
+					if (path === RouterEnum.trans) {
+						let item = model.items[0] // 默认取第一个
+						info.transTarget = `${item.source}-${item.target}`
+					}
+					return {
+						currentModelInfo: info
+					}
+				}),
+			// 设置当前翻译model的target
+			setCurrentTransTarget: (transTarget) =>
+				set((state) => ({
+					currentModelInfo: { ...state.currentModelInfo, transTarget: transTarget }
+				})),
+			// 设置第三方model信息
+			setThirdModelInfo: (type, info) =>
+				set((state) => {
+					let current = state.thirdModelInfo[type] || {}
+					let newInfo = { ...state.thirdModelInfo, [type]: { ...current, ...info } }
+
+					const isOllama = type === ModelTypeEnum.ollama
+					if (isOllama) {
+						//
+					}
+					return {
+						thirdModelInfo: {
+							...state.thirdModelInfo,
+							[type]: newInfo
+						}
+					}
+				}),
+			// 设置第三方model key
+			setThirdModelKeys: (arr) =>
+				set((state) => {
+					let info = state.thirdModelInfo
+					arr.forEach((i) => {
+						const { type, key } = i
+						let current = state.thirdModelInfo[type] || {}
+						current.apiKey = key
+						info[type] = current
+					})
+
+					return {
+						thirdModelInfo: info
+					}
+				})
 		}),
-		{ name: 'model-store' }
+		{ name: 'model-store', version: 1 }
 	)
 )
 
@@ -104,9 +161,7 @@ export const useChatStore = create(
 			clearImgMessages: () => set({ imgMessages: [] }),
 			setPreTrans: (preTrans) => set({ preTrans })
 		}),
-		{
-			name: 'chat-store'
-		}
+		{ name: 'chat-store', version: 0 }
 	)
 )
 
@@ -122,6 +177,6 @@ export const useUserStore = create(
 			nickName: '',
 			setNickname: (nickName) => set({ nickName })
 		}),
-		{ name: 'user-store' }
+		{ name: 'user-store', version: 0 }
 	)
 )

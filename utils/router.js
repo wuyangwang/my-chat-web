@@ -5,6 +5,10 @@ export const RouterEnum = {
 	history: '/history'
 }
 
+// 根据路由path 获取obj的key
+export const mapPathToKey = (path) =>
+	path === RouterEnum.chat ? 'chat' : path === RouterEnum.img ? 'img' : 'trans'
+
 export const isValidRoute = (path) => {
 	return Object.values(RouterEnum).includes(path)
 }

@@ -62,6 +62,7 @@ pnpm run deploy
 
 目前兼容了以下模型 需要自己提供 api key 使用 具体见`/utils/models.js`
 
+- DeepSeek
 - Gemini
 - Grok
 - OpenAI

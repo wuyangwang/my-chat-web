@@ -11,14 +11,18 @@ import { chatWithMock, genImageWithApi, getChatApi, transWithApi } from '@/servi
 import { useChatStatusStore, useChatStore, useModelStore } from '@/store'
 
 import queue from '@/utils/queue'
+import { useCurrentModel } from '@/hooks/useModel'
 import { useState } from 'react'
 
 export function useChat(type) {
 	const [input, setInput] = useState('')
 
-	const currentTrans = useModelStore((s) => s.currentTrans)
-	const currentModel = useModelStore((s) => s.currentModel)
-	const ollamaModel = useModelStore((s) => s.ollamaModel)
+	const currentModel = useCurrentModel()
+	const currentModelInfo = useModelStore((state) => state.currentModelInfo)
+	const currentTransTarget = currentModelInfo.transTarget
+
+	const ollamaModelInfo = useModelStore((s) => s.ollamaModelInfo)
+	const ollamaModel = ollamaModelInfo()?.model
 
 	const apiLoading = useChatStatusStore((s) => s.apiLoading)
 	const setApiLoading = useChatStatusStore((s) => s.setApiLoading)
@@ -41,6 +45,7 @@ export function useChat(type) {
 	}
 
 	const onSubmit = async (content) => {
+		if (!currentModel) return showToast('请先选择模型')
 		let text = content || input
 		if (!text) return showToast('请输入内容')
 		let maxCount = currentModel.maxCount || 1000
@@ -59,7 +64,7 @@ export function useChat(type) {
 			params = genChatPostParams(msg, messages, fModel)
 		} else if (type === ChatTypeEnum.translate) {
 			addTransMessage(msg)
-			let [source, target] = currentTrans.split('-')
+			let [source, target] = currentTransTarget.split('-')
 			chatApi = transWithApi
 			params = { text, source, target }
 		} else if (type === ChatTypeEnum.genImage) {

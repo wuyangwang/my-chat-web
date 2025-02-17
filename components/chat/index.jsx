@@ -9,8 +9,8 @@ import { ChatMessage } from './chat-message'
 import { ChatScroll } from './chat-scroll'
 import { ChatTop } from './chat-topbar'
 import { useChat } from '@/hooks/useChat'
+import { useInitModel } from '@/hooks/useModel'
 import { useListScroll } from '@/hooks/useListScroll'
-import { useModel } from '@/hooks/useModel'
 import { useSidebarClose } from '@/hooks/useSidebarClose'
 import { useUserStore } from '@/store'
 
@@ -18,7 +18,7 @@ export function Chat({ type }) {
 	const isChat = type === ChatTypeEnum.chat
 	const chatRef = useRef(null)
 
-	useModel()
+	useInitModel()
 	useSidebarClose() // 确保进入页面 关闭侧边栏
 	const { showScroll, onScroll } = useListScroll(chatRef)
 	const nickName = useUserStore((state) => state.nickName)

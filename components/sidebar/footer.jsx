@@ -1,6 +1,7 @@
 'use client'
 
 import { BaseDialog, DialogProvider, useDialog } from '@/components/common/BaseDialog'
+import { ModelTypeEnum, showToast } from '@/utils'
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'
 import { useModelStore, useUserStore } from '@/store'
 
@@ -8,7 +9,6 @@ import { CopyContent } from '../common/CopyContent'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Settings } from 'lucide-react'
-import { showToast } from '@/utils'
 import { useState } from 'react'
 
 export function Footer() {
@@ -41,16 +41,16 @@ function SystemConfigDialog() {
 	const nickName = useUserStore((state) => state.nickName)
 	const setNickname = useUserStore((state) => state.setNickname)
 
-	const grokApiKey = useModelStore((state) => state.grokApiKey)
-	const setGrokApiKey = useModelStore((state) => state.setGrokApiKey)
-	const geminiApiKey = useModelStore((state) => state.geminiApiKey)
-	const setGeminiApiKey = useModelStore((state) => state.setGeminiApiKey)
-	const openAiApiKey = useModelStore((state) => state.openAiApiKey)
-	const deepseekApiKey = useModelStore((state) => state.deepseekApiKey)
-	const setOpenAiApiKey = useModelStore((state) => state.setOpenAiApiKey)
-	const setDeepSeekApiKey = useModelStore((state) => state.setDeepSeekApiKey)
-	const ollamaApiHost = useModelStore((state) => state.ollamaApiHost)
-	// const setOllamaApiHost = useUserStore((state) => state.setOllamaApiHost)
+	const thirdModelKey = useModelStore((state) => state.thirdModelKey)
+	const ollamaModelInfo = useModelStore((state) => state.ollamaModelInfo)
+	const setThirdModelKeys = useModelStore((state) => state.setThirdModelKeys)
+
+	const ollamaApiHost = ollamaModelInfo().apiHost
+	const grokApiKey = thirdModelKey(ModelTypeEnum.grok)
+	const geminiApiKey = thirdModelKey(ModelTypeEnum.gemini)
+	const openAiApiKey = thirdModelKey(ModelTypeEnum.openai)
+	const deepseekApiKey = thirdModelKey(ModelTypeEnum.deepseek)
+
 	const { openDialog, closeDialog } = useDialog()
 
 	const onConfirm = () => {
@@ -62,10 +62,13 @@ function SystemConfigDialog() {
 			return showToast('昵称最多8个字符', 'error')
 		}
 		setNickname(nickName || '')
-		setGrokApiKey(grokApiKey || '')
-		setGeminiApiKey(geminiApiKey || '')
-		setOpenAiApiKey(openAiApiKey || '')
-		setDeepSeekApiKey(deepseekApiKey || '')
+		let arr = [
+			{ type: ModelTypeEnum.grok, key: grokApiKey || '' },
+			{ type: ModelTypeEnum.gemini, key: geminiApiKey || '' },
+			{ type: ModelTypeEnum.openai, key: openAiApiKey || '' },
+			{ type: ModelTypeEnum.deepseek, key: deepseekApiKey || '' }
+		]
+		setThirdModelKeys(arr)
 		setForm({})
 		closeDialog()
 	}

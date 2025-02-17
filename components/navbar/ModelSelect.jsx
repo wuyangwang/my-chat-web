@@ -10,6 +10,7 @@ import {
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
+import { useCurrentModel, useModel } from '@/hooks/useModel'
 import { useEffect, useMemo, useState } from 'react'
 
 import { getOllamaModels } from '@/service/ollama'
@@ -17,19 +18,26 @@ import { useModelStore } from '@/store'
 import { useValidRoute } from '@/hooks/useValidRoute'
 
 export function ModelSelect() {
-	const models = useModelStore((state) => state.models)
-	const currentModel = useModelStore((state) => state.currentModel)
-	const currentTrans = useModelStore((state) => state.currentTrans)
-	const ollamaModel = useModelStore((state) => state.ollamaModel)
-	const setCurrentModel = useModelStore((state) => state.setCurrentModel)
-	const setCurrentTrans = useModelStore((state) => state.setCurrentTrans)
-	const setOllamaModel = useModelStore((state) => state.setOllamaModel)
-	const grokApiKey = useModelStore((state) => state.grokApiKey)
-	const geminiApiKey = useModelStore((state) => state.geminiApiKey)
-	const openAiApiKey = useModelStore((state) => state.openAiApiKey)
-	const deepseekApiKey = useModelStore((state) => state.deepseekApiKey)
+	const [isValid, isChatPath, isTransPath, path] = useValidRoute()
 
-	const [isValid, isChatPath, isTransPath] = useValidRoute()
+	const currentModel = useCurrentModel()
+	const models = useModel()
+
+	const currentModelInfo = useModelStore((state) => state.currentModelInfo)
+	const currentTransTarget = currentModelInfo.transTarget
+
+	const ollamaModelInfo = useModelStore((state) => state.ollamaModelInfo)
+	const ollamaModel = ollamaModelInfo().model
+	const setCurrentModelInfo = useModelStore((state) => state.setCurrentModelInfo)
+	const setCurrentTransTarget = useModelStore((state) => state.setCurrentTransTarget)
+	const setThirdModelInfo = useModelStore((state) => state.setThirdModelInfo)
+
+	const thirdModelKey = useModelStore((state) => state.thirdModelKey)
+	const grokApiKey = thirdModelKey(ModelTypeEnum.grok)
+	const geminiApiKey = thirdModelKey(ModelTypeEnum.gemini)
+	const openAiApiKey = thirdModelKey(ModelTypeEnum.openai)
+	const deepseekApiKey = thirdModelKey(ModelTypeEnum.deepseek)
+
 	const [ollamaModels, setOllamaModels] = useState([])
 
 	const isOllama = currentModel?.type === ModelTypeEnum.ollama
@@ -43,12 +51,12 @@ export function ModelSelect() {
 	const onChange = (value) => {
 		let list = models.concat(externalModels)
 		let obj = list.find((model) => model.name === value)
-		setCurrentModel(obj)
+		setCurrentModelInfo(obj, path)
 	}
 
 	const updateModel = (value) => {
 		const model = ollamaModels.find((item) => item.model === value)
-		setOllamaModel(model)
+		setThirdModelInfo(ModelTypeEnum.ollama, { model })
 	}
 
 	useEffect(() => {
@@ -57,7 +65,7 @@ export function ModelSelect() {
 
 		getOllamaModels().then((res) => {
 			setOllamaModels(res)
-			setOllamaModel(res[0].model)
+			setThirdModelInfo(ModelTypeEnum.ollama, { model: res[0].model })
 		})
 		// eslint-disable-next-line
 	}, [isOllama, currentModel])
@@ -98,7 +106,7 @@ export function ModelSelect() {
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
-						<SelectLabel>默认模型</SelectLabel>
+						<SelectLabel>默认模型(免费)</SelectLabel>
 						{models.map((model) => (
 							<SelectItem key={model.name} value={model.name}>
 								{model.name}
@@ -107,7 +115,7 @@ export function ModelSelect() {
 					</SelectGroup>
 					{isChatPath && (
 						<SelectGroup>
-							<SelectLabel>外部模型</SelectLabel>
+							<SelectLabel>外部模型(需要api key)</SelectLabel>
 							{externalModels.map((model) => (
 								<SelectItem key={model.name} value={model.name} disabled={model.disabled}>
 									{model.name}
@@ -119,7 +127,7 @@ export function ModelSelect() {
 			</Select>
 
 			{isTransPath && currentModel.items && currentModel.items.length > 0 && (
-				<Select value={currentTrans} onValueChange={setCurrentTrans}>
+				<Select value={currentTransTarget} onValueChange={setCurrentTransTarget}>
 					<SelectTrigger className='w-[90px]'>
 						<SelectValue placeholder='选择一个翻译目标' />
 					</SelectTrigger>
