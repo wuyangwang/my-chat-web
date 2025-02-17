@@ -7,7 +7,7 @@ export const RouterEnum = {
 
 // 根据路由path 获取obj的key
 export const mapPathToKey = (path) =>
-	path === RouterEnum.chat ? 'chat' : path === RouterEnum.img ? 'img' : 'trans'
+	path === RouterEnum.chat ? 'chat' : path === RouterEnum.genImage ? 'img' : 'trans'
 
 export const isValidRoute = (path) => {
 	return Object.values(RouterEnum).includes(path)

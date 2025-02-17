@@ -26,23 +26,16 @@ export function useModel() {
 
 export function useInitModel() {
 	const path = usePathname()
-	const currentModel = useCurrentModel()
 
 	const setModels = useModelStore((state) => state.setModels)
-	const setCurrentModelInfo = useModelStore((state) => state.setCurrentModelInfo)
 
 	useEffect(() => {
 		const fetchList = async () => {
 			const arr = await getModels(path.replace('/', ''))
 			setModels(arr, path)
-
-			if (!currentModel) {
-				setCurrentModelInfo(arr[0], path)
-			}
 		}
-		setTimeout(() => {
-			fetchList()
-		}, 500)
+
+		fetchList()
 		// eslint-disable-next-line
 	}, [])
 

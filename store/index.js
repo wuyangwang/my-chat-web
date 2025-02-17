@@ -33,6 +33,10 @@ export const useModelStore = create(
 			setModels: (models, path) =>
 				set((state) => {
 					let key = mapPathToKey(path)
+
+					if (!state.currentModelInfo[key]) {
+						state.setCurrentModelInfo(models[0], path)
+					}
 					return {
 						models: {
 							...state.models,
