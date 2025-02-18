@@ -1,4 +1,11 @@
-import { ExternalModelHost, ModelTypeEnum, genSystemMessage, getGrokKey, showToast } from '@/utils'
+import {
+	ExternalModelHost,
+	ModelTypeEnum,
+	formatStreamResponse,
+	genSystemMessage,
+	getGrokKey,
+	showToast
+} from '@/utils'
 
 import OpenAI from 'openai'
 
@@ -25,10 +32,7 @@ export async function chatWithGrok({ model, messages }, onCb = () => {}) {
 			stream: true
 		})
 
-		for await (const chunk of stream) {
-			onCb(chunk.choices[0]?.delta?.content || '')
-		}
-		onCb('[DONE]') // 兼容格式
+		await formatStreamResponse(stream, onCb)
 	} catch (error) {
 		showToast(error.message)
 	}

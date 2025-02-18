@@ -1,6 +1,7 @@
 import {
 	ExternalModelHost,
 	ModelTypeEnum,
+	formatStreamResponse,
 	genSystemMessage,
 	getDeepSeekKey,
 	showToast
@@ -31,26 +32,7 @@ export async function chatWithDeepSeek({ model, messages }, onCb = () => {}) {
 			stream: true
 		})
 
-		let isFirstChunk = false
-		let isLastChunk = false
-		for await (const chunk of stream) {
-			// 推理
-			let thinkingContent = chunk.choices[0]?.delta?.reasoning_content || ''
-			if (thinkingContent) {
-				if (!isFirstChunk) {
-					onCb('#### 思考过程\n ```')
-					isFirstChunk = true
-				}
-				onCb(thinkingContent)
-			} else {
-				if (isFirstChunk && !isLastChunk) {
-					onCb('```\n')
-					isLastChunk = true
-				}
-				onCb(chunk.choices[0]?.delta?.content || '')
-			}
-		}
-		onCb('[DONE]') // 兼容格式
+		await formatStreamResponse(stream, onCb)
 	} catch (error) {
 		showToast(error.message)
 	}

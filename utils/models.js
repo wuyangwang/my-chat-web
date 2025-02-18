@@ -11,7 +11,7 @@ export const ExternalModelHost = {
 	[ModelTypeEnum.ollama]: 'http://localhost:11434',
 	[ModelTypeEnum.gemini]: '',
 	[ModelTypeEnum.grok]: 'https://api.x.ai/v1',
-	[ModelTypeEnum.deepseek]: 'https://api.deepseek.com'
+	[ModelTypeEnum.deepseek]: 'https://api.deepseek.com/v1'
 }
 
 // 本地第三方LLM 配置模型
