@@ -10,8 +10,27 @@ import rehypeKatex from 'rehype-katex'
 import remarkBreaks from 'remark-breaks'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import { useMemo } from 'react'
 
 export function MarkdownPreview({ content }) {
+	function escapeBrackets(text) {
+		const pattern = /(```[\s\S]*?```|`.*?`)|\\\[([\s\S]*?[^\\])\\\]|\\\((.*?)\\\)/g
+		return text.replace(pattern, (match, codeBlock, squareBracket, roundBracket) => {
+			if (codeBlock) {
+				return codeBlock
+			} else if (squareBracket) {
+				return `$$${squareBracket}$$`
+			} else if (roundBracket) {
+				return `$${roundBracket}$`
+			}
+			return match
+		})
+	}
+
+	const escapedContent = useMemo(() => {
+		return escapeBrackets(content)
+	}, [content])
+
 	return (
 		<Markdown
 			remarkPlugins={[remarkMath, remarkGfm, remarkBreaks]}
@@ -29,7 +48,7 @@ export function MarkdownPreview({ content }) {
 			}}
 			rehypePlugins={[rehypeKatex]}
 		>
-			{content}
+			{escapedContent}
 		</Markdown>
 	)
 }
