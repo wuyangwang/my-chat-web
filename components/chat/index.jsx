@@ -20,7 +20,7 @@ export function Chat({ type }) {
 
 	useInitModel()
 	useSidebarClose() // 确保进入页面 关闭侧边栏
-	const { showScroll, onScroll } = useListScroll(chatRef)
+	const { showScroll, onScroll, onScrollBottom } = useListScroll(chatRef)
 	const nickName = useUserStore((state) => state.nickName)
 	const { apiLoading, messages, onSubmit } = useChat(type)
 
@@ -52,7 +52,7 @@ export function Chat({ type }) {
 					<ChatMessage message={{ role: 'assistant', pending: true, content: '正在生成中...' }} />
 				)}
 			</ChatList>
-			{showScroll && messages.length > 0 && <ChatScroll onScroll={onScroll} />}
+			{showScroll && messages.length > 0 && <ChatScroll onScroll={onScrollBottom} />}
 			<ChatBottom type={type} />
 		</div>
 	)
