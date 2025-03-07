@@ -22,8 +22,8 @@ export async function genImageWithApi({ prompt, model = '' }, preTrans) {
 	let finalPrompt = prompt
 	if (preTrans) {
 		// 先使用接口翻译为英文
-		const transData = await chatWithApiGet({ prompt: '翻译为英文：' + text })
+		const transData = await chatWithApiGet({ prompt: '请把以下内容翻译为英文：' + prompt })
 		finalPrompt = transData.text
 	}
-	return await apiGet('/api/gen-image', { prompt, model }, { isImage: true })
+	return await apiGet('/api/gen-image', { prompt: finalPrompt, model }, { isImage: true })
 }
