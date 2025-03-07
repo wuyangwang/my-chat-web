@@ -4,21 +4,26 @@ import { useMotionValueEvent, useScroll } from 'framer-motion'
 export function useListScroll(listRef) {
 	const [showScroll, setShowScroll] = useState(false)
 	const isUserScrolling = useRef(false) // 追踪用户是否手动滚动
-	const { scrollYProgress } = useScroll({ container: listRef })
+	const { scrollY } = useScroll({ container: listRef })
 
-	useMotionValueEvent(scrollYProgress, 'change', (val) => {
-		// 0 代表 滚动到顶部 1 代表 滚动到底部
-		setShowScroll(val <= 0.8)
-		isUserScrolling.current = val <= 0.94
+	useMotionValueEvent(scrollY, 'change', (val) => {
+		if (!listRef?.current) return
+
+		const { scrollHeight, clientHeight } = listRef.current
+		setShowScroll(val < scrollHeight - clientHeight - 50)
+		isUserScrolling.current = val < scrollHeight - clientHeight - 100
 	})
 
 	const onScrollBottom = useCallback(() => {
-		if (listRef?.current) {
-			listRef.current.scrollTo({
-				top: listRef.current.scrollHeight,
-				behavior: 'smooth'
-			})
-		}
+		if (!listRef?.current) return 
+		if (isUserScrolling.current) return
+
+		const { scrollHeight, clientHeight } = listRef.current
+		listRef.current.scrollTo({
+			top: scrollHeight - clientHeight,
+			behavior: 'smooth'
+		})
+		
 	}, [listRef])
 
 	// 滑动到底部

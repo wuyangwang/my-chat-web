@@ -20,7 +20,8 @@ export async function GET(request) {
 		prompt: prompt + promptDefault,
 		negative_prompt: negativePromptDefault,
 		height: 512,
-		width: 512
+		width: 512,
+		steps: 8
 	})
 
 	return utils.returnImage(response)

@@ -39,6 +39,11 @@ export const aiModelList = [
 				maxCount: 1000
 			},
 			{
+				name: 'black-forest-labs/flux-1-schnell',
+				model: '@cf/black-forest-labs/flux-1-schnell',
+				maxCount: 1000
+			},
+			{
 				name: 'lykon/dreamshaper',
 				model: '@cf/lykon/dreamshaper-8-lcm',
 				maxCount: 1000
