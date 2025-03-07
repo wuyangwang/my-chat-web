@@ -18,10 +18,10 @@ export async function GET(request) {
 
 	const response = await env.AI.run(model, {
 		prompt: prompt + promptDefault,
-		negative_prompt: negativePromptDefault,
-		height: 512,
-		width: 512,
-		steps: 8
+		//negative_prompt: negativePromptDefault,
+		height: 1024,
+		width: 1024,
+		steps: 12
 	})
 
 	return utils.returnImage(response)
