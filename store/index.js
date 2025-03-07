@@ -107,9 +107,9 @@ export const useChatStore = create(
 			messages: [],
 			// 最大保存500条
 			transMessages: [],
-			// 保存最新的50条
+			// 保存最新的100条
 			imgMessages: [],
-			preTrans: false,
+			preTrans: true,
 			addMessage: (message) =>
 				set((state) => {
 					let newMessages = state.messages.concat(message)
@@ -155,7 +155,7 @@ export const useChatStore = create(
 						...state.imgMessages,
 						{ ...message, isImage: message.role === ChatRole.Assistant }
 					]
-					if (newMessages.length > 50) {
+					if (newMessages.length > 100) {
 						newMessages.shift()
 					}
 					return { imgMessages: newMessages }
@@ -165,7 +165,7 @@ export const useChatStore = create(
 			clearImgMessages: () => set({ imgMessages: [] }),
 			setPreTrans: (preTrans) => set({ preTrans })
 		}),
-		{ name: 'chat-store', version: 0 }
+		{ name: 'chat-store', version: 1 }
 	)
 )
 
