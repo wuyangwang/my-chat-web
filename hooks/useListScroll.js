@@ -10,22 +10,22 @@ export function useListScroll(listRef) {
 		if (!listRef?.current) return
 
 		const { scrollHeight, clientHeight } = listRef.current
-		setShowScroll(val < scrollHeight - clientHeight - 50)
+		setShowScroll(val < scrollHeight - clientHeight - 70)
 		isUserScrolling.current = val < scrollHeight - clientHeight - 100
 	})
 
+	// 直接滑动到底部
 	const onScrollBottom = useCallback(() => {
 		const { scrollHeight } = listRef.current
 		listRef.current.scrollTo({
 			top: scrollHeight,
 			behavior: 'smooth'
 		})
-		
 	}, [listRef])
 
-	// 滑动到底部
+	// 检查-滑动到底部
 	const onScroll = useCallback(() => {
-		if (!listRef?.current) return 
+		if (!listRef?.current) return
 		if (isUserScrolling.current) return
 		onScrollBottom()
 		// eslint-disable-next-line

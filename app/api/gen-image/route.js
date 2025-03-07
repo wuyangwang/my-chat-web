@@ -16,13 +16,27 @@ export async function GET(request) {
 	const [_, err] = utils.validReqSchema(genImgSchema, { prompt, model })
 	if (err) return err
 
-	const response = await env.AI.run(model, {
-		prompt: prompt + promptDefault,
-		//negative_prompt: negativePromptDefault,
-		height: 1024,
-		width: 1024,
-		steps: 12
-	})
+	let params = getParamsByModel(model, prompt)
+	const response = await env.AI.run(model, params)
 
 	return utils.returnImage(response)
+}
+
+// 返回的是base64 而不是image
+const specialModel = ['@cf/black-forest-labs/flux-1-schnell']
+
+function getParamsByModel(model, prompt) {
+	if (specialModel.includes(model)) {
+		return {
+			prompt: prompt + promptDefault,
+			steps: 8 // 最大是8
+		}
+	}
+	return {
+		prompt: prompt + promptDefault,
+		negative_prompt: negativePromptDefault,
+		height: 1024,
+		width: 1024,
+		num_steps: 16 // 最大是20
+	}
 }
