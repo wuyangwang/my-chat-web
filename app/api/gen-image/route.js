@@ -16,10 +16,18 @@ export async function GET(request) {
 	const [_, err] = utils.validReqSchema(genImgSchema, { prompt, model })
 	if (err) return err
 
-	let params = getParamsByModel(model, prompt)
+	let [params, isBase64] = getParamsByModel(model, prompt)
 	const response = await env.AI.run(model, params)
 
-	return utils.returnImage(response)
+	if (isBase64) {
+		// Convert from base64 string
+		const binaryString = atob(response.image)
+		// Create byte representation
+		const img = Uint8Array.from(binaryString, (m) => m.codePointAt(0))
+		return utils.returnImage(img)
+	} else {
+		return utils.returnImage(response)
+	}
 }
 
 // 返回的是base64 而不是image
@@ -27,16 +35,22 @@ const specialModel = ['@cf/black-forest-labs/flux-1-schnell']
 
 function getParamsByModel(model, prompt) {
 	if (specialModel.includes(model)) {
-		return {
+		return [
+			{
+				prompt: prompt + promptDefault,
+				steps: 8 // 最大是8
+			},
+			true
+		]
+	}
+	return [
+		{
 			prompt: prompt + promptDefault,
-			steps: 8 // 最大是8
-		}
-	}
-	return {
-		prompt: prompt + promptDefault,
-		negative_prompt: negativePromptDefault,
-		height: 1024,
-		width: 1024,
-		num_steps: 16 // 最大是20
-	}
+			negative_prompt: negativePromptDefault,
+			height: 1024,
+			width: 1024,
+			num_steps: 16 // 最大是20
+		},
+		false
+	]
 }
