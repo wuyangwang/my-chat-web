@@ -24,7 +24,7 @@ export const ExternalChatModelList = [
 	},
 	{
 		name: '谷歌gemini-2.0',
-		model: 'gemini-2.0-flash-exp',
+		model: 'gemini-2.0-flash',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
 	},
