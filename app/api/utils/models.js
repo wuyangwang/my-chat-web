@@ -29,6 +29,11 @@ export const aiModelList = [
 		tag: 'gen-image',
 		models: [
 			{
+				name: 'black-forest-labs/flux-1-schnell',
+				model: '@cf/black-forest-labs/flux-1-schnell',
+				maxCount: 1000
+			},
+			{
 				name: 'stable-diffusion-xl-lightning',
 				model: '@cf/bytedance/stable-diffusion-xl-lightning',
 				maxCount: 1000
@@ -38,16 +43,11 @@ export const aiModelList = [
 				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 				maxCount: 1000
 			},
-			{
-				name: 'black-forest-labs/flux-1-schnell',
-				model: '@cf/black-forest-labs/flux-1-schnell',
-				maxCount: 1000
-			},
-			{
-				name: 'lykon/dreamshaper',
-				model: '@cf/lykon/dreamshaper-8-lcm',
-				maxCount: 1000
-			}
+			// {
+			// 	name: 'lykon/dreamshaper',
+			// 	model: '@cf/lykon/dreamshaper-8-lcm',
+			// 	maxCount: 1000
+			// }
 			// {
 			// 	name: 'stable-diffusion-v1.5',
 			// 	model: '@cf/runwayml/stable-diffusion-v1-5-img2img',
