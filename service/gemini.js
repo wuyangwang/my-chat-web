@@ -1,4 +1,4 @@
-import { genSystemMessage, getGeminiKey, showToast } from '@/utils'
+import { compressImage, genSystemMessage, getGeminiKey, showToast } from '@/utils'
 
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
@@ -26,7 +26,7 @@ export async function chatWithGemini({ model, messages }, onCb = () => {}) {
 	if (genImage(model)) {
 		config.generationConfig = { responseModalities: ['Text', 'Image'] }
 		// 去除图片base64的聊天内容
-		inputs.contents = inputs.contents.filter((item) => item.role !== 'model')
+		inputs.contents = inputs.contents.filter((item) => item.role === 'user')
 	} else {
 		config.systemInstruction = genSystemMessage()[0].content
 	}
@@ -38,9 +38,9 @@ export async function chatWithGemini({ model, messages }, onCb = () => {}) {
 			if (part.text) {
 				onCb(part.text)
 			} else if (part.inlineData) {
-				const imageData = part.inlineData.data
+				const imageData = await compressImage(part.inlineData.data)
 				// 特定结构
-				onCb(`chat_img__data:image/png;base64,${imageData}__chat_img`)
+				onCb(`chat_img__${imageData}__chat_img`)
 			}
 		}
 		onCb('[DONE]')
