@@ -20,6 +20,16 @@
 - 图片生成 @cf/stabilityai/stable-diffusion-xl-base-1.0
 - 翻译 @cf/meta/m2m100-1.2b
 
+### 外部模型使用
+
+目前兼容了以下模型 需要自己提供 api key 使用 具体见`/utils/models.js`
+
+- DeepSeek
+- Gemini
+- Grok
+- OpenAI
+- Ollama 本地
+
 ### 参考文档
 
 - https://developers.cloudflare.com/pages/framework-guides/nextjs/ssr/
@@ -57,16 +67,6 @@ pnpm run deploy
 - 执行 pnpm run deploy
 - 看终端提示 第一次需要登录
 - 完成 可以到 cf dashboard 里查看
-
-### 外部模型使用
-
-目前兼容了以下模型 需要自己提供 api key 使用 具体见`/utils/models.js`
-
-- DeepSeek
-- Gemini
-- Grok
-- OpenAI
-- Ollama 本地
 
 ## 说明
 

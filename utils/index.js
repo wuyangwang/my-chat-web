@@ -51,7 +51,7 @@ export function compressImage(base64) {
 			const ctx = canvas.getContext('2d')
 
 			// 设置新的宽高（可以调整压缩率）
-			const MAX_WIDTH = 300 // 限制宽度
+			const MAX_WIDTH = 600 // 限制宽度
 			const scaleSize = MAX_WIDTH / img.width
 			canvas.width = MAX_WIDTH
 			canvas.height = img.height * scaleSize
