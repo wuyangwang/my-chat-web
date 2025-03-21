@@ -4,6 +4,9 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 
 let geminiClient = null
 
+// 可以生成图片的模型
+const genImage = (model) => model.indexOf('image-generation') > -1
+
 export async function chatWithGemini({ model, messages }, onCb = () => {}) {
 	let apiKey = getGeminiKey()
 	if (!apiKey) {
@@ -13,13 +16,35 @@ export async function chatWithGemini({ model, messages }, onCb = () => {}) {
 	if (!geminiClient) {
 		geminiClient = new GoogleGenerativeAI(apiKey)
 	}
-	const chatModel = geminiClient.getGenerativeModel({
-		model: model,
-		systemInstruction: genSystemMessage()[0].content
-	})
 
+	const config = {
+		model: model
+	}
 	let inputs = {
 		contents: convertMsg(messages)
+	}
+	if (genImage(model)) {
+		config.generationConfig = { responseModalities: ['Text', 'Image'] }
+		// 去除图片base64的聊天内容
+		inputs.contents = inputs.contents.filter((item) => item.role !== 'model')
+	} else {
+		config.systemInstruction = genSystemMessage()[0].content
+	}
+	const chatModel = geminiClient.getGenerativeModel(config)
+
+	if (genImage) {
+		const response = await chatModel.generateContent(inputs)
+		for (const part of response.response.candidates[0].content.parts) {
+			if (part.text) {
+				onCb(part.text)
+			} else if (part.inlineData) {
+				const imageData = part.inlineData.data
+				// 特定结构
+				onCb(`chat_img__data:image/png;base64,${imageData}__chat_img`)
+			}
+		}
+		onCb('[DONE]')
+		return
 	}
 
 	try {

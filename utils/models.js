@@ -17,14 +17,20 @@ export const ExternalModelHost = {
 // 本地第三方LLM 配置模型
 export const ExternalChatModelList = [
 	{
-		name: '谷歌gemini-1.5',
-		model: 'gemini-1.5-flash',
+		name: '谷歌gemini-2.0',
+		model: 'gemini-2.0-flash',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
 	},
 	{
-		name: '谷歌gemini-2.0',
-		model: 'gemini-2.0-flash',
+		name: '谷歌gemini-2.0-图片生成',
+		model: 'gemini-2.0-flash-exp-image-generation',
+		maxCount: 1000,
+		type: ModelTypeEnum.gemini
+	},
+	{
+		name: '谷歌gemini-1.5',
+		model: 'gemini-1.5-flash',
 		maxCount: 1000,
 		type: ModelTypeEnum.gemini
 	},
