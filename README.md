@@ -1,5 +1,7 @@
 ## AI 聊天
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/wuyangwang/my-chat-web)
+
 > 基于 nextjs + cloudflare pages 部署 + cloudflare workers ai 提供聊天 api
 
 - UI 使用 nextjs + tailwindcss + shadcn-ui
