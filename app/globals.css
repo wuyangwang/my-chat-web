@@ -50,6 +50,7 @@
 		--chart-5: 341.49 75.2% 50.98%;
 		--sidebar: 180 6.67% 97.06%;
 		--sidebar-foreground: 210 25% 7.84%;
+		--sidebar-background: 180 7% 97%;
 		--sidebar-primary: 203.89 88.28% 53.14%;
 		--sidebar-primary-foreground: 0 0% 100%;
 		--sidebar-accent: 211.58 51.35% 92.75%;
@@ -102,6 +103,7 @@
 		--chart-5: 341.49 75.2% 50.98%;
 		--sidebar: 228 9.8% 10%;
 		--sidebar-foreground: 0 0% 85.1%;
+		--sidebar-background: 230 10% 10%;
 		--sidebar-primary: 202.82 89.12% 53.14%;
 		--sidebar-primary-foreground: 0 0% 100%;
 		--sidebar-accent: 205.71 70% 7.84%;
