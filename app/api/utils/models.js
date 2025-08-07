@@ -3,6 +3,16 @@ export const aiModelList = [
 		tag: 'chat',
 		models: [
 			{
+				name: 'gpt-oss-120b',
+				model: '@cf/openai/gpt-oss-120b',
+				maxCount: 1000
+			},
+			{
+				name: 'gpt-oss-20b',
+				model: '@cf/openai/gpt-oss-20b',
+				maxCount: 1000
+			},
+			{
 				name: 'llama3.3-70b',
 				model: '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
 				maxCount: 1000
@@ -42,7 +52,7 @@ export const aiModelList = [
 				name: 'stable-diffusion-xl',
 				model: '@cf/stabilityai/stable-diffusion-xl-base-1.0',
 				maxCount: 1000
-			},
+			}
 			// {
 			// 	name: 'lykon/dreamshaper',
 			// 	model: '@cf/lykon/dreamshaper-8-lcm',
