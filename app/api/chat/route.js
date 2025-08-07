@@ -39,7 +39,11 @@ export async function POST(request) {
 		messages: systemMsg.concat(body.messages),
 		stream: true // 启用流式传输
 	}
-
+	if(model.indexOf('openai')>-1){
+		inputs = {
+			input: inputs.messages
+		}
+	}
 	const stream = await env.AI.run(model, inputs)
 	return utils.returnStreamText(stream)
 	// return utils.returnJson({ text: res.response })
