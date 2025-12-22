@@ -41,7 +41,8 @@ export async function POST(request) {
 	}
 	if (model.indexOf('openai') > -1) {
 		inputs = {
-			input: inputs.messages
+			input: inputs.messages,
+			stream: true
 		}
 	}
 	const stream = await env.AI.run(model, inputs)
