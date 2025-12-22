@@ -39,7 +39,7 @@ export async function POST(request) {
 		messages: systemMsg.concat(body.messages),
 		stream: true // 启用流式传输
 	}
-	if(model.indexOf('openai')>-1){
+	if (model.indexOf('openai') > -1) {
 		inputs = {
 			input: inputs.messages
 		}
