@@ -83,6 +83,7 @@ export const aiModelList = [
 	}
 ]
 
-export const defaultChatModel = aiModelList[0].models[0].model
+// export const defaultChatModel = aiModelList[0].models[0].model
+export const defaultChatModel = aiModelList[0].models.find(i => i.name.indexOf('llama3.3') > -1)
 export const defaultGenImageModel = aiModelList[1].models[0].model
 export const defaultTransModel = aiModelList[2].models[0].model
