@@ -8,7 +8,7 @@
 - 使用 cloudflare 提供的 workers ai 功能
 - 参考/app/api 目录
 
-体验地址：https://duyaxuan.xyz
+体验地址：https://chat.handybox.top
 
 ![image](https://github.com/user-attachments/assets/fe25176f-8b02-4f7b-918b-08a512224647)
 
